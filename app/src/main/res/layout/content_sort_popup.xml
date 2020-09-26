@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?popupBackgroundColor">
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/txtPopularity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Popularity"
+        android:layout_margin="@dimen/_8sdp"
+        android:textColor="?darkGreyTextColor"
+        android:padding="@dimen/_8sdp"/>
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/txtAlphabetic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alphabetic"
+        android:layout_margin="@dimen/_8sdp"
+        android:textColor="?darkGreyTextColor"
+        android:padding="@dimen/_8sdp"/>
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/txtRadeef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Radeef"
+        android:layout_margin="@dimen/_8sdp"
+        android:textColor="?darkGreyTextColor"
+        android:padding="@dimen/_8sdp"/>
+</LinearLayout>
