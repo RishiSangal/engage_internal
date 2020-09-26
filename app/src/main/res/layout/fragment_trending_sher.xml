@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_185sdp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_24sdp">
+        <LinearLayout
+            android:id="@+id/laySher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_14sdp" />
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/sher_poet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingTop="5sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="visible"
+            tools:text="FIROq gorakhpuri" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap" />
+    </LinearLayout>
+
+</LinearLayout>

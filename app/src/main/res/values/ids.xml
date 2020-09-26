@@ -1,0 +1,16 @@
+<resources>
+
+    <item name="tag_data" type="id" />
+    <item name="tag_position" type="id" />
+    <item name="tag_language" type="id" />
+    <item name="item_click_support" type="id" />
+    <item name="tag_word" type="id" />
+    <item name="tag_para" type="id" />
+    <item name="tag_line" type="id" />
+    <item name="tag_content_id" type="id" />
+    <item name="tag_content_type_id" type="id" />
+    <item name="tag_line_number" type="id" />
+    <item name="menuGroup" type="id" />
+    <item name="group_detail" type="id" />
+    <item name="shayari_image_bitmap" type="id" />
+</resources>

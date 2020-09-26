@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?appBackgroundColor"
+    android:paddingLeft="@dimen/_16sdp"
+    android:paddingRight="@dimen/_16sdp">
+
+    <com.example.sew.views.TitleTextViewType5
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textAllCaps="true"
+        android:textColor="?primaryTextColor"
+        app:textSizeUr="@dimen/_22sdp"
+        app:textSizeEn="@dimen/_24sdp"
+        app:textSizeHi="@dimen/_24sdp"
+        android:textStyle="normal"
+        tools:text="MOST FAMOUS" />
+
+    <com.example.sew.views.TitleTextViewType2
+        android:id="@+id/txtDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:lineSpacingExtra="@dimen/_1sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:textColor="?primaryTextColor"
+        android:textIsSelectable="true"
+        app:textSizeEn="@dimen/_14ssp"
+        app:textSizeHi="@dimen/_14ssp"
+        app:textSizeUr="@dimen/_16ssp"
+        tools:text="A selection of 100 most famous ghazals curated by Rekhta, based on popularity and quality of ghazals" />
+</LinearLayout>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/poetList_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?appBackgroundColor"
+    tools:ignore="ContentDescription">
+
+    <ImageView
+        android:id="@+id/offlineFavIcon"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:scaleType="fitXY"
+        android:tint="?appIconColor"
+        app:srcCompat="@drawable/ic_favorite" />
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtContentType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:letterSpacing=".1"
+            android:layout_toEndOf="@+id/offlineFavIcon"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="?primaryTextColor"
+            app:textSizeEn="@dimen/_10ssp"
+            app:textSizeHi="@dimen/_10ssp"
+            app:textSizeUr="@dimen/_12ssp"
+            tools:text="Nazm" />
+
+
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/txtContentType"
+        android:layout_toEndOf="@+id/offlineFavIcon"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:weightSum="4"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_5sdp">
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtNazmTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="?primaryTextColor"
+            app:textSizeEn="@dimen/_14ssp"
+            app:textSizeHi="@dimen/_14ssp"
+            app:textSizeUr="@dimen/_16ssp"
+            tools:text="Ghazal Ka Title Dummy " />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_toEndOf="@+id/offlineFavIcon"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:weightSum="4"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginEnd="@dimen/_10sdp">
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtContentNazmBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3.5"
+                android:ellipsize="end"
+                app:autoSizeTextType="uniform"
+                android:includeFontPadding="false"
+                android:textColor="?darkGreyTextColor"
+                android:visibility="gone"
+                app:textSizeEn="@dimen/_14ssp"
+                app:textSizeHi="@dimen/_14ssp"
+                app:textSizeUr="@dimen/_16ssp"
+                tools:text="Ghazal Ka Title Dummy Text Included for ggffdffdgrerfdgregdfgfdgfdg" />
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtContentNazmBodySecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3.5"
+                android:ellipsize="end"
+                app:autoSizeTextType="uniform"
+                android:includeFontPadding="false"
+                android:textColor="?darkGreyTextColor"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:textSizeEn="@dimen/_14ssp"
+                app:textSizeHi="@dimen/_14ssp"
+                app:textSizeUr="@dimen/_16ssp"
+                tools:text="Ghazal Ka Title Dummy Text Included for ggffdffdgrerfdgregdfgfdgfdg" />
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtContentBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3.5"
+                android:ellipsize="end"
+                app:autoSizeTextType="uniform"
+                android:includeFontPadding="false"
+                android:textColor="?darkGreyTextColor"
+                app:textSizeEn="@dimen/_14ssp"
+                app:textSizeHi="@dimen/_14ssp"
+                app:textSizeUr="@dimen/_16ssp"
+                tools:text="Ghazal Ka Title Dummy Text Included for ggffdffdgrerfdgregdfgfdgfdg" />
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtContentBodySecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:autoSizeTextType="uniform"
+                android:includeFontPadding="false"
+                android:textColor="?darkGreyTextColor"
+                android:visibility="gone"
+                app:textSizeEn="@dimen/_14ssp"
+                app:textSizeHi="@dimen/_14ssp"
+                app:textSizeUr="@dimen/_16ssp"
+                tools:text="Ghazal Ka Title Dummy Text Included for ggffdffdgrerfdgregdfgfdgfdg" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight=".5">
+
+            <ImageView
+                android:id="@+id/shareIcon"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_gravity="center_vertical"
+                android:tint="?appIconColor"
+                android:visibility="gone"
+                app:srcCompat="@drawable/share_black" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/txtSher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/offlineFavIcon"
+        android:layout_below="@+id/linearLayout"
+        android:lineSpacingExtra="8dp"
+        android:paddingBottom="6sp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="?darkGreyTextColor"
+        app:textSizeEn="@dimen/_12ssp"
+        app:textSizeHi="@dimen/_12ssp"
+        app:textSizeUr="@dimen/_18ssp"
+        android:textStyle="normal"
+        android:visibility="gone"
+        tools:text="My name is Binod" />
+    <LinearLayout
+        android:id="@+id/imagecontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSher"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_toEndOf="@+id/offlineFavIcon"
+        android:orientation="horizontal">
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtContentAuthor"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:padding="2dp"
+            android:paddingTop="5sp"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:textColor="?darkGreyTextColor"
+            app:textSizeEn="@dimen/_10ssp"
+            app:textSizeHi="@dimen/_10ssp"
+            app:textSizeUr="@dimen/_14ssp"
+            android:textStyle="normal"
+            tools:text="GHAZAL kA Author" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/searchEditorChoiceIcon"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_4sdp"
+                android:scaleType="fitXY"
+                android:tint="#fbb167"
+                app:srcCompat="@drawable/ic_beginner_choice" />
+
+
+            <ImageView
+                android:id="@+id/searchPopularChoiceIcon"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:scaleType="fitXY"
+
+                android:tint="@color/dark_blue"
+                app:srcCompat="@drawable/ic_editors_choice" />
+
+            <ImageView
+                android:id="@+id/searchaudioLink"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:scaleType="fitXY"
+                android:tint="?appIconColor"
+                app:srcCompat="@drawable/ic_audio" />
+
+            <ImageView
+                android:id="@+id/searchyoutubeLink"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:scaleType="fitXY"
+                android:tint="?appIconColor"
+                app:srcCompat="@drawable/ic_video" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/imagecontainer"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="?appDividerColor"
+        android:visibility="gone" />
+
+</RelativeLayout>

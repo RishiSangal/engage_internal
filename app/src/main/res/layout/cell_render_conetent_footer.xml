@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_51sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?appBackgroundColor"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="?appDividerColor"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        android:background="?appDividerColor">
+
+
+        <ImageView
+            android:id="@+id/imgFooterMoreOption"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="?appBackgroundColor"
+            android:padding="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:src="@drawable/ic_more_kitkat"
+            android:tint="?appIconColor" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:background="?appBackgroundColor"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/layAudioSection"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:background="?appBackgroundColor"
+                android:gravity="center"
+                android:tint="?appIconColor">
+                <com.example.sew.views.CommonImageView
+                    android:id="@+id/imgFooterAudio"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="match_parent"
+                    android:background="?appBackgroundColor"
+                    android:gravity="center"
+                    android:padding="@dimen/_8sdp"
+                    app:rotateForRtl="true"
+                    android:visibility="visible"
+                    android:src="@drawable/ic_audio_kitkat"
+                    android:tint="?appIconColor" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layFooterVideo"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:background="?appBackgroundColor"
+                android:gravity="center"
+                android:tint="?appIconColor">
+                <ImageView
+                    android:id="@+id/imgFooterVideo"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="match_parent"
+                    android:background="?appBackgroundColor"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
+                    android:src="@drawable/ic_video_kitkat"
+                    android:tint="?appIconColor" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layTranslate"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:background="?appBackgroundColor"
+                android:gravity="center"
+                android:tint="?appIconColor">
+                <ImageView
+                    android:id="@+id/imgTranslate"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp"
+                    android:background="?appBackgroundColor"
+                    app:srcCompat="@drawable/ic_translate"
+                    android:tint="?appIconColor"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/view1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?appBackgroundColor" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+
+            <ImageView
+                android:id="@+id/imgFooterShare"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?appBackgroundColor"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_1sdp"
+                android:src="@drawable/ic_share_kitkat"
+                android:tint="?appIconColor" />
+            <LinearLayout
+                android:id="@+id/layFav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="?appBackgroundColor"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/imgFooterFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?appBackgroundColor"
+                    android:padding="@dimen/_2sdp"
+                    android:src="@drawable/ic_favourite_kitkat"
+                    android:tint="?appIconColor" />
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtFavoriteFooterCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="922"
+                    android:textSize="@dimen/_10ssp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

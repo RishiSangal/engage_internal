@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primaryTextColor">@color/white</item>
+        <item name="secondaryTextColor">@color/dark_grey</item>
+        <item name="greyTextColor">@color/icon_color</item>
+        <item name="darkGreyTextColor">@color/white</item>
+        <item name="appBackgroundColor">@color/dark_grey</item>
+        <item name="popupBackgroundColor">@color/md_grey_800</item>
+        <item name="popupBackgroundShadowColor">@color/md_grey_800</item>
+        <item name="appDividerColor">@color/divider_color</item>
+        <item name="appIconColor">@color/icon_color</item>
+        <item name="appSecondBackground">@color/night_bg_color</item>
+        <item name="appThirdBackground">@color/night_bg_color</item>
+        <item name="tagBackgroundColor">@color/light_black</item>
+        <item name="cardViewStyle">@style/CardView.Dark</item>
+        <item name="shareContentFillColor">@color/render_content_selection_color_dark</item>
+    </style>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="@dimen/_120sdp"-->
+<!--        android:layout_height="@dimen/_120sdp"-->
+<!--        android:background="#CCC"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/poets_image"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:elevation="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_4sdp">
+
+            <com.example.sew.views.SquareImageView
+                android:id="@+id/imgSeeMore"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:src="@drawable/see_more_en" />
+        </androidx.cardview.widget.CardView>
+
+<!--        <com.example.sew.views.TitleTextViewType6-->
+<!--            android:id="@+id/txtSeeMore"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/_15ssp"-->
+<!--            tools:text="See More" />-->
+
+<!--    </LinearLayout>-->
+</LinearLayout>

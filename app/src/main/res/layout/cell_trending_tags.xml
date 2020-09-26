@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?appBackgroundColor"
+    android:gravity="start"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:orientation="vertical">
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtTrendingTagsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:includeFontPadding="false"
+            android:letterSpacing=".2"
+            android:lineSpacingExtra="@dimen/_1sdp"
+            android:textColor="?primaryTextColor"
+            android:textIsSelectable="true"
+            app:textSizeEn="@dimen/_14ssp"
+            app:textSizeHi="@dimen/_16ssp"
+            app:textSizeUr="@dimen/_16ssp"
+            android:textStyle="bold"
+            tools:text="TRENDING TAGS" />
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTrendingTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:clipToPadding="false"
+        android:background="?appBackgroundColor"
+        android:layout_marginTop="@dimen/_18sdp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:orientation="vertical">
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtAllTagsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:letterSpacing=".2"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/_1sdp"
+            android:textColor="?primaryTextColor"
+            android:textIsSelectable="true"
+            app:textSizeEn="@dimen/_14ssp"
+            app:textSizeHi="@dimen/_16ssp"
+            app:textSizeUr="@dimen/_16ssp"
+            android:textStyle="bold"
+            tools:text="ALL TAGS" />
+    </LinearLayout>
+</LinearLayout>

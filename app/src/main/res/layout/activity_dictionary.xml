@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?appBackgroundColor"
+    android:orientation="vertical"
+    tools:context=".activities.AboutUsActivity">
+
+<!--    <include layout="@layout/header_type_2" />-->
+    <include layout="@layout/header_type_4" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/md_grey_500" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/worldOfDayHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?appBackgroundColor">
+            <com.example.sew.views.TitleTextViewType5
+                android:id="@+id/txtUrduDictionary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:textColor="?primaryTextColor"
+                android:textSize="@dimen/_30ssp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="URDU DICTIONARY" />
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtHeaderDictionary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/_1sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:textColor="?primaryTextColor"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                tools:text="Find meanings of Urdu words especially used in sher o shayari. Please type the word in
+search box to get its meaning." />
+
+            <View
+
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_below="@id/txtTop100Description"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:background="#CCCCCC" />
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/laySearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@drawable/textlayouthint"
+            android:gravity="center_vertical">
+
+            <com.example.sew.views.CommonImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:rotateForRtl="false"
+                app:srcCompat="@drawable/ic_searchtab" />
+
+            <EditText
+                android:id="@+id/edSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:minHeight="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textColor="?primaryTextColor"
+                android:textColorHint="?greyTextColor"
+                android:textSize="@dimen/_14ssp" />
+        </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/laySearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:gravity="center_vertical">
+
+            <com.example.sew.views.CommonImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:rotateForRtl="false"
+                app:srcCompat="@drawable/ic_searchtab" />
+
+            <EditText
+                android:id="@+id/edSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:minHeight="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textColor="?darkGreyTextColor"
+                android:textColorHint="@color/hint_color"
+                android:textSize="@dimen/_12ssp"
+                android:hint="Search the word you’re looking for..."/>
+        </LinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:background="?appDividerColor"
+            android:layout_marginEnd="@dimen/_16sdp"/>
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtNoData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="?primaryTextColor"
+            android:textSize="@dimen/_20ssp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:visibility="gone"
+            tools:text="No records found" />
+        <com.example.sew.common.PagingListView
+            android:id="@+id/lstDictionary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:visibility="gone"
+            android:background="?appBackgroundColor"/>
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/layWorldOfDayBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10sp">
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtWordOfTheDayHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14sp"
+                    android:letterSpacing=".2"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Word Of The Day"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    app:textSizeEn="@dimen/_14ssp"
+                    app:textSizeHi="@dimen/_14ssp"
+                    app:textSizeUr="@dimen/_16ssp"
+                    android:textColor="?primaryTextColor" />
+
+                <com.example.sew.views.TitleTextViewType7
+                    android:id="@+id/txtWordOfTheDayMainText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_28sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_pink"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic"
+                    tools:text="fardaa" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginRight="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtWordOfTheDayHindiText"
+                        style="@style/LeilaRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:gravity="center_horizontal|end"
+                        android:padding="3sp"
+                        android:textColor="?primaryTextColor"
+                        android:textSize="18sp"
+                        tools:text="Hindi Text" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_marginRight="@dimen/_2sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:text="\u25CF"
+                        android:textAlignment="center"
+                        android:textColor="?appIconColor" />
+
+                    <TextView
+                        android:id="@+id/txtWordOfTheDayUrduText"
+                        style="@style/NotoNastaliq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:gravity="center_horizontal|start"
+                        android:textColor="?primaryTextColor"
+                        android:textSize="@dimen/_18ssp"
+                        tools:text="Urdu Text" />
+
+                </LinearLayout>
+
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtMeaningHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:text="Meaning"
+                    android:textAlignment="center"
+                    android:textColor="?greyTextColor"
+                    android:textSize="16sp" />
+
+
+                <com.example.sew.views.TitleTextView
+                    android:id="@+id/txtWordMeaning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textAlignment="center"
+                    android:textColor="?primaryTextColor"
+                    android:textSize="16sp"
+                    tools:text="Means" />
+
+
+                <com.example.sew.views.TitleTextView
+                    android:id="@+id/txtContentUsingWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:lineSpacingExtra="@dimen/_6sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:textAlignment="center"
+                    android:textColor="?primaryTextColor"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    tools:text="mysticism, the theology of the mystics of the east, Sufism, and of course-some more mysticism" />
+<!--                android:background="@drawable/touch_effect"-->
+                <com.example.sew.views.TitleTextView
+                    android:id="@+id/txtContentUsingWordHinUrdu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:lineSpacingExtra="@dimen/_6sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:textAlignment="center"
+                    android:textColor="?primaryTextColor"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    tools:text="mysticism, the theology of the mystics of the east, Sufism, and of course-some more mysticism" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/_3sdp">
+
+                    <com.example.sew.views.TitleTextViewType11
+                        android:id="@+id/txtPoetName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:textStyle="italic"
+                        android:textColor="?primaryTextColor"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="MIRZA GHALIB" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:visibility="gone"
+                        android:background="@color/dark_blue" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

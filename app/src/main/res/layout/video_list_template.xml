@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/touch_effect"
+    android:orientation="horizontal">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ImageOfAuthor"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_26sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:src="@drawable/bg" />
+
+    <TextView
+        android:id="@+id/performtxt"
+        style="@style/LatoRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_toStartOf="@+id/totalTime"
+        android:layout_toEndOf="@+id/ImageOfAuthor"
+        android:textAllCaps="true"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/_10ssp"
+        tools:text="Performed By" />
+
+    <TextView
+        android:id="@+id/videAuthor"
+        style="@style/LatoBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/performtxt"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_26sdp"
+        android:layout_toStartOf="@+id/totalTime"
+        android:layout_toEndOf="@+id/ImageOfAuthor"
+        android:gravity="center_vertical"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        tools:text="Nauman Shaque" />
+
+    <com.example.sew.views.TitleTextView
+        android:id="@+id/totalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/performtxt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_26sdp"
+        android:gravity="center_vertical"
+        android:visibility="invisible"
+        tools:text="7:32" />
+
+    <View
+        android:id="@+id/divi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/_26sdp"
+        android:layout_marginRight="@dimen/_26sdp"
+        android:background="@color/md_grey_400" />
+</RelativeLayout><!--</android.support.v7.widget.CardView>-->

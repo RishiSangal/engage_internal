@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/custom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_24sdp"
+        android:paddingRight="@dimen/_24sdp"
+        android:textColor="@drawable/tabs_selection_colors"
+        android:textAllCaps="true"
+        tools:text="This is raman kumar"
+        android:textStyle="bold"
+        android:textSize="@dimen/_14ssp" />
+
+</LinearLayout>

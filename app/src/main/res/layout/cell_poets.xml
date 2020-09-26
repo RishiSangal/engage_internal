@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/poetTemplate"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/touch_effect"
+    android:paddingStart="@dimen/_4sdp"
+    android:paddingEnd="@dimen/_4sdp">
+
+    <LinearLayout
+        android:id="@+id/viewHo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp">
+        <ImageView
+            android:id="@+id/offlineFavIcon"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:tint="?appIconColor"
+            android:layout_marginStart="14dp"
+            app:srcCompat="@drawable/ic_favorite"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_gravity="center"
+            android:layout_weight="1.2">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgPoetImage"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:src="@drawable/icon">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="6.2"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:padding="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtPoetName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?primaryTextColor"
+                        app:textSizeEn="@dimen/_14ssp"
+                        app:textSizeHi="@dimen/_14ssp"
+                        app:textSizeUr="@dimen/_16ssp"
+                        android:textStyle="bold"
+                        tools:text="Addddddddd Addddddddd  " />
+
+                    <com.example.sew.views.TitleTextView
+                        android:id="@+id/txtpoetIsNew"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:text="New"
+                        android:textColor="?primaryTextColor"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_7ssp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtPoetDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="?greyTextColor"
+                    app:textSizeEn="@dimen/_10ssp"
+                    app:textSizeHi="@dimen/_10ssp"
+                    app:textSizeUr="@dimen/_14ssp"
+                    android:visibility="visible"
+                    tools:text=" " />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:orientation="horizontal">
+
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtGhazalCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textColor="?greyTextColor"
+                        app:textSizeEn="@dimen/_10ssp"
+                        app:textSizeHi="@dimen/_12ssp"
+                        app:textSizeUr="@dimen/_12ssp"
+                        tools:text="31 Ghazals" />
+
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtNazmCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:textAllCaps="true"
+                        android:textColor="?greyTextColor"
+                        app:textSizeEn="@dimen/_10ssp"
+                        app:textSizeHi="@dimen/_12ssp"
+                        app:textSizeUr="@dimen/_12ssp"
+                        tools:text="14 Nazms" />
+
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtSherCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="21dp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:textAllCaps="true"
+                        android:textColor="?greyTextColor"
+                        app:textSizeEn="@dimen/_10ssp"
+                        app:textSizeHi="@dimen/_12ssp"
+                        app:textSizeUr="@dimen/_12ssp"
+                        tools:text="14 Shers" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1ssp"
+        android:layout_below="@+id/viewHo"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:background="?appDividerColor" />
+
+</RelativeLayout>

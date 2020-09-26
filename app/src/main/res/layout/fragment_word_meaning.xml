@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainMeaningview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow_meaning_background"
+    android:backgroundTint="?popupBackgroundColor"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_30sdp"
+    android:paddingBottom="@dimen/_10sdp">
+    <com.example.sew.views.TitleTextViewType7
+        android:id="@+id/txtNoWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?greyTextColor"
+        android:textSize="@dimen/_16ssp"
+        android:gravity="center"
+        android:visibility="visible"
+        tools:text=" Chaahiye " />
+    <LinearLayout
+        android:id="@+id/layMainText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_10sdp">
+
+        <com.example.sew.views.TitleTextViewType7
+            android:id="@+id/mainText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="?primaryTextColor"
+            android:textSize="@dimen/_22ssp"
+            tools:text=" Chaahiye " />
+
+        <ImageView
+            android:id="@+id/imgWordAudio"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:tint="@color/dark_blue"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_audio" />
+        <ImageView
+            android:id="@+id/imgWordFavorite"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:tint="?appIconColor"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_favorite" />
+        <ImageView
+            android:id="@+id/closeImg"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:tint="?appIconColor"
+            app:srcCompat="@drawable/ic_close" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linaerpara2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <com.example.sew.views.TitleTextViewType7
+            android:id="@+id/mainword2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2sp"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="?primaryTextColor"
+            tools:text="भाषा " />
+        <ImageView
+            android:id="@+id/imgDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/dictionary_dot" />
+        <TextView
+            android:id="@+id/txtPoetTenureDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="sans-serif"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:text="@string/text_divider"
+            android:textColor="?appIconColor"/>
+
+        <com.example.sew.views.TitleTextViewType7
+            android:id="@+id/mainword3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:padding="2sp"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="?primaryTextColor"
+            tools:text=" urdu" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtDetail"
+        style="@style/LatoRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textColor="?primaryTextColor"
+        tools:text="Api Not Integrated yet" />
+</LinearLayout>

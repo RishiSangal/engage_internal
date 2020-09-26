@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?appBackgroundColor"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <com.example.sew.views.CommonImageView
+        android:id="@+id/imgBack"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerInside"
+        android:tint="?appIconColor"
+        android:src="@drawable/ic_arrow_left_grey600_24dp"
+        app:rotateForRtl="true" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/_50sdp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/imgHeaderLogo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:tint="?primaryTextColor"
+        app:srcCompat="@drawable/ic_rekhtalogo" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+    <com.example.sew.views.IconTextView
+        android:id="@+id/imgHeaderSearch"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_toStartOf="@id/imgHeaderMenu"
+        android:text="@string/rico_search"
+        android:textSize="@dimen/_32ssp"
+        android:textColor="?appIconColor"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/imgSearch"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_toStartOf="@id/imgHeaderMenu"-->
+<!--        android:background="@drawable/touch_effect"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:tint="@color/md_grey_600"-->
+<!--        app:srcCompat="@drawable/ic_searchtab" />-->
+
+    <ImageView
+        android:id="@+id/imgHeaderMenu"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerInside"
+        android:tint="?appIconColor"
+        android:src="@drawable/ic_dots_vertical_grey600_24dp" />
+</LinearLayout>

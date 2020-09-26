@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.sew.activities.TestActivity">
+
+    <TextView
+        android:id="@+id/txtChangeLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/_20sdp"
+        android:text="Change Language" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff0"
+            android:orientation="vertical">
+
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/testText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f00"
+                android:text="This is a big test\nThis is a big test\nThis is a big test"
+                app:layout_marginEn="@dimen/_10sdp"
+                app:layout_marginHi="@dimen/_20sdp"
+                app:layout_marginUr="@dimen/_30sdp"
+                app:paddingEn="@dimen/_10sdp"
+                app:paddingHi="@dimen/_20sdp"
+                app:paddingUr="@dimen/_30sdp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

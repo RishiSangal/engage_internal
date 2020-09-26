@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "146085015376",
+    "firebase_url": "https://rekhta-org.firebaseio.com",
+    "project_id": "rekhta-org",
+    "storage_bucket": "rekhta-org.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146085015376:android:b28a71045a98e063",
+        "android_client_info": {
+          "package_name": "org.Rekhta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146085015376-cbvj58rc7cma771m623o9aq0js7ia0i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.Rekhta",
+            "certificate_hash": "8c8540c14562c250a3a72a43a02090ed8992993c"
+          }
+        },
+        {
+          "client_id": "146085015376-idh4t9rq8hnt8q0n48tdfvpnpeq50bck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.Rekhta",
+            "certificate_hash": "e912429cc92f3e6960dff84d5424653b6fece8e5"
+          }
+        },
+        {
+          "client_id": "146085015376-u3bhp9gbdpd5s1kd1c8l3b32n5l8p9lq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.Rekhta",
+            "certificate_hash": "cf932df0ca76b808f0dbc5c4d4f2b07c5a7dc72b"
+          }
+        },
+        {
+          "client_id": "146085015376-bdqv1pjnbqune4nb36q068c73p3slrn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDglciwFwCaHsXB9NkQiplJw2NcNJGfd_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146085015376-bdqv1pjnbqune4nb36q068c73p3slrn0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146085015376-6v2iklp30m9tvnsbk3ek9medfsp9o94s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.rekhta"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

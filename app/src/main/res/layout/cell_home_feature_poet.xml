@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?appThirdBackground"
+    android:orientation="vertical">
+
+    <com.example.sew.views.TitleTextViewType6
+        android:id="@+id/txtCollectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?appBackgroundColor"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_30sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_24sdp"
+        android:textColor="?primaryTextColor"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        tools:text="Collection Title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?appThirdBackground"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_24sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/poetProfileImageTemplate"
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_64sdp"
+                android:src="@drawable/icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?appThirdBackground"
+                android:paddingStart="@dimen/_23sdp"
+                android:orientation="vertical">
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtFeaturedType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textColor="?greyTextColor"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="normal"
+                    tools:text="FAIZ AHMAAD FAIZ Ahmad SUZUKI" />
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtPoetName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAllCaps="false"
+                    android:textColor="@color/blue"
+                    app:textSizeEn="@dimen/_14ssp"
+                    app:textSizeHi="@dimen/_14ssp"
+                    app:textSizeUr="@dimen/_20ssp"
+                    android:textStyle="bold"
+                    tools:text="FAIZ AHMAAD FAIZ Ahmad SUZUKI" />
+
+                <LinearLayout
+                    android:id="@+id/lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <com.example.sew.views.IconTextView
+                        android:id="@+id/txtCalendarIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rico_calendar"
+                        android:textColor="?appIconColor"
+                        android:textSize="@dimen/_20ssp" />
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtPoetTenure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5sp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="?greyTextColor"
+                        tools:text="1911 - 1984" />
+
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtPoetTenureDivider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        app:layout_marginEndUr="@dimen/_5sdp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_divider" />
+
+                    <com.example.sew.views.IconTextView
+                        android:id="@+id/txtLocationIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rico_location"
+                        android:textColor="?appIconColor"
+                        android:textSize="@dimen/_20ssp" />
+                    <com.example.sew.views.TitleTextViewType6
+                        android:id="@+id/txtPoetBirthPlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5sp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical"
+                        app:textSizeEn="@dimen/_12ssp"
+                        app:textSizeHi="@dimen/_12ssp"
+                        app:textSizeUr="@dimen/_14ssp"
+                        android:textColor="?greyTextColor"
+                        tools:text="Lahore Pakistan" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        <!--<org.Rekhta.views.JustifyCustomTextView-->
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtPoetShortDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/_4sdp"
+            android:maxLines="10"
+            android:padding="@dimen/_5sdp"
+            android:textColor="?primaryTextColor"
+            android:textSize="@dimen/_14ssp"
+            tools:text="One of the most celebrated and popular poets. Faced political repression for h most celebrated and popular poets. Faced political repression for his revoloutionary views." />
+
+
+        <View
+            android:id="@+id/layDivider"
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:layout_marginStart="@dimen/_55sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_55sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:background="?appDividerColor" />
+
+        <LinearLayout
+            android:id="@+id/laySher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_21sdp" />
+        <LinearLayout
+            android:id="@+id/laySeeFullGhazal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?appThirdBackground"
+            android:orientation="vertical">
+
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtSeeFullGhazal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:gravity="center"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/blue"
+                app:textSizeEn="@dimen/_10ssp"
+                app:textSizeHi="@dimen/_10ssp"
+                app:textSizeUr="@dimen/_12ssp"
+                android:textStyle="bold"
+                tools:text="View all Ghazals" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@color/dark_blue"
+                android:gravity="center" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_26sdp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

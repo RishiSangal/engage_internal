@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rico_rekhta_logo"></string>
+    <string name="rico_sher"></string>
+    <string name="rico_ghazal"></string>
+    <string name="rico_ghazals"></string>
+    <string name="rico_nazm"></string>
+    <string name="rico_nazms"></string>
+    <string name="rico_profile_ico"></string>
+    <string name="rico_profile"></string>
+    <string name="rico_replay"></string>
+    <string name="rico_home"></string>
+    <string name="rico_home_filled"></string>
+    <string name="rico_search"></string>
+    <string name="rico_more"></string>
+    <string name="rico_favorite"></string>
+    <string name="rico_not_favorited"></string>
+    <string name="rico_favorited"></string>
+    <string name="rico_tag"></string>
+    <string name="rico_videothumbplay"></string>
+    <string name="rico_calendar"></string>
+    <string name="rico_location"></string>
+    <string name="rico_checked"></string>
+    <string name="rico_settings"></string>
+    <string name="rico_dictonary"></string>
+    <string name="rico_gallery"></string>
+    <string name="rico_about"></string>
+    <string name="rico_feedback"></string>
+    <string name="rico_logout"></string>
+    <string name="rico_like"></string>
+    <string name="rico_dislike"></string>
+    <string name="rico_controls"></string>
+    <string name="rico_explain"></string>
+    <string name="rico_copy">&#xe953;</string>
+</resources>

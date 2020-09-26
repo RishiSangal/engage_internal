@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--<shape xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:shape="rectangle">--><!--<solid android:color="@color/white" />--><!--<corners android:radius="0dp" />--><!--<stroke--><!--android:width="0.5px"--><!--android:color="#808080"/>--><!--</shape>--><!--<?xml version="1.0" encoding="utf-8"?>-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <stroke
+                android:width="@dimen/_1sdp"
+                android:color="@color/grey_border" />
+            <solid
+                android:color="?appBackgroundColor"/>
+            <corners
+                android:radius="@dimen/_2ssp"/>
+        </shape>
+
+    </item>
+
+</layer-list>

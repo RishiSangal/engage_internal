@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="primaryTextColor" format="color" />
+    <attr name="secondaryTextColor" format="color"/>
+    <attr name="appBackgroundColor" format="color"/>
+    <attr name="popupBackgroundColor" format="color"/>
+    <attr name="popupBackgroundShadowColor" format="color"/>
+    <attr name="appSecondBackground" format="color"/>
+    <attr name="appDividerColor" format="color"/>s
+    <attr name="appIconColor" format="color"/>
+    <attr name="greyTextColor" format="color"/>
+    <attr name="darkGreyTextColor" format="color"/>
+    <attr name="appThirdBackground" format="color"/>
+    <attr name="tagBackgroundColor" format="color"/>
+    <attr name="shareContentFillColor" format="color"/>
+    <attr name="cardViewStyles" format="reference"/>
+</resources>
