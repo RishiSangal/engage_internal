@@ -32,4 +32,5 @@
     <string name="rico_controls"></string>
     <string name="rico_explain"></string>
     <string name="rico_copy">&#xe953;</string>
+    <string name="rico_close"></string>
 </resources>

@@ -13,5 +13,6 @@
     <attr name="appThirdBackground" format="color"/>
     <attr name="tagBackgroundColor" format="color"/>
     <attr name="shareContentFillColor" format="color"/>
+    <attr name="meaningWordBgClose" format="color"/>
     <attr name="cardViewStyles" format="reference"/>
 </resources>

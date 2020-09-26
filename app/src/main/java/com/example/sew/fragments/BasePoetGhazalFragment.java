@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.adapters.PoetGhazalAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentListWithPaging;
 import com.example.sew.common.Enums;
 import com.example.sew.common.PagingListView;
-import com.example.sew.helpers.MyService;
 import com.example.sew.models.ShayariContent;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -75,6 +72,7 @@ public abstract class BasePoetGhazalFragment extends BasePoetProfileFragment {
         });
         shimmerViewContainer.startShimmer();
         shimmerViewContainer.setVisibility(View.VISIBLE);
+
         getPoetGhazals(defaultSortContent);
         ViewCompat.setNestedScrollingEnabled(lstPoetContent, true);
     }
@@ -106,19 +104,19 @@ public abstract class BasePoetGhazalFragment extends BasePoetProfileFragment {
 
     private ArrayList<ShayariContent> poetGhazals = new ArrayList<>();
     private PoetGhazalAdapter poetGhazalAdapter;
-
+    private String sortedBy;
     private void updateUI() {
         if (poetGhazalAdapter == null) {
-            Parcelable state= lstPoetContent.onSaveInstanceState();
-            poetGhazalAdapter = new PoetGhazalAdapter(GetActivity(), poetGhazals, getPoetDetail(), getContentType(),BasePoetGhazalFragment.this);
+            poetGhazalAdapter = new PoetGhazalAdapter(GetActivity(), poetGhazals, getPoetDetail(), getContentType(),BasePoetGhazalFragment.this,defaultSortContent);
             poetGhazalAdapter.setTotalContentCount(getContentListWithPaging.getTotalCount());
             lstPoetContent.setAdapter(poetGhazalAdapter);
-            if(state!=null)
-                lstPoetContent.onRestoreInstanceState(state);
         } else
             poetGhazalAdapter.notifyDataSetChanged();
     }
     public void sortContent(Enums.SORT_CONTENT sortBy){
+        defaultSortContent= sortBy.getKey();
+        poetGhazalAdapter = null;
         getPoetGhazals(sortBy.getKey());
+
     }
 }

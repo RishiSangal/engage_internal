@@ -11,9 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.RenderContentActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
 import com.example.sew.adapters.PoetSherAdapter;
 import com.example.sew.apis.BaseServiceable;
@@ -21,7 +19,6 @@ import com.example.sew.apis.GetCoupletListWithPaging;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MeaningBottomPopupWindow;
 import com.example.sew.common.PagingListView;
-import com.example.sew.common.MyConstants;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetDetail;
 import com.example.sew.models.SherContent;
@@ -40,7 +37,7 @@ public class PoetSherFragment extends BasePoetProfileFragment {
     ShimmerFrameLayout shimmerViewContainer;
     @BindView(R.id.lstPoetContent)
     PagingListView lstPoetContent;
-    private String defaultSortContent= Enums.SORT_CONTENT.POPULARITY.getKey();
+    private String defaultSortContent = Enums.SORT_CONTENT.POPULARITY.getKey();
 
     public static BasePoetProfileFragment getInstance(PoetDetail poetDetail, ContentType contentType) {
         return getInstance(poetDetail, contentType, new PoetSherFragment());
@@ -127,19 +124,22 @@ public class PoetSherFragment extends BasePoetProfileFragment {
 
     private void updateUI() {
         if (poetSherAdapter == null) {
-            Parcelable state= lstPoetContent.onSaveInstanceState();
-            poetSherAdapter = new PoetSherAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this);
+            Parcelable state = lstPoetContent.onSaveInstanceState();
+            poetSherAdapter = new PoetSherAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
             poetSherAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
             poetSherAdapter.setOnWordClickListener(onWordClickListener);
             poetSherAdapter.setOnTagClick(onTagClickListener);
             poetSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
             lstPoetContent.setAdapter(poetSherAdapter);
-            if(state!=null)
+            if (state != null)
                 lstPoetContent.onRestoreInstanceState(state);
         } else
             poetSherAdapter.notifyDataSetChanged();
     }
-    public void sortContent(Enums.SORT_CONTENT sortBy){
+
+    public void sortContent(Enums.SORT_CONTENT sortBy) {
+        defaultSortContent = sortBy.getKey();
+        poetSherAdapter = null;
         getSherContent(sortBy.getKey());
     }
 }

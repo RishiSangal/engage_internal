@@ -6,13 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.PopupMenu;
-
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
+import com.example.sew.common.ContentSortPopupWindow;
 import com.example.sew.common.Enums;
+import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.fragments.BasePoetGhazalFragment;
-import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetDetail;
@@ -29,13 +28,15 @@ public class PoetGhazalAdapter extends BasePoetContentAdapter {
     private int totalContentCount;
     private ContentType contentType;
     private BasePoetGhazalFragment fragment;
-
-    public PoetGhazalAdapter(BaseActivity activity, ArrayList<ShayariContent> poetGhazals, PoetDetail poetDetail, ContentType contentType, BasePoetGhazalFragment fragment) {
+    private String sortedBy;
+    public PoetGhazalAdapter(BaseActivity activity, ArrayList<ShayariContent> poetGhazals, PoetDetail poetDetail, ContentType contentType,
+                             BasePoetGhazalFragment fragment, String sortedBy) {
         super(activity, poetDetail);
         this.poetGhazals = poetGhazals;
         this.poetDetail = poetDetail;
         this.contentType = contentType;
         this.fragment = fragment;
+        this.sortedBy= sortedBy;
     }
 
     public void setTotalContentCount(int totalContentCount) {
@@ -65,6 +66,10 @@ public class PoetGhazalAdapter extends BasePoetContentAdapter {
                 } else
                     poetsProfileViewHolder = (PoetsProfileViewHolder) convertView.getTag();
                 convertView.setTag(poetsProfileViewHolder);
+                if(poetGhazals.size()>1)
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.VISIBLE);
+                else
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.GONE);
                 loadDataForPoetHeader(poetsProfileViewHolder);
                 break;
             case VIEW_TYPE_CONTENT:
@@ -119,30 +124,42 @@ public class PoetGhazalAdapter extends BasePoetContentAdapter {
     }
 
     ArrayList<String> sortContent;
-
     @Override
     void contentFilter(View view) {
-        sortContent = new ArrayList<>();
-        sortContent.add(MyHelper.getString(R.string.popularity));
-        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
-            sortContent.add(MyHelper.getString(R.string.alphabetic));
-        if (getContentTitle().equalsIgnoreCase(MyHelper.getString(R.string.ghazal)) | getContentTitle().equalsIgnoreCase(MyHelper.getString(R.string.unpublished_ghazal)))
-            sortContent.add(MyHelper.getString(R.string.radeef));
-        PopupMenu popup = new PopupMenu(getActivity(), view);
-        for (int i = 0; i < sortContent.size(); i++) {
-            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
-        }
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
-                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
-            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
-                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
-            } else {
-                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
-            }
-            return true;
-        });
-        popup.show();
+        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
+            new ContentSortPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
+        else
+            new ContentSortPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
+
+//form_popup is the template to the popup
+
+////...
+//        view.findViewById(R.id.txtPopularity);
+//        view.findViewById(R.id.txtAlphabetic);
+//        view.findViewById(R.id.txtRadeef);
+
+
+//        sortContent = new ArrayList<>();
+//        sortContent.add(MyHelper.getString(R.string.popularity));
+//        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
+//            sortContent.add(MyHelper.getString(R.string.alphabetic));
+//        if (getContentTitle().equalsIgnoreCase(MyHelper.getString(R.string.ghazal)) | getContentTitle().equalsIgnoreCase(MyHelper.getString(R.string.unpublished_ghazal)))
+//            sortContent.add(MyHelper.getString(R.string.radeef));
+//        PopupMenu popup = new PopupMenu(getActivity(), view);
+//        for (int i = 0; i < sortContent.size(); i++) {
+//            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
+//        }
+//        popup.setOnMenuItemClickListener(item -> {
+//            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
+//            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
+//            } else {
+//                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
+//            }
+//            return true;
+//        });
+//        popup.show();
     }
 
     class GhazalViewHolder {
@@ -163,4 +180,5 @@ public class PoetGhazalAdapter extends BasePoetContentAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
 }

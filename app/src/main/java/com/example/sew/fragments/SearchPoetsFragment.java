@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,7 @@ public class SearchPoetsFragment extends BaseSearchFragment {
     @BindView(R.id.txtNoData)
     TextView txtNoData;
 
-//    public static BaseSearchFragment getInstance(String searchedText) {
+    //    public static BaseSearchFragment getInstance(String searchedText) {
 //        return getInstance(new SearchPoetsFragment(), searchedText);
 //    }
     public static BaseSearchFragment getInstance(Enums.CONTENT_TYPE contentType, String searchedText) {
@@ -106,7 +105,8 @@ public class SearchPoetsFragment extends BaseSearchFragment {
                     SearchContentAll searchContentAll = getSearchContentByType.getSearchContentAll();
                     if (getSearchContentByType.isFirstPage())
                         searchPoets.clear();
-                    searchPoets.addAll(searchContentAll.getPoets());
+                    if(!CollectionUtils.isEmpty(searchContentAll.getPoets()))
+                        searchPoets.addAll(searchContentAll.getPoets());
                     if (CollectionUtils.isEmpty(searchContentAll.getPoets()))
                         lstSearchResult.setHasMoreItems(false);
                     else

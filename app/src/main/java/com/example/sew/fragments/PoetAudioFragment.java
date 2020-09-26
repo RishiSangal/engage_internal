@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.adapters.PoetAudioAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAudioListWithPaging;
 import com.example.sew.common.PagingListView;
+import com.example.sew.common.PoetAudioInterFace;
 import com.example.sew.helpers.AudioPlayerControls;
 import com.example.sew.models.AudioContent;
 import com.example.sew.models.BaseAudioContent;
@@ -35,6 +35,7 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
     @BindView(R.id.lstPoetContent)
     PagingListView lstPoetContent;
     private AudioPlayerControls audioPlayerControls;
+    PoetAudioInterFace poetAudioInterFace;
 
     public static BasePoetProfileFragment getInstance(PoetDetail poetDetail) {
         return getInstance(poetDetail, new PoetAudioFragment());
@@ -72,6 +73,8 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
             AudioContent audioContent = (AudioContent) convertView.getTag(R.id.tag_data);
             if (audioPlayerControls != null && audioContent != null)
                 audioPlayerControls.playAudio(audioContents.indexOf(audioContent));
+            //poetAudioInterFace.onPoetAudioPlay(audioContents.indexOf(audioContent),audioContent);
+
         }
     }
 
@@ -83,10 +86,12 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
         if (audioPlayerControls != null)
             audioPlayerControls.updateUI();
     }
+
     public void onFavoriteUpdated() {
         super.onFavoriteUpdated();
         updateUI();
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_poet_content, container, false);
@@ -95,6 +100,12 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
         audioPlayerControls.setOnAudioPlayerStateChanged(this);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        poetAudioInterFace = (PoetAudioInterFace) getActivity();
     }
 
     @Override

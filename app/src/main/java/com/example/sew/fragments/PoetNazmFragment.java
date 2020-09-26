@@ -11,14 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.adapters.PoetNazmAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentListWithPaging;
 import com.example.sew.common.Enums;
-import com.example.sew.common.PagingListView;
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.PagingListView;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetDetail;
 import com.example.sew.models.ShayariContent;
@@ -36,7 +35,8 @@ public class PoetNazmFragment extends BasePoetProfileFragment {
     ShimmerFrameLayout shimmerViewContainer;
     @BindView(R.id.lstPoetContent)
     PagingListView lstPoetContent;
-    private String defaultSortContent= Enums.SORT_CONTENT.POPULARITY.getKey();
+    private String defaultSortContent = Enums.SORT_CONTENT.POPULARITY.getKey();
+
     @OnItemClick(R.id.lstPoetContent)
     void onItemClick(View convertView) {
         ShayariContent shayariContent = (ShayariContent) convertView.getTag(R.id.tag_data);
@@ -113,16 +113,19 @@ public class PoetNazmFragment extends BasePoetProfileFragment {
 
     private void updateUI() {
         if (poetNazmAdapter == null) {
-            Parcelable state= lstPoetContent.onSaveInstanceState();
-            poetNazmAdapter = new PoetNazmAdapter(GetActivity(), poetNazms, getPoetDetail(), getContentType(), PoetNazmFragment.this);
+            Parcelable state = lstPoetContent.onSaveInstanceState();
+            poetNazmAdapter = new PoetNazmAdapter(GetActivity(), poetNazms, getPoetDetail(), getContentType(), PoetNazmFragment.this, defaultSortContent);
             poetNazmAdapter.setTotalContentCount(getContentListWithPaging.getTotalCount());
             lstPoetContent.setAdapter(poetNazmAdapter);
-            if(state != null)
+            if (state != null)
                 lstPoetContent.onRestoreInstanceState(state);
         } else
             poetNazmAdapter.notifyDataSetChanged();
     }
-    public void sortContent(Enums.SORT_CONTENT sortBy){
-            getPoetGhazals(sortBy.getKey());
+
+    public void sortContent(Enums.SORT_CONTENT sortBy) {
+        defaultSortContent = sortBy.getKey();
+        poetNazmAdapter = null;
+        getPoetGhazals(sortBy.getKey());
     }
 }

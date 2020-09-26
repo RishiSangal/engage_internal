@@ -21,6 +21,7 @@
         <item name="tagBackgroundColor">@color/divider_grey</item>
         <item name="cardViewStyles">@style/CardView.Light</item>
         <item name="shareContentFillColor">@color/render_content_selection_color</item>
+        <item name="meaningWordBgClose">@color/word_meaning_bg_color</item>
     </style>
 
 </resources>

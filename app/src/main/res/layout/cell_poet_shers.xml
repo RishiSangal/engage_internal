@@ -66,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
+            android:weightSum="2"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -76,55 +77,55 @@
 
                 <ImageView
                     android:id="@+id/sher_heartIcon"
-                    android:layout_width="@dimen/_26sdp"
-                    android:layout_height="@dimen/_26sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_favourite_kitkat"
                     android:tint="?appIconColor" />
 
                 <ImageView
                     android:id="@+id/sher_shareIcon"
-                    android:layout_width="@dimen/_26sdp"
+                    android:layout_width="@dimen/_24sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:src="@drawable/ic_share_kitkat"
                     android:tint="?appIconColor" />
 
                 <ImageView
                     android:id="@+id/sher_clipbordIcon"
-                    android:layout_width="@dimen/_26sdp"
-                    android:layout_height="@dimen/_26sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:padding="5dp"
                     android:src="@drawable/ic_copy_kitkat"
                     android:tint="?appIconColor" />
 
                 <ImageView
                     android:id="@+id/sher_ghazalIcon"
-                    android:layout_width="@dimen/_26sdp"
-                    android:layout_height="@dimen/_26sdp"
-                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
                     android:src="@drawable/ic_glas"
                     android:tint="?appIconColor"
                     android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/sher_translateIcon"
-                    android:layout_width="@dimen/_26sdp"
-                    android:layout_height="@dimen/_26sdp"
-                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:adjustViewBounds="true"
@@ -133,13 +134,13 @@
                     app:srcCompat="@drawable/ic_translate" />
                 <ImageView
                     android:id="@+id/imgCritiqueInfo"
-                    android:layout_width="@dimen/_26sdp"
-                    android:layout_height="@dimen/_26sdp"
-                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:adjustViewBounds="true"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:src="@drawable/ic_critique_kitkat"
                     android:tint="?appIconColor" />
 

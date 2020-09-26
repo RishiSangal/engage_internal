@@ -1,5 +1,6 @@
 package com.example.sew.adapters;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -10,12 +11,16 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +32,13 @@ import androidx.core.content.ContextCompat;
 import com.binaryfork.spanny.Spanny;
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
+import com.example.sew.apis.BaseServiceable;
+import com.example.sew.apis.PostSubmitCritique;
 import com.example.sew.common.AppErrorMessage;
+import com.example.sew.common.ContentSortSherPopupWindow;
 import com.example.sew.common.Enums;
+import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.common.Utils;
 import com.example.sew.fragments.PoetSherFragment;
 import com.example.sew.helpers.MyHelper;
@@ -42,9 +50,9 @@ import com.example.sew.models.Para;
 import com.example.sew.models.PoetDetail;
 import com.example.sew.models.SherContent;
 import com.example.sew.models.SherTag;
-import com.example.sew.views.TitleTextViewType2;
 import com.example.sew.views.TitleTextViewType6;
 import com.google.android.gms.common.util.CollectionUtils;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -63,13 +71,15 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
     private ContentType contentType;
     private int totalContentCount;
     PoetSherFragment fragment;
-
-    public PoetSherAdapter(BaseActivity activity, ArrayList<SherContent> sherContents, PoetDetail poetDetail, ContentType contentType, PoetSherFragment fragment) {
+private String sortedBy;
+    public PoetSherAdapter(BaseActivity activity, ArrayList<SherContent> sherContents, PoetDetail poetDetail, ContentType contentType,
+                           PoetSherFragment fragment,String sortedBy) {
         super(activity, poetDetail);
         this.sherContents = sherContents;
         this.poetDetail = poetDetail;
         this.contentType = contentType;
         this.fragment = fragment;
+        this.sortedBy= sortedBy;
     }
 
     public void setTotalContentCount(int totalContentCount) {
@@ -104,6 +114,10 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
                 } else
                     poetsProfileViewHolder = (PoetsProfileViewHolder) convertView.getTag();
                 convertView.setTag(poetsProfileViewHolder);
+                if(sherContents.size()>1)
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.VISIBLE);
+                else
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.GONE);
                 loadDataForPoetHeader(poetsProfileViewHolder);
                 break;
             case VIEW_TYPE_CONTENT:
@@ -121,6 +135,8 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
                 sherViewHolder.sherGhazalIcon.setTag(R.id.tag_data, sherContent);
                 sherViewHolder.sherHeartIcon.setTag(R.id.tag_data, sherContent);
                 sherViewHolder.sherTranslateIcon.setTag(R.id.tag_data, sherContent);
+                sherViewHolder.imgCritiqueInfo.setTag(R.id.tag_data, sherContent);
+                sherViewHolder.imgCritiqueInfo.setOnClickListener(onEnableCritiqueClickListener);
                 if (!TextUtils.isEmpty(sherContent.getGhazalID()))
                     sherViewHolder.sherGhazalIcon.setVisibility(View.VISIBLE);
                 else
@@ -247,7 +263,15 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
     private int getClickableTextColor() {
         return ContextCompat.getColor(getActivity(), R.color.dark_blue);
     }
-
+    private View.OnClickListener onEnableCritiqueClickListener = v -> {
+        SherContent sherContent = (SherContent) v.getTag(R.id.tag_data);
+        enableCritiqueWordContainer(sherContent);
+    };
+    private void enableCritiqueWordContainer(SherContent sherContent) {
+        Para para = sherContent.getRenderText().get(0);
+        Line line = para.getLines().get(0);
+        ShowCritiqueSubmitForm(1, line.getFullText(), sherContent);
+    }
     private View.OnLongClickListener onWordLongClick = v -> {
         Para para = (Para) v.getTag(R.id.tag_para);
         if (para == null)
@@ -363,26 +387,34 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
     ArrayList<String>sortContent;
     @Override
     void contentFilter(View view) {
-        sortContent = new ArrayList<>();
-        sortContent.add(MyHelper.getString(R.string.popularity));
-        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
-            sortContent.add(MyHelper.getString(R.string.alphabetic));
-        //  sortContent.add(MyHelper.getString(R.string.radeef));
-        PopupMenu popup = new PopupMenu(getActivity(), view);
-        for (int i = 0; i < sortContent.size(); i++) {
-            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
-        }
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
-                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
-            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
-                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
-            } else {
-                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
-            }
-            return true;
-        });
-        popup.show();
+
+        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
+            new ContentSortSherPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
+        else
+            new ContentSortSherPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
+
+
+
+//        sortContent = new ArrayList<>();
+//        sortContent.add(MyHelper.getString(R.string.popularity));
+//        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
+//            sortContent.add(MyHelper.getString(R.string.alphabetic));
+//        //  sortContent.add(MyHelper.getString(R.string.radeef));
+//        PopupMenu popup = new PopupMenu(getActivity(), view);
+//        for (int i = 0; i < sortContent.size(); i++) {
+//            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
+//        }
+//        popup.setOnMenuItemClickListener(item -> {
+//            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
+//            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
+//            } else {
+//                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
+//            }
+//            return true;
+//        });
+//        popup.show();
     }
 
 
@@ -405,7 +437,8 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
         ImageView sherTranslateIcon;
         @BindView(R.id.sherTagIcon)
         ImageView sherTagIcon;
-
+        @BindView(R.id.imgCritiqueInfo)
+        ImageView imgCritiqueInfo;
 
         @BindView(R.id.sher_shareIcon)
         ImageView sher_shareIcon;
@@ -481,5 +514,119 @@ public class PoetSherAdapter extends BasePoetContentAdapter {
         ClipData clip = ClipData.newPlainText("Sher", sherContentText);
         clipboard.setPrimaryClip(clip);
         Toast.makeText(getActivity(), AppErrorMessage.poetsher_adapter_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+    Dialog critiqueSubmitForm;
+
+    public void ShowCritiqueSubmitForm(final int lineNumber, final String ghazalLine, SherContent sherContent) {
+        critiqueSubmitForm = new Dialog(new ContextThemeWrapper(getActivity(), R.style.Dialog));
+        critiqueSubmitForm.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        critiqueSubmitForm.setContentView(R.layout.submit_critique_template);
+        critiqueSubmitForm.setCanceledOnTouchOutside(false);
+        critiqueSubmitForm.getWindow().getDecorView().setLayoutDirection(MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
+        TextView critiqueLine = critiqueSubmitForm.findViewById(R.id.critiqueLine);
+        TextView critiqueLineNumber = critiqueSubmitForm.findViewById(R.id.critiqueLineNumber);
+        ImageView userProfile = critiqueSubmitForm.findViewById(R.id.imgProfile);
+        TextInputLayout citiqueEMAIL = critiqueSubmitForm.findViewById(R.id.citiqueEMAIL);
+        TextInputLayout citiqueUserName = critiqueSubmitForm.findViewById(R.id.citiqueUserName);
+        TextInputLayout citiqueUserCOMMENT = critiqueSubmitForm.findViewById(R.id.citiqueUserCOMMENT);
+        critiqueLine.setText(ghazalLine);
+        final TextView critiqueSubmitText = critiqueSubmitForm.findViewById(R.id.critiqueSubmit);
+        TextView critiqueCancelText = critiqueSubmitForm.findViewById(R.id.critiqe_cancel);
+        TextView txtSubmitCritiqueTitle = critiqueSubmitForm.findViewById(R.id.txtSubmitCritiqueTitle);
+        ImageView closeModal = critiqueSubmitForm.findViewById(R.id.closeModal);
+        closeModal.setOnClickListener(view -> critiqueSubmitForm.dismiss());
+        final EditText critiqueUserName = critiqueSubmitForm.findViewById(R.id.critique_UserName);
+        final EditText critiqueUserEmail = critiqueSubmitForm.findViewById(R.id.critique_UserEmail);
+        final EditText critiqueUserComment = critiqueSubmitForm.findViewById(R.id.critique_UserComment);
+
+        critiqueUserName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        critiqueUserEmail.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        critiqueUserComment.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+
+        txtSubmitCritiqueTitle.setText(MyHelper.getString(R.string.submit_critique));
+        //critiqueUserEmail.setHint(MyHelper.getString(R.string.email));
+        // critiqueUserName.setHint(MyHelper.getString(R.string.name).toUpperCase());
+        citiqueEMAIL.setHint(MyHelper.getString(R.string.email).toUpperCase());
+        citiqueUserName.setHint(MyHelper.getString(R.string.name).toUpperCase());
+        //critiqueUserComment.setHint(MyHelper.getString(R.string.critique_comment).toUpperCase());
+        citiqueUserCOMMENT.setHint(MyHelper.getString(R.string.critique_comment).toUpperCase());
+        critiqueCancelText.setText(MyHelper.getString(R.string.button_cancel));
+        critiqueSubmitText.setText(MyHelper.getString(R.string.button_submit));
+        critiqueLineNumber.setText(String.format(Locale.getDefault(), "%s #%d", MyHelper.getString(R.string.line), lineNumber));
+
+        critiqueUserComment.setOnEditorActionListener((v, actionId, event) -> {
+            if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                    || actionId == EditorInfo.IME_ACTION_DONE) {
+                critiqueSubmitText.performClick();
+                return true;
+            }
+            return false;
+        });
+        if (MyService.isUserLogin()) {
+            critiqueUserName.setText(MyService.getUser().getDisplayName());
+            critiqueUserEmail.setText(MyService.getEmail());
+            citiqueEMAIL.setVisibility(View.GONE);
+            userProfile.setVisibility(View.GONE);
+            //ImageHelper.setImage(userProfile,MyService.getUser().);
+            critiqueUserName.setEnabled(false);
+            critiqueUserEmail.setEnabled(false);
+        } else {
+            critiqueUserName.setText("");
+            critiqueUserEmail.setText("");
+            userProfile.setVisibility(View.GONE);
+            citiqueEMAIL.setVisibility(View.VISIBLE);
+        }
+        critiqueSubmitText.setOnClickListener(view -> {
+            String email, name, message;
+            message = getActivity().getEditTextData(critiqueUserComment);
+            if (MyService.isUserLogin()) {
+                email = MyService.getEmail();
+                name = MyService.getUser().getDisplayName();
+            } else {
+                email = getActivity().getEditTextData(critiqueUserEmail);
+                name = getActivity().getEditTextData(critiqueUserName);
+                if (TextUtils.isEmpty(name)) {
+                    getActivity().showToast(AppErrorMessage.please_enter_your_name);
+                    return;
+                } else if (!MyHelper.isValidEmail(email)) {
+                    if (TextUtils.isEmpty(email))
+                        getActivity().showToast(AppErrorMessage.please_enter_your_email);
+                    else
+                        getActivity().showToast(AppErrorMessage.please_enter_valid_email_address);
+                    return;
+                }
+            }
+            if (TextUtils.isEmpty(message))
+                getActivity().showToast(AppErrorMessage.Please_enter_your_feedback);
+            else {
+                getActivity().showDialog();
+                new PostSubmitCritique()
+                        .setTypeOfQuery(Enums.CRITIQUE_TYPE.CRITIQUE)
+                        .setMessage(message)
+                        .setName(name)
+                        .setEmail(email)
+                        .setPageUrl(sherContent.getLink())
+                        .setContentId(sherContent.getId())
+                        .setContentTitle(sherContent.getTitle())
+                        .setSubject(String.format(Locale.getDefault(), "LINE #%d %s", lineNumber, ghazalLine))
+                        .runAsync((BaseServiceable.OnApiFinishListener<PostSubmitCritique>) submitCritique -> {
+                            getActivity().dismissDialog();
+                            if (submitCritique.isValidResponse()) {
+                                critiqueSubmitForm.dismiss();
+                                getActivity().showToast(MyHelper.getString(R.string.thankyou_for_your_feedback));
+                                // ShowThankYouForCritique();
+                            } else
+                                getActivity().showToast(submitCritique.getErrorMessage());
+                        });
+            }
+        });
+        critiqueCancelText.setOnClickListener(view -> {
+            critiqueSubmitForm.dismiss();
+            //  updateCritiqueUI(sherViewHolder.imgCritiqueInfo, null);
+        });
+        DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        critiqueSubmitForm.show();
+        critiqueSubmitForm.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

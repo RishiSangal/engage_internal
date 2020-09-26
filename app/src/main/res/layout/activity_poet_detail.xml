@@ -241,7 +241,7 @@
 
         </LinearLayout>
 
-
+        <include layout="@layout/audio_player" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

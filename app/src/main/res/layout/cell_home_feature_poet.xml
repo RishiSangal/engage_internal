@@ -170,8 +170,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingStart="@dimen/_6sdp"
-            android:paddingEnd="@dimen/_6sdp" />
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp" />
 
         <Space
             android:layout_width="match_parent"

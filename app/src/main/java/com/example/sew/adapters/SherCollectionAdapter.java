@@ -29,8 +29,9 @@ import com.binaryfork.spanny.Spanny;
 import com.example.sew.R;
 import com.example.sew.SherViewHolder;
 import com.example.sew.activities.BaseActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
+import com.example.sew.apis.BaseServiceable;
+import com.example.sew.apis.PostSubmitCritique;
 import com.example.sew.common.AppErrorMessage;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MeaningBottomPopupWindow;
@@ -40,7 +41,6 @@ import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.RenderHelper;
 import com.example.sew.models.BaseSherTag;
-import com.example.sew.models.Comment;
 import com.example.sew.models.HomeSherCollection;
 import com.example.sew.models.Line;
 import com.example.sew.models.OccasionCollection;
@@ -58,14 +58,13 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.srodrigo.androidhintspinner.HintAdapter;
 
 import static android.view.View.VISIBLE;
 
 public class SherCollectionAdapter extends BaseMyAdapter {
     private ArrayList<SherContent> sherContents;
-    private ArrayList<SherContent> selectedSher= new ArrayList<>();
-    private View.OnClickListener onTagClick, onGhazalClick,onCitiqueClick;
+    private ArrayList<SherContent> selectedSher = new ArrayList<>();
+    private View.OnClickListener onTagClick, onGhazalClick, onCitiqueClick;
     private Enums.SHER_COLLECTION_TYPE sherCollectionType;
     private SherCollection sherCollection;
     private HomeSherCollection homeSherCollection;
@@ -78,6 +77,7 @@ public class SherCollectionAdapter extends BaseMyAdapter {
     public static final int PAGE_TYPE_CRITIQUE_ENABLED = 3;
     public int currentPageType = PAGE_TYPE_BASIC;
     private int totalCount;
+
     public SherCollectionAdapter(BaseActivity activity, ArrayList<SherContent> sherContents, int totalCounts) {
         super(activity);
         this.sherContents = sherContents;
@@ -108,7 +108,9 @@ public class SherCollectionAdapter extends BaseMyAdapter {
     public int getViewTypeCount() {
         return 2;
     }
+
     SherViewHolder sherViewHolder;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (isLayoutDirectionMismatched(convertView))
@@ -263,7 +265,7 @@ public class SherCollectionAdapter extends BaseMyAdapter {
                 }
                 addFavoriteClick(sherViewHolder.sherHeartIcon, sherContent.getId(), Enums.FAV_TYPES.CONTENT.getKey());
                 updateFavoriteIcon(sherViewHolder.sherHeartIcon, sherContent.getId());
-                if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
+                if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI)
                     sherViewHolder.layBottom.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
                 else
                     sherViewHolder.layBottom.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -284,16 +286,23 @@ public class SherCollectionAdapter extends BaseMyAdapter {
     };
     private View.OnClickListener onEnableCritiqueClickListener = v -> {
         SherContent sherContent = (SherContent) v.getTag(R.id.tag_data);
-        selectedSher.add(sherContent);
+        //   selectedSher.add(sherContent);
+        enableCritiqueWordContainer(sherContent);
         //   if (currentPageType == PAGE_TYPE_BASIC)
-        if(isEnableCritique(sherContent))
-            showCritiqueConfirmationDialog(sherContent);
-        else{
-            selectedSher.remove(sherContent);
-            sherViewHolder.imgCritiqueInfo.setImageResource(R.drawable.ic_critique);
-            sherViewHolder.imgCritiqueInfo.setColorFilter(getActivity().getAppIconColor());
-        }
+//        if(isEnableCritique(sherContent))
+//            showCritiqueConfirmationDialog(sherContent);
+//        else{
+//            selectedSher.remove(sherContent);
+//            sherViewHolder.imgCritiqueInfo.setImageResource(R.drawable.ic_critique);
+//            sherViewHolder.imgCritiqueInfo.setColorFilter(getActivity().getAppIconColor());
+//        }
     };
+
+    private void enableCritiqueWordContainer(SherContent sherContent) {
+        Para para = sherContent.getRenderText().get(0);
+        Line line = para.getLines().get(0);
+        ShowCritiqueSubmitForm(1, line.getFullText(), sherContent);
+    }
 
     private View.OnClickListener onWordClickListener = v -> {
         WordContainer wordContainer = (WordContainer) v.getTag(R.id.tag_word);
@@ -303,11 +312,12 @@ public class SherCollectionAdapter extends BaseMyAdapter {
 //            ShowCritiqueSubmitForm(lineNumber, line.getFullText());
 //        } else {
 //        MeaningBottomSheetFragment.getInstance(wordContainer.getWord(), wordContainer.getMeaning()).show(getActivity().getSupportFragmentManager(), "MEANING");
-            currentPageType = PAGE_TYPE_BASIC;
-            new MeaningBottomPopupWindow(getActivity(), wordContainer.getWord(), wordContainer.getMeaning()).show();
-    //    }
+        currentPageType = PAGE_TYPE_BASIC;
+        new MeaningBottomPopupWindow(getActivity(), wordContainer.getWord(), wordContainer.getMeaning()).show();
+        //    }
 
     };
+
     public void showCritiqueConfirmationDialog(SherContent sherContent) {
         final Dialog critiqueDialog = new Dialog(getActivity());
         critiqueDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -322,7 +332,7 @@ public class SherCollectionAdapter extends BaseMyAdapter {
         txtCritiqueMessage.setText(MyHelper.getString(R.string.tap_on_any_word));
         txtCritiqueOk.setOnClickListener(view -> {
             currentPageType = PAGE_TYPE_CRITIQUE_ENABLED;
-           // updateCritiqueUI(sherViewHolder.imgCritiqueInfo,sherContent);
+            updateCritiqueUI(sherViewHolder.imgCritiqueInfo, sherContent);
             critiqueDialog.dismiss();
         });
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
@@ -330,6 +340,7 @@ public class SherCollectionAdapter extends BaseMyAdapter {
         critiqueDialog.show();
         critiqueDialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
+
     public void setOnWordClickListener(View.OnClickListener onWordClickListener) {
         this.onWordClickListener = onWordClickListener;
     }
@@ -458,8 +469,10 @@ public class SherCollectionAdapter extends BaseMyAdapter {
         //return new StyleSpan(android.graphics.Typeface.BOLD);
         return new StyleSpan(Typeface.NORMAL);
     }
+
     Dialog critiqueSubmitForm;
-    public void ShowCritiqueSubmitForm(final int lineNumber, final String ghazalLine) {
+
+    public void ShowCritiqueSubmitForm(final int lineNumber, final String ghazalLine, SherContent sherContent) {
         critiqueSubmitForm = new Dialog(new ContextThemeWrapper(getActivity(), R.style.Dialog));
         critiqueSubmitForm.requestWindowFeature(Window.FEATURE_NO_TITLE);
         critiqueSubmitForm.setContentView(R.layout.submit_critique_template);
@@ -541,49 +554,48 @@ public class SherCollectionAdapter extends BaseMyAdapter {
             if (TextUtils.isEmpty(message))
                 getActivity().showToast(AppErrorMessage.Please_enter_your_feedback);
             else {
-                getActivity().showToast("HI");
-//                showDialog();
-//                new PostSubmitCritique()
-//                        .setTypeOfQuery(Enums.CRITIQUE_TYPE.CRITIQUE)
-//                        .setMessage(message)
-//                        .setName(name)
-//                        .setEmail(email)
-//                        .setPageUrl(contentPageModel.getUrl())
-//                        .setContentId(contentPageModel.getId())
-//                        .setContentTitle(contentPageModel.getTitle())
-//                        .setSubject(String.format(Locale.getDefault(), "LINE #%d %s", lineNumber, ghazalLine))
-//                        .runAsync((BaseServiceable.OnApiFinishListener<PostSubmitCritique>) submitCritique -> {
-//                            dismissDialog();
-//                            if (submitCritique.isValidResponse()) {
-//                                critiqueSubmitForm.dismiss();
-//                                showToast(MyHelper.getString(R.string.thankyou_for_your_feedback));
-//                                // ShowThankYouForCritique();
-//                                currentPageType = PAGE_TYPE_BASIC;
-//                                updateBottomControls();
-//                            } else
-//                                showToast(submitCritique.getErrorMessage());
-//                        });
+                critiqueSubmitForm.dismiss();
+                getActivity().showDialog();
+                new PostSubmitCritique()
+                        .setTypeOfQuery(Enums.CRITIQUE_TYPE.CRITIQUE)
+                        .setMessage(message)
+                        .setName(name)
+                        .setEmail(email)
+                        .setPageUrl(sherContent.getLink())
+                        .setContentId(sherContent.getId())
+                        .setContentTitle(sherContent.getTitle())
+                        .setSubject(String.format(Locale.getDefault(), "LINE #%d %s", lineNumber, ghazalLine))
+                        .runAsync((BaseServiceable.OnApiFinishListener<PostSubmitCritique>) submitCritique -> {
+                            getActivity().dismissDialog();
+                            if (submitCritique.isValidResponse()) {
+                                getActivity().showToast(MyHelper.getString(R.string.thankyou_for_your_feedback));
+                                // ShowThankYouForCritique();
+                                currentPageType = PAGE_TYPE_BASIC;
+                            } else
+                                getActivity().showToast(submitCritique.getErrorMessage());
+                        });
             }
         });
-        critiqueCancelText.setOnClickListener(view ->{
+        critiqueCancelText.setOnClickListener(view -> {
             currentPageType = PAGE_TYPE_BASIC;
             critiqueSubmitForm.dismiss();
-            updateCritiqueUI(sherViewHolder.imgCritiqueInfo,null);
+            //  updateCritiqueUI(sherViewHolder.imgCritiqueInfo, null);
         });
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         critiqueSubmitForm.show();
         critiqueSubmitForm.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
-    private void updateCritiqueUI(ImageView imageView,SherContent sherContent){
+
+    private void updateCritiqueUI(ImageView imageView, SherContent sherContent) {
         if (currentPageType == PAGE_TYPE_BASIC) {
             imageView.setImageResource(R.drawable.ic_critique);
             imageView.setColorFilter(getActivity().getAppIconColor());
-            currentPageType=PAGE_TYPE_CRITIQUE_ENABLED;
+            currentPageType = PAGE_TYPE_CRITIQUE_ENABLED;
         } else {
             imageView.setImageResource(R.drawable.ic_critiquefilled);
             imageView.setColorFilter(ContextCompat.getColor(getActivity(), R.color.dark_blue), PorterDuff.Mode.SRC_IN);
-            currentPageType=PAGE_TYPE_BASIC;
+            currentPageType = PAGE_TYPE_BASIC;
         }
     }
 

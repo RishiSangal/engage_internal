@@ -3,7 +3,6 @@ package com.example.sew.models;
 import com.example.sew.helpers.MyService;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -189,6 +188,7 @@ public class SherContent extends BaseSherModel {
     public boolean isPopularChoice() {
         return isPopularChoice;
     }
+
     public ArrayList<Para> getRenderText() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
@@ -200,6 +200,7 @@ public class SherContent extends BaseSherModel {
         }
         return getRenderTextEng();
     }
+
     public ArrayList<Para> getRenderTextEng() {
         return renderTextEng;
     }
@@ -238,5 +239,17 @@ public class SherContent extends BaseSherModel {
 
     public String getLinkUr() {
         return linkUr;
+    }
+
+    public String getTitle() {
+        switch (MyService.getSelectedLanguage()) {
+            case ENGLISH:
+                return getTitleEng();
+            case HINDI:
+                return getTitleHin();
+            case URDU:
+                return getTitleUr();
+        }
+        return getTitleEng();
     }
 }

@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.PopupMenu;
-import androidx.fragment.app.Fragment;
-
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
+import com.example.sew.common.ContentSortNazmPopupWindow;
 import com.example.sew.common.Enums;
+import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.fragments.PoetNazmFragment;
-import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetDetail;
@@ -30,13 +28,15 @@ public class PoetNazmAdapter extends BasePoetContentAdapter {
     private ContentType contentType;
     private int totalContentCount;
     private PoetNazmFragment fragment;
-
-    public PoetNazmAdapter(BaseActivity activity, ArrayList<ShayariContent> poetGhazals, PoetDetail poetDetail, ContentType contentType, PoetNazmFragment poetNazmFragment) {
+    private String sortedBy;
+    public PoetNazmAdapter(BaseActivity activity, ArrayList<ShayariContent> poetGhazals, PoetDetail poetDetail, ContentType contentType,
+                           PoetNazmFragment poetNazmFragment,String sortedBy) {
         super(activity, poetDetail);
         this.poetGhazals = poetGhazals;
         this.poetDetail = poetDetail;
         this.contentType = contentType;
         this.fragment = poetNazmFragment;
+        this.sortedBy= sortedBy;
     }
 
     public void setTotalContentCount(int totalContentCount) {
@@ -66,6 +66,10 @@ public class PoetNazmAdapter extends BasePoetContentAdapter {
                 } else
                     poetsProfileViewHolder = (PoetsProfileViewHolder) convertView.getTag();
                 convertView.setTag(poetsProfileViewHolder);
+                if(poetGhazals.size()>1)
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.VISIBLE);
+                else
+                    poetsProfileViewHolder.txtFilter.setVisibility(View.GONE);
                 loadDataForPoetHeader(poetsProfileViewHolder);
                 break;
             case VIEW_TYPE_CONTENT:
@@ -161,26 +165,31 @@ public class PoetNazmAdapter extends BasePoetContentAdapter {
 
     @Override
     public void contentFilter(View view) {
-        sortContent = new ArrayList<>();
-        sortContent.add(MyHelper.getString(R.string.popularity));
-        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
-            sortContent.add(MyHelper.getString(R.string.alphabetic));
-        // sortContent.add(MyHelper.getString(R.string.radeef));
-        PopupMenu popup = new PopupMenu(getActivity(), view);
-        for (int i = 0; i < sortContent.size(); i++) {
-            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
-        }
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
-                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
-            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
-                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
-            } else {
-                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
-            }
-            return true;
-        });
-        popup.show();
+        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
+            new ContentSortNazmPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
+        else
+            new ContentSortNazmPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
+
+//        sortContent = new ArrayList<>();
+//        sortContent.add(MyHelper.getString(R.string.popularity));
+//        if(MyService.getSelectedLanguage()== Enums.LANGUAGE.ENGLISH||MyService.getSelectedLanguage()== Enums.LANGUAGE.HINDI)
+//            sortContent.add(MyHelper.getString(R.string.alphabetic));
+//        // sortContent.add(MyHelper.getString(R.string.radeef));
+//        PopupMenu popup = new PopupMenu(getActivity(), view);
+//        for (int i = 0; i < sortContent.size(); i++) {
+//            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, sortContent.get(i));
+//        }
+//        popup.setOnMenuItemClickListener(item -> {
+//            if (item.toString().equalsIgnoreCase(MyHelper.getString(R.string.popularity))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
+//            } else if ((item.toString().equalsIgnoreCase(MyHelper.getString(R.string.alphabetic)))) {
+//                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
+//            } else {
+//                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
+//            }
+//            return true;
+//        });
+//        popup.show();
     }
 
     static class NazmViewHolder {

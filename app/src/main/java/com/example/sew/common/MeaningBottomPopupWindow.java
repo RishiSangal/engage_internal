@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,9 @@ public class MeaningBottomPopupWindow extends PopupWindow {
     private WordMeaning wordMeaning;
     private View convertView;
     @BindView(R.id.closeImg)
-    ImageView imgClose;
+    TextView imgClose;
+    @BindView(R.id.relClose)
+    RelativeLayout relClose;
     @BindView(R.id.linaerpara2)
     LinearLayout linaerpara2;
 
@@ -75,10 +78,10 @@ public class MeaningBottomPopupWindow extends PopupWindow {
         setLayoutDirection(convertView);
         ButterKnife.bind(this, convertView);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setOutsideTouchable(true);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        setOutsideTouchable(false);
         getWordMeaning();
-        imgClose.setVisibility(View.GONE);
+        //imgClose.setVisibility(View.GONE);
         context.registerBroadcastListener(broadcastReceiver, BROADCAST_FAVORITE_UPDATED);
     }
 
@@ -222,7 +225,7 @@ public class MeaningBottomPopupWindow extends PopupWindow {
         getActivity().addFavoriteClick(imgWordFavorite, wordMeaning.getId(), Enums.FAV_TYPES.WORD.getKey());
     }
 
-    @OnClick(R.id.closeImg)
+    @OnClick(R.id.relClose)
     void onCloseClicked() {
         dismiss();
     }

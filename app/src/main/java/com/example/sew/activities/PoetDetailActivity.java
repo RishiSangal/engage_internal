@@ -2,13 +2,12 @@ package com.example.sew.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -19,14 +18,16 @@ import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetPoetProfile;
 import com.example.sew.common.CollapsingImageLayout;
 import com.example.sew.common.Enums;
-import com.example.sew.common.MyConstants;
+import com.example.sew.common.PoetAudioInterFace;
+import com.example.sew.helpers.AudioPlayerControls;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
+import com.example.sew.models.AudioContent;
+import com.example.sew.models.BaseAudioContent;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetCompleteProfile;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import org.json.JSONException;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PoetDetailActivity extends BaseActivity {
+public class PoetDetailActivity extends BaseActivity implements AudioPlayerControls.onAudioPlayerStateChanged, PoetAudioInterFace {
     @BindView(R.id.tabLayout)
     SmartTabLayout tabLayout;
     @BindView(R.id.viewpager)
@@ -66,6 +67,9 @@ public class PoetDetailActivity extends BaseActivity {
     AppBarLayout appBarLayout;
     @BindView(R.id.CollapseImageLayout)
     CollapsingImageLayout CollapseImageLayout;
+    @BindView(R.id.searchActivity_mainView)
+    RelativeLayout searchActivity_mainView;
+    private AudioPlayerControls audioPlayerControls;
 
     public static Intent getInstance(Activity activity, String poetId) {
         Intent intent = new Intent(activity, PoetDetailActivity.class);
@@ -98,6 +102,8 @@ public class PoetDetailActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+        audioPlayerControls = new AudioPlayerControls(PoetDetailActivity.this, searchActivity_mainView);
+        audioPlayerControls.setOnAudioPlayerStateChanged(this);
         getPoetDetail();
     }
 
@@ -181,12 +187,12 @@ public class PoetDetailActivity extends BaseActivity {
                 if (poetProfilesTabs.get(position).getName().equalsIgnoreCase(MyHelper.getDummyContentTypeProfile().getName())) {
                     poetHeader.setVisibility(View.GONE);
                     CollapseImageLayout.getLayoutParams().height = 0;
-                  //  CollapseImageLayout.setVisibility(View.GONE);
+                    //  CollapseImageLayout.setVisibility(View.GONE);
                 } else {
                     poetHeader.setVisibility(View.VISIBLE);
                     CollapseImageLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     CollapseImageLayout.requestLayout();
-                   // CollapseImageLayout.setVisibility(View.VISIBLE);
+                    // CollapseImageLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -249,6 +255,35 @@ public class PoetDetailActivity extends BaseActivity {
     @Override
     public void onFavoriteUpdated() {
         super.onFavoriteUpdated();
-        updateFavoriteIcon(imgFavorite, poetCompleteProfile.getPoetDetail().getPoetId());
+        if (poetCompleteProfile != null)
+            updateFavoriteIcon(imgFavorite, poetCompleteProfile.getPoetDetail().getPoetId());
+    }
+
+    private ArrayList<AudioContent> audioContents = new ArrayList<>();
+
+    @Override
+    public void onPoetAudioPlay(int i, AudioContent audioContent) {
+        audioPlayerControls.playAudio(audioContents.indexOf(audioContent));
+    }
+
+    @Override
+    public void onAudioPause() {
+
+    }
+
+    @Override
+    public void onAudioStart() {
+
+    }
+
+    @Override
+    public void onAudioWindowClose() {
+
+    }
+
+    @Override
+    public void onAudioSelected(BaseAudioContent audioContent) {
+//        if (poetAudioAdapter != null && audioContent instanceof AudioContent)
+//            poetAudioAdapter.setSelectedAudioContent((AudioContent) audioContent);
     }
 }
