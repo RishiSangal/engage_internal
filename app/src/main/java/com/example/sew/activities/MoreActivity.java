@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
+
+import com.alexvasilkov.gestures.commons.circle.CircleImageView;
 import com.example.sew.R;
 import com.example.sew.apis.PostLogout;
 import com.example.sew.common.ActivityManager;
@@ -21,9 +25,6 @@ import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.User;
 import com.example.sew.views.TitleTextViewType6;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.view.ContextThemeWrapper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +49,8 @@ public class MoreActivity extends BaseHomeActivity {
 
     @BindView(R.id.txtLogoutTitle)
     TextView txtLogoutTitle;
-    @BindView(R.id.imgProfile)
-    ImageView imgProfile;
+ //   @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
     @BindView(R.id.txtUserName)
     TextView txtUserName;
     @BindView(R.id.txtLanguageSelectTitle)
@@ -100,6 +101,7 @@ public class MoreActivity extends BaseHomeActivity {
     TextView txtNotificationCount;
     @BindView(R.id.layWholeDonation)
     LinearLayout layWholeDonation;
+    View top_more;
     public static Intent getInstance(Activity activity) {
         return new Intent(activity, MoreActivity.class);
     }
@@ -109,6 +111,8 @@ public class MoreActivity extends BaseHomeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
         ButterKnife.bind(this);
+        top_more= findViewById(R.id.top_more);
+        imgProfile= top_more.findViewById(R.id.imgProfile);
        // setSelectableItemForeground(layDonateViaPaytm,layDonateNow);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_4);
         updateUI();
@@ -153,7 +157,7 @@ public class MoreActivity extends BaseHomeActivity {
             User user = MyService.getUser();
             txtUserName.setText(user.getDisplayName());
             txtMoreMyFavoriteCount.setVisibility(View.VISIBLE);
-            if (user.isUserImageExist())
+            if (!TextUtils.isEmpty(user.getImageName()))
                 ImageHelper.setImage(imgProfile, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
         } else {
             txtLogoutTitle.setText(MyHelper.getString(R.string.login));

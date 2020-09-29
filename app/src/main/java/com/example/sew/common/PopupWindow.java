@@ -5,11 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,7 +64,7 @@ public class PopupWindow extends RelativePopupWindow {
             viewHolder.txtMenuMyFavoriteCount.setVisibility(View.VISIBLE);
             User user = MyService.getUser();
             viewHolder.txtUserName.setText(user.getDisplayName());
-            if (user.isUserImageExist())
+           if (!TextUtils.isEmpty(user.getImageName()))
                 ImageHelper.setImage(viewHolder.imgProfile, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
 
         }

@@ -2,20 +2,15 @@ package com.example.sew.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,17 +26,15 @@ import com.example.sew.R;
 import com.example.sew.adapters.CommentListRecyclerAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllCommentsByTargetId;
-import com.example.sew.apis.GetReplyByParentId;
 import com.example.sew.apis.PostAddEditReplyComment;
 import com.example.sew.common.Enums;
 import com.example.sew.common.ICommonValues;
-import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ReplyComment;
-import com.example.sew.views.IconTextView;
-import com.example.sew.views.TitleTextViewType6;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -103,22 +96,26 @@ public class AddCommentActivity extends BaseActivity {
         Comment currComment = (Comment) v.getTag(R.id.tag_data);
         edComment.requestFocus();
         openKeyBoard();
+        parentReplyUpdate(currComment);
+    };
+
+    void parentReplyUpdate(Comment currComment) {
         isParentReply = true;
         currentViewType = REPLY_TYPE_PARENT;
         layTagName.setVisibility(View.GONE);
         edComment.setHint("Reply...");
         commentId = currComment.getId();
-    };
+    }
 
     @OnTextChanged(R.id.edComment)
     void onSearchTextChanged() {
-        if(MyService.isUserLogin()) {
+        if (MyService.isUserLogin()) {
             String searchText = getEditTextData(edComment);
             if (TextUtils.isEmpty(searchText))
                 layCancelComment.setVisibility(View.GONE);
             else
                 layCancelComment.setVisibility(View.VISIBLE);
-        }else
+        } else
             startActivity(LoginActivity.getInstance(AddCommentActivity.this));
     }
 
@@ -219,16 +216,19 @@ public class AddCommentActivity extends BaseActivity {
     private ArrayList<Comment> commentList = new ArrayList<>();
     String targetId;
     ArrayList<String> filterList;
-    class MyClickableSpan extends ClickableSpan{
+
+    class MyClickableSpan extends ClickableSpan {
 
         String clicked;
+
         public MyClickableSpan(String string) {
             super();
             clicked = string;
         }
+
         @Override
         public void onClick(View tv) {
-            Toast.makeText(AddCommentActivity.this,clicked , Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddCommentActivity.this, clicked, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -237,6 +237,7 @@ public class AddCommentActivity extends BaseActivity {
             ds.setUnderlineText(false);
         }
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,7 +245,34 @@ public class AddCommentActivity extends BaseActivity {
         ButterKnife.bind(this);
         // setHeaderTitle(MyHelper.getString(R.string.comments));
         targetId = getIntent().getStringExtra(CONTENT_ID);
-        isOpenKeyBoard= getIntent().getBooleanExtra(IS_OPEN_KEYBOARD,false);
+        isOpenKeyBoard = getIntent().getBooleanExtra(IS_OPEN_KEYBOARD, false);
+        currentViewType = getIntent().getIntExtra(CURR_COMMENT_TYPE, 0);
+        if (currentViewType == REPLY_TYPE_DEFAULT)
+            currentViewType = REPLY_TYPE_DEFAULT;
+        else if (currentViewType == REPLY_TYPE_PARENT) {
+            currentViewType = REPLY_TYPE_PARENT;
+            try {
+                currComment = new Comment(new JSONObject(getIntent().getStringExtra(CURR_COMMENT)));
+                edComment.requestFocus();
+                openKeyBoard();
+                parentReplyUpdate(currComment);
+            } catch (Exception e) {
+                return;
+            }
+        } else if (currentViewType == REPLY_TYPE_CHILD) {
+            currentViewType = REPLY_TYPE_CHILD;
+            try {
+                currComment = new Comment(new JSONObject(getIntent().getStringExtra(CURR_COMMENT)));
+                currReplyComment = new ReplyComment(new JSONObject(getIntent().getStringExtra(CURR_REPLY_COMMENT)));
+                childReply(true, currReplyComment, currComment);
+            } catch (Exception e) {
+                return;
+            }
+        } else if (currentViewType == REPLY_TYPE_PARENT_EDIT)
+            currentViewType = REPLY_TYPE_PARENT_EDIT;
+        else if (currentViewType == REPLY_TYPE_CHILD_EDIT)
+            currentViewType = REPLY_TYPE_CHILD_EDIT;
+
         filterList = new ArrayList<>();
         filterList.add(getString(R.string.top_comment));
         filterList.add(getString(R.string.newest_comments));
@@ -264,7 +292,7 @@ public class AddCommentActivity extends BaseActivity {
         // txtTitle.setMovementMethod(LinkMovementMethod.getInstance());
         txtTitle.setText(ss, TextView.BufferType.SPANNABLE);
 
-        if(isOpenKeyBoard) {
+        if (isOpenKeyBoard) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         } else
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -328,16 +356,22 @@ public class AddCommentActivity extends BaseActivity {
 
     }
 
-    public static Intent getInstance(Activity activity, String targetId,boolean isOpenKeyBoard) {
+    public static Intent getInstance(Activity activity, String targetId, boolean isOpenKeyBoard, int currentCommentType, Comment comment, ReplyComment replyComment) {
         Intent intent = new Intent(activity, AddCommentActivity.class);
         intent.putExtra(CONTENT_ID, targetId);
-        intent.putExtra(IS_OPEN_KEYBOARD,isOpenKeyBoard);
+        intent.putExtra(IS_OPEN_KEYBOARD, isOpenKeyBoard);
+        intent.putExtra(CURR_COMMENT_TYPE, currentCommentType);
+        if (currentCommentType == 1 || currentCommentType == 2)
+            intent.putExtra(CURR_COMMENT, comment.getJsonObject().toString());
+        if (currentCommentType == 2)
+            intent.putExtra(CURR_REPLY_COMMENT, replyComment.getJsonObject().toString());
         return intent;
     }
 
     public void refreshTotalCommentCount(String totalCommentCount) {
         txtCommentHeaderCount.setText(totalCommentCount);
     }
+
     public void refreshInputComment() {
         isParentReply = false;
         edComment.setText("");

@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -22,7 +22,6 @@ import com.example.sew.models.ContentType;
 import com.example.sew.models.FavContentPageModel;
 import com.example.sew.models.FavoriteDictionary;
 import com.example.sew.models.FavoritePoet;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.ShayariImage;
 import com.example.sew.models.User;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -79,7 +78,7 @@ public class FavoriteActivity extends BaseHomeActivity {
         if (MyService.isUserLogin()) {
             User user = MyService.getUser();
             userName.setText(user.getDisplayName());
-            if (user.isUserImageExist())
+            if (!TextUtils.isEmpty(user.getImageName()))
                 ImageHelper.setImage(userImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
         } else
             userName.setText(MyHelper.getString(R.string.guest));

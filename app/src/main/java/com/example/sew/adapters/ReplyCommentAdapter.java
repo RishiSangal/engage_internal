@@ -19,6 +19,7 @@ import com.example.sew.R;
 import com.example.sew.activities.AddCommentActivity;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.LoginActivity;
+import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetMarkLikeDislike;
 import com.example.sew.apis.GetUserComplainType;
@@ -30,7 +31,6 @@ import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ComplainType;
 import com.example.sew.models.ReplyComment;
-import com.example.sew.views.TitleTextViewType6;
 
 import java.util.ArrayList;
 
@@ -225,6 +225,9 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                         if (getActivity() instanceof AddCommentActivity) {
                             ((AddCommentActivity) getActivity()).childReply(true, currReplyComment,currComment);
                         }
+                        if(getActivity() instanceof RenderContentActivity){
+                            ((RenderContentActivity) getActivity()).childReply(true, currReplyComment,currComment);
+                        }
 
                     }
                     break;
@@ -252,8 +255,12 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                             if (!MyService.isUserLogin()) {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
-                            } else
-                                ((AddCommentActivity) getActivity()).childEditComment(currReplyComment);
+                            } else {
+                                if(getActivity() instanceof AddCommentActivity)
+                                    ((AddCommentActivity) getActivity()).childEditComment(currReplyComment);
+                                if(getActivity() instanceof  RenderContentActivity)
+                                    ((RenderContentActivity) getActivity()).childEditComment(currReplyComment);
+                            }
                         } else if (item.toString().equalsIgnoreCase(getString(R.string.delete))) {
                             if (!MyService.isUserLogin()) {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
@@ -275,9 +282,15 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                 if(postRemoveComment.isValidResponse()){
                     showToast("Deleted Successfully");
                     replyComments.remove(currReplyComment);
-                    ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
+                    if(getActivity() instanceof  AddCommentActivity) {
+                        ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
+                        ((AddCommentActivity) getActivity()).refreshCommentAdapter();
+                    }
+                    if(getActivity() instanceof RenderContentActivity){
+                        ((RenderContentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
+                        ((RenderContentActivity) getActivity()).refreshCommentAdapter();
+                    }
                     currComment.updateReplyCount(postRemoveComment.getReplyCount());
-                    ((AddCommentActivity) getActivity()).refreshCommentAdapter();
                     notifyDataSetChanged();
                 }
             });

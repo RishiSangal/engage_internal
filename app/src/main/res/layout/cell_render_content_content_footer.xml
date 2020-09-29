@@ -246,8 +246,7 @@
         android:background="?appDividerColor" />
     <include
         android:id="@+id/layCommentSection"
-        layout="@layout/render_comment_section"
-        android:visibility="gone"/>
+        layout="@layout/render_comment_section" />
     <include
         android:id="@+id/layKeepReading"
         layout="@layout/cell_render_content_keep_reading_like"

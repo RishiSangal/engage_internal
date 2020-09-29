@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/home"
     android:orientation="vertical"
+    android:id="@+id/top_more"
     android:paddingTop="@dimen/activity_vertical_margin">
     <!--@dimen/nav_header_height-->
     <LinearLayout
@@ -17,7 +18,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <ImageView
+        <com.alexvasilkov.gestures.commons.circle.CircleImageView
             android:id="@+id/imgProfile"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"

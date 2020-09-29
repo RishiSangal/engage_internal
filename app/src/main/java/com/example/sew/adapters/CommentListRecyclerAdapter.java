@@ -2,10 +2,8 @@ package com.example.sew.adapters;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.PorterDuff;
-import android.os.Handler;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,10 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sew.R;
 import com.example.sew.activities.AddCommentActivity;
 import com.example.sew.activities.BaseActivity;
-import com.example.sew.activities.FavoriteActivity;
 import com.example.sew.activities.LoginActivity;
+import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.apis.BaseServiceable;
-import com.example.sew.apis.GetAllCommentsByTargetId;
 import com.example.sew.apis.GetMarkLikeDislike;
 import com.example.sew.apis.GetReplyByParentId;
 import com.example.sew.apis.GetUserComplainType;
@@ -38,8 +35,6 @@ import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.SLog;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ComplainType;
-import com.example.sew.models.ReplyComment;
-import com.example.sew.views.TitleTextViewType6;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -136,11 +131,13 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
     }
 
     private View.OnClickListener onParentReplyClickListener;
-
+    private View.OnClickListener onParentReplyClickOnRenderPageListener;
     public void setOnParentReplyClickListener(View.OnClickListener onItemClickListener) {
         this.onParentReplyClickListener = onItemClickListener;
     }
-
+    public void setOnParentReplyOnRenderPageClickListener(View.OnClickListener onItemClickListener) {
+        this.onParentReplyClickOnRenderPageListener = onItemClickListener;
+    }
     @Override
     public int getItemCount() {
         return commentList.size();
@@ -279,18 +276,22 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     break;
                 case R.id.layComment:
                     if (MyService.isUserLogin()) {
-                        if (onParentReplyClickListener != null)
-                            onParentReplyClickListener.onClick(view);
+                        if(getActivity() instanceof AddCommentActivity)
+                            if (onParentReplyClickListener != null)
+                                onParentReplyClickListener.onClick(view);
+                        if(getActivity() instanceof RenderContentActivity){
+                            if (onParentReplyClickOnRenderPageListener != null)
+                                onParentReplyClickOnRenderPageListener.onClick(view);
+                        }
                     } else {
                         getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                         BaseActivity.showToast("Please login");
                     }
                     break;
                 case R.id.imgMore:
-                    PopupMenu popup = new PopupMenu(getActivity(), imgMore);
+                    PopupMenu popup = new PopupMenu(getActivity(), imgMore,Gravity.TOP);
                     ArrayList<String> popupList = new ArrayList<>();
                     if (currComment.isEditable()) {
-                        // popupList.add(getString(R.string.report_comment));
                         popupList.add(getString(R.string.edit));
                         popupList.add(getString(R.string.delete));
                     } else {
@@ -310,8 +311,12 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                             if (!MyService.isUserLogin()) {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
-                            } else
+                            } else {
+                                if(getActivity() instanceof AddCommentActivity)
                                 ((AddCommentActivity) getActivity()).parentEditComment(currComment);
+                                if(getActivity() instanceof RenderContentActivity)
+                                    ((RenderContentActivity) getActivity()).parentEditComment(currComment);
+                            }
                         } else if (item.toString().equalsIgnoreCase(getString(R.string.delete))) {
                             if (!MyService.isUserLogin()) {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
@@ -381,8 +386,14 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
             if (postRemoveComment.isValidResponse()) {
                 showToast("Deleted Successfully");
                 commentList.remove(currComment);
-                ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
-                ((AddCommentActivity) getActivity()).refreshInputComment();
+                if(getActivity() instanceof  AddCommentActivity) {
+                    ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
+                    ((AddCommentActivity) getActivity()).refreshInputComment();
+                }
+                if(getActivity() instanceof  RenderContentActivity){
+                    ((RenderContentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
+                    ((RenderContentActivity) getActivity()).refreshInputComment();
+                }
                 notifyDataSetChanged();
             }
         });

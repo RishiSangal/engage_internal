@@ -57,4 +57,7 @@ public interface ICommonValues {
     String CUMULATED_CONTENT_TYPE_OBJ = "CUMULATED_CONTENT_TYPE_OBJ";
     String CONTENT_TYPE_TAB = "content_type_tab";
     String IS_OPEN_KEYBOARD = "is_open_keyboard";
+    String CURR_COMMENT_TYPE = "curr_comment_type";
+    String CURR_COMMENT= "curr_comment";
+    String CURR_REPLY_COMMENT= "curr_reply_comment";
 }

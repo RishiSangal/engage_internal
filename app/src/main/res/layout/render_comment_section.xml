@@ -19,7 +19,7 @@
         android:text="COMMENTS"
         android:fontFamily="@font/lato_x_regular_eng"
         android:textColor="?primaryTextColor"
-       android:textSize="@dimen/_20ssp"/>
+        android:textSize="@dimen/_20ssp"/>
     <TextView
         android:id="@+id/txtShareYourView"
         android:layout_width="wrap_content"
@@ -64,85 +64,144 @@
 
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_margin="@dimen/_18sdp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/_12sdp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgUserImage"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icon" />
+
         <LinearLayout
-            android:id="@+id/layAddComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_15sdp">
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:orientation="horizontal">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgUserImage"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:orientation="vertical">
+
+
                 <LinearLayout
-                    android:id="@+id/layTagName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/tag_name_bg"
-                    android:visibility="gone"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/txtTagName"
-                        android:fontFamily="@font/lato_regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textColor="?primaryTextColor"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="Anuj Agrawal"/>
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/txtSearchComment"
+                    android:id="@+id/layAddComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:minHeight="@dimen/_35sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColorHint="@color/hint_color"
-                    android:hint="Add a comment..."/>
+                    android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:id="@+id/layTagName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:background="@drawable/tag_name_bg"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/txtTagName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_regular"
+                            android:padding="@dimen/_5sdp"
+                            android:textColor="?primaryTextColor"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="Anuj Agrawal" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Add a comment..."
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
+                        android:maxLines="5"
+                        android:minHeight="@dimen/_40sdp"
+                        android:minLines="2"
+                        android:scrollbars="vertical"
+                        android:textColor="?primaryTextColor"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="?appDividerColor" />
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="?appDividerColor"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_16sdp"/>
+        <LinearLayout
+            android:id="@+id/layCancelComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/lato_x_regular_eng"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="@dimen/_10sdp"
+                android:text="Cancel"
+                android:textColor="?greyTextColor"
+                android:textSize="@dimen/_14ssp" />
+
+            <TextView
+                android:id="@+id/txtComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_dark_blue"
+                android:ems="6"
+                android:fontFamily="@font/lato_x_regular_eng"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="Comment"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/layCommentPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:visibility="gone"/>
+    <com.example.sew.views.paging_recycler_view.PagingRecyclerView
+        android:id="@+id/rvComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:orientation="vertical"
+        tools:listitem="@layout/cell_comment_section" />
 
     <LinearLayout
         android:id="@+id/layLoadMoreComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/_25sdp">
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtLoadMoreComment"

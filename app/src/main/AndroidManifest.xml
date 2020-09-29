@@ -143,6 +143,7 @@
             android:name=".activities.RenderContentActivity"
             android:configChanges="layoutDirection"
             android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ShayariImagesActivity"

@@ -29,18 +29,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alexvasilkov.gestures.GestureController;
 import com.alexvasilkov.gestures.State;
 import com.alexvasilkov.gestures.views.GestureFrameLayout;
 import com.example.sew.MyApplication;
 import com.example.sew.R;
+import com.example.sew.adapters.CommentListRecyclerAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllCommentsByTargetId;
 import com.example.sew.apis.GetBottomContentById;
 import com.example.sew.apis.GetContentById;
 import com.example.sew.apis.GetCountingSummaryByTargetid;
 import com.example.sew.apis.GetMarkLikeDislike;
+import com.example.sew.apis.PostAddEditReplyComment;
 import com.example.sew.apis.PostSubmitCritique;
 import com.example.sew.common.AppErrorMessage;
 import com.example.sew.common.DoubleClick;
@@ -71,7 +74,9 @@ import com.example.sew.models.PluralContentName;
 import com.example.sew.models.PreviousNextContent;
 import com.example.sew.models.RenderContentAudio;
 import com.example.sew.models.RenderContentTag;
+import com.example.sew.models.ReplyComment;
 import com.example.sew.models.WordContainer;
+import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.gms.common.util.CollectionUtils;
 import com.google.android.material.textfield.TextInputLayout;
@@ -84,6 +89,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RenderContentActivity extends BaseActivity implements RenderActivityAudioPlayerControls.onAudioPlayerStateChanged {
@@ -227,7 +233,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     TextView txtYouMayLikeSubtitle;
     TextView txtHeaderComment;
     TextView txtShareYourView;
-    TextView txtSearchComment;
+    //   TextView txtSearchComment;
     LinearLayout layKeepReadingContentPlaceholder;
     LinearLayout layYouMayLikeContentPlaceholder;
     LinearLayout layCommentPlaceholder;
@@ -263,6 +269,16 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     LinearLayout layTranslate;
     @BindView(R.id.imgTranslate)
     ImageView imgTranslate;
+    @BindView(R.id.rvComment)
+    PagingRecyclerView rvComment;
+    @BindView(R.id.edComment)
+    EditText edComment;
+    @BindView(R.id.layCancelComment)
+    LinearLayout layCancelComment;
+    @BindView(R.id.txtCancel)
+    TextView txtCancel;
+    @BindView(R.id.txtComment)
+    TextView txtComment;
     boolean showingTranslation = false;
     private boolean shouldCancelSingleClick;
     private String descriptionNotAvailable = MyHelper.getString(R.string.content_not_available);
@@ -278,7 +294,12 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     public static final int PAGE_TYPE_SHARE_SELECTION_ENABLED_WITH_AUDIO_PLAY = 7;
     private int desiredBottomPadding, desiredTopPadding;
 
-
+    public final int REPLY_TYPE_DEFAULT = 0;
+    public final int REPLY_TYPE_PARENT = 1;
+    public final int REPLY_TYPE_CHILD = 2;
+    public final int REPLY_TYPE_PARENT_EDIT = 3;
+    public final int REPLY_TYPE_CHILD_EDIT = 4;
+    public int currentViewType = REPLY_TYPE_DEFAULT;
     public static final int AUDIO_PLAY_STATE_PLAYING = 1;
     public static final int AUDIO_PLAY_STATE_NOT_PLAYING = 2;
     public static final int AUDIO_PLAY_STATE_PAUSE = 3;
@@ -318,31 +339,36 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_render_content);
         ButterKnife.bind(this);
-
         layKeepReading = findViewById(R.id.layKeepReading);
         layYouMayLike = findViewById(R.id.layYouMayLike);
         layCommentSection = findViewById(R.id.layCommentSection);
-        poetProfileSection= findViewById(R.id.poetProfileSection);
+        poetProfileSection = findViewById(R.id.poetProfileSection);
         txtKeepReadingTitle = layKeepReading.findViewById(R.id.txtKeepReadingLikeTitle);
         txtKeepReadingSubtitle = layKeepReading.findViewById(R.id.txtKeepReadingLikeSubtitle);
         txtYouMayLikeTitle = layYouMayLike.findViewById(R.id.txtKeepReadingLikeTitle);
         txtYouMayLikeSubtitle = layYouMayLike.findViewById(R.id.txtKeepReadingLikeSubtitle);
         txtHeaderComment = layCommentSection.findViewById(R.id.txtHeaderComment);
         txtShareYourView = layCommentSection.findViewById(R.id.txtShareYourView);
-        txtSearchComment = layCommentSection.findViewById(R.id.txtSearchComment);
+        //  txtSearchComment = layCommentSection.findViewById(R.id.txtSearchComment);
         layKeepReadingContentPlaceholder = layKeepReading.findViewById(R.id.layContentPlaceholder);
         layYouMayLikeContentPlaceholder = layYouMayLike.findViewById(R.id.layContentPlaceholder);
         layCommentPlaceholder = layCommentSection.findViewById(R.id.layCommentPlaceholder);
         layLoadMoreComment = layCommentSection.findViewById(R.id.layLoadMoreComment);
         txtCommentHeaderCount = layCommentSection.findViewById(R.id.txtCommentHeaderCount);
         layAddComment = layCommentSection.findViewById(R.id.layAddComment);
+        rvComment = layCommentSection.findViewById(R.id.rvComment);
+        layCancelComment = layCommentSection.findViewById(R.id.layCancelComment);
+        edComment = layCommentSection.findViewById(R.id.edComment);
+        txtCancel = layCommentSection.findViewById(R.id.txtCancel);
+        txtComment = layCommentSection.findViewById(R.id.txtComment);
         layLoadingPlaceholder.setVisibility(View.VISIBLE);
         contentId = getIntent().getStringExtra(CONTENT_ID);
         slugId = getIntent().getStringExtra(SLUG_ID);
-      //  setSelectableItemForeground(btnEnglishLanguage, btnUrduLanguage, btnHindiLanguage);
+        //  setSelectableItemForeground(btnEnglishLanguage, btnUrduLanguage, btnHindiLanguage);
         registerBroadcastListener(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                commentListRecyclerAdapter = null;
                 getAllComments();
             }
         }, BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
@@ -427,6 +453,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     private ArrayList<MaybeLike> maybeLikes;
     private ArrayList<KeepReading> keepReadings;
     private ArrayList<Comment> comment;
+    private ArrayList<Comment> threeCommentList;
     private ArrayList<Comment> selectedLiked = new ArrayList<Comment>();
     private ArrayList<Comment> selectedDisLiked = new ArrayList<Comment>();
 
@@ -443,7 +470,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                         isMainContentLoaded = true;
                         contentId = contentPageModel.getId();
                         getCountSummarybyTargetId();
-                       // getBottomContent();
+                        // getBottomContent();
                         updateUI();
                     } else {
                         finish();
@@ -451,11 +478,13 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                     }
                 });
     }
+
     CountSummary countSummary;
+
     private void getCountSummarybyTargetId() {
-        new GetCountingSummaryByTargetid().setTargetId(contentId).runAsync((BaseServiceable.OnApiFinishListener<GetCountingSummaryByTargetid>) getCountSummarybyTargetId->{
-            if (getCountSummarybyTargetId.isValidResponse()){
-                countSummary= getCountSummarybyTargetId.getCountSummary();
+        new GetCountingSummaryByTargetid().setTargetId(contentId).runAsync((BaseServiceable.OnApiFinishListener<GetCountingSummaryByTargetid>) getCountSummarybyTargetId -> {
+            if (getCountSummarybyTargetId.isValidResponse()) {
+                countSummary = getCountSummarybyTargetId.getCountSummary();
                 getBottomContent();
                 updateUI();
             }
@@ -493,40 +522,51 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 comment = getAllCommentsByTargetIds.getComment();
                 txtCommentHeaderCount.setText(getAllCommentsByTargetId.getTotalCommentsCount());
-                layCommentPlaceholder.removeAllViews();
+                // layCommentPlaceholder.removeAllViews();
                 if (CollectionUtils.isEmpty(comment)) {
                     layCommentPlaceholder.setVisibility(View.GONE);
                     layLoadMoreComment.setVisibility(View.GONE);
                 } else {
                     layCommentPlaceholder.setVisibility(View.VISIBLE);
                     layLoadMoreComment.setVisibility(View.VISIBLE);
-
                     int commentSize;
                     if (comment.size() >= 3)
                         commentSize = 3;
                     else
                         commentSize = comment.size();
+                    threeCommentList = new ArrayList<>();
                     for (int i = 0; i < commentSize; i++) {
-                        Comment currComment = comment.get(i);
-                        CommentSectionViewHolder commentViewHolder = new CommentSectionViewHolder(getInflatedView(R.layout.cell_comment_section));
-                        commentViewHolder.layLike.setTag(R.id.tag_data, currComment);
-                        commentViewHolder.layDislike.setTag(R.id.tag_data, currComment);
-                        commentViewHolder.layComment.setTag(R.id.tag_data, currComment);
-                        commentViewHolder.txtName.setText(currComment.getCommentByUserName());
-                        commentViewHolder.txtComment.setText(currComment.getCommentDescription());
-                        commentViewHolder.txtLikeCount.setText(currComment.getTotalLike());
-                        commentViewHolder.txtDislikeCount.setText(currComment.getTotalDisLike());
-                        commentViewHolder.txtCommentCount.setText(String.valueOf(currComment.getReplyCount()));
-                        commentViewHolder.txtTime.setText(currComment.getCommentDate());
-                        commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
-                        commentViewHolder.txtCommentCount.setVisibility(currComment.getReplyCount() == 0 ? View.GONE : View.VISIBLE);
-                        if (currComment.getReplyComment().size() > 0)
-                            commentViewHolder.txtShowReplies.setVisibility(View.VISIBLE);
-                        else
-                            commentViewHolder.txtShowReplies.setVisibility(View.GONE);
-
-                        layCommentPlaceholder.addView(commentViewHolder.convertView);
+                        threeCommentList.add(comment.get(i));
                     }
+                    updateUIComment(threeCommentList);
+                    rvComment.onNoMoreData();
+                    rvComment.onHide();
+//                    int commentSize;
+//                    if (comment.size() >= 3)
+//                        commentSize = 3;
+//                    else
+//                        commentSize = comment.size();
+//                    for (int i = 0; i < commentSize; i++) {
+//                        Comment currComment = comment.get(i);
+//                        CommentSectionViewHolder commentViewHolder = new CommentSectionViewHolder(getInflatedView(R.layout.cell_comment_section));
+//                        commentViewHolder.layLike.setTag(R.id.tag_data, currComment);
+//                        commentViewHolder.layDislike.setTag(R.id.tag_data, currComment);
+//                        commentViewHolder.layComment.setTag(R.id.tag_data, currComment);
+//                        commentViewHolder.txtName.setText(currComment.getCommentByUserName());
+//                        commentViewHolder.txtComment.setText(currComment.getCommentDescription());
+//                        commentViewHolder.txtLikeCount.setText(currComment.getTotalLike());
+//                        commentViewHolder.txtDislikeCount.setText(currComment.getTotalDisLike());
+//                        commentViewHolder.txtCommentCount.setText(String.valueOf(currComment.getReplyCount()));
+//                        commentViewHolder.txtTime.setText(currComment.getCommentDate());
+//                        commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+//                        commentViewHolder.txtCommentCount.setVisibility(currComment.getReplyCount() == 0 ? View.GONE : View.VISIBLE);
+//                        if (currComment.getReplyComment().size() > 0)
+//                            commentViewHolder.txtShowReplies.setVisibility(View.VISIBLE);
+//                        else
+//                            commentViewHolder.txtShowReplies.setVisibility(View.GONE);
+//
+//                        layCommentPlaceholder.addView(commentViewHolder.convertView);
+//                    }
                 }
             }
 //            else {
@@ -534,6 +574,124 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 //                showToast(getAllCommentsByTargetIds.getErrorMessage());
 //            }
         });
+    }
+
+    @OnTextChanged(R.id.edComment)
+    void onSearchTextChanged() {
+        if (MyService.isUserLogin()) {
+            String searchText = getEditTextData(edComment);
+            if (TextUtils.isEmpty(searchText))
+                layCancelComment.setVisibility(View.GONE);
+            else
+                layCancelComment.setVisibility(View.VISIBLE);
+        } else
+            startActivity(LoginActivity.getInstance(RenderContentActivity.this));
+    }
+
+    CommentListRecyclerAdapter commentListRecyclerAdapter;
+
+    private void updateUIComment(ArrayList<Comment> comment) {
+        rvComment.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        if (commentListRecyclerAdapter == null) {
+            commentListRecyclerAdapter = new CommentListRecyclerAdapter(getActivity(), comment);
+            commentListRecyclerAdapter.setOnParentReplyOnRenderPageClickListener(onParentReplyOnrenderPageClickListener);
+            rvComment.setAdapter(commentListRecyclerAdapter);
+        } else
+            commentListRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    Comment currComment;
+    ReplyComment currReplyComment;
+
+    public void parentEditComment(Comment currComment) {
+        this.currComment = currComment;
+        layCancelComment.setVisibility(View.VISIBLE);
+        edComment.requestFocus();
+        currentViewType = REPLY_TYPE_PARENT_EDIT;
+        edComment.setText(currComment.getCommentDescription());
+        edComment.setSelection(currComment.getCommentDescription().length());
+        openKeyBoard();
+    }
+
+    public void childEditComment(ReplyComment replyComment) {
+        this.currReplyComment = replyComment;
+        layCancelComment.setVisibility(View.VISIBLE);
+        edComment.requestFocus();
+        currentViewType = REPLY_TYPE_CHILD_EDIT;
+        edComment.setText(replyComment.getCommentDescription());
+        edComment.setSelection(replyComment.getCommentDescription().length());
+        openKeyBoard();
+    }
+    public void refreshCommentAdapter() {
+        commentListRecyclerAdapter.notifyDataSetChanged();
+    }
+    private View.OnClickListener onParentReplyOnrenderPageClickListener = v -> {
+        Comment currComment = (Comment) v.getTag(R.id.tag_data);
+        startActivity(AddCommentActivity.getInstance(this, contentId, true, REPLY_TYPE_PARENT, currComment, null));
+        // parentReplyUpdate(currComment);
+    };
+
+    public void childReply(boolean isChildReply, ReplyComment replyComment, Comment currComment) {
+        startActivity(AddCommentActivity.getInstance(this, contentId, true, REPLY_TYPE_CHILD, currComment, replyComment));
+    }
+
+    @OnClick(R.id.txtComment)
+    public void onAddCommentClick() {
+        addComment();
+    }
+
+    private void addComment() {
+        String commentText = getEditTextData(edComment);
+        if (MyService.isUserLogin()) {
+            if (!TextUtils.isEmpty(commentText)) {
+                showDialog();
+                PostAddEditReplyComment postAddEditReplyComment = new PostAddEditReplyComment();
+                postAddEditReplyComment.setCommentId("");
+                if (currentViewType == REPLY_TYPE_PARENT_EDIT) {
+                    postAddEditReplyComment.setCommentId(currComment.getId()).setParentCommentId(currComment.getParentCommentId()).setAddComment(edComment.getText().toString());
+                } else if (currentViewType == REPLY_TYPE_CHILD_EDIT) {
+                    postAddEditReplyComment.setCommentId(currReplyComment.getId()).setParentCommentId(currReplyComment.getParentCommentId()).setAddComment(edComment.getText().toString());
+                } else
+                    postAddEditReplyComment.setAddComment(commentText).setParentCommentId("");
+                postAddEditReplyComment.setTargetId(contentId).setLangauge(String.valueOf(MyService.getSelectedLanguageInt()))
+                        .runAsync((BaseServiceable.OnApiFinishListener<PostAddEditReplyComment>) postAddEditReplyComments -> {
+                            dismissDialog();
+                            if (postAddEditReplyComments.isValidResponse()) {
+                                edComment.setText("");
+                                currentViewType = REPLY_TYPE_DEFAULT;
+                                hideKeyBoard();
+                                commentListRecyclerAdapter = null;
+                                getAllComments();
+                            } else {
+                                dismissDialog();
+                                showToast(postAddEditReplyComments.getErrorMessage());
+                            }
+                        });
+
+            } else {
+                BaseActivity.showToast("Please enter comment");
+            }
+        } else {
+            startActivity(LoginActivity.getInstance(getActivity()));
+            BaseActivity.showToast("Please login");
+        }
+
+    }
+
+    public void refreshTotalCommentCount(String totalCommentCount) {
+        txtCommentHeaderCount.setText(totalCommentCount);
+    }
+
+    public void refreshInputComment() {
+        currentViewType = REPLY_TYPE_DEFAULT;
+        edComment.setText("");
+    }
+
+    @OnClick(R.id.txtCancel)
+    public void onCancelClick() {
+        edComment.setText("");
+        edComment.setHint("Add a comment...");
+        hideKeyBoard();
     }
 
     FavContentPageModel favContentPageModel;
@@ -629,7 +787,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
             txtDobPlaceSeparator.setVisibility(View.GONE);
         txtFooterPoetPlace.setText(contentPoet.getPoetPlace());
         ImageHelper.setImage(authorImg, contentPoet.getImageUrl());
-        if(TextUtils.isEmpty(contentPoet.getPoetID()))
+        if (TextUtils.isEmpty(contentPoet.getPoetID()))
             poetProfileSection.setVisibility(View.GONE);
         else
             poetProfileSection.setVisibility(View.VISIBLE);
@@ -938,7 +1096,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 
     @OnClick({R.id.imgCritiqueOff, R.id.imgFooterMoreOption, R.id.btnEnglishLanguage, R.id.btnUrduLanguage, R.id.btnHindiLanguage, R.id.txtHeaderPoetName, R.id.layNext,
             R.id.prevLinearLayout, R.id.txtViewAllContent, R.id.imgFooterAudio, R.id.imgFooterVideo, R.id.imgFooterShare, R.id.imgCritiqueClose, R.id.imgCritiqueInfo,
-            R.id.imgCritiqueShare, R.id.txtFooterViewPoetProfile, R.id.audioFooterBar, R.id.imgUpArrow, R.id.layCommentSection, R.id.layAddComment, R.id.imgTranslate
+            R.id.imgCritiqueShare, R.id.txtFooterViewPoetProfile, R.id.audioFooterBar, R.id.imgUpArrow, R.id.layCommentSection, R.id.layLoadMoreComment, R.id.imgTranslate
             , R.id.imgFooterMultiShare, R.id.txtFooterMultiCopy, R.id.imgFooterShareClose})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -1031,17 +1189,17 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 //                        onFooterAudioIconClick(0, null);
                     }
                 break;
-            case R.id.layCommentSection:
+//            case R.id.layCommentSection:
+//                isOpenKeyboard = false;
+//                clearShareSelection();
+//                checkAndModifyShareSelectionIfNecessary();
+//                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard));
+//                break;
+            case R.id.layLoadMoreComment:
                 isOpenKeyboard = false;
                 clearShareSelection();
                 checkAndModifyShareSelectionIfNecessary();
-                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard));
-                break;
-            case R.id.layAddComment:
-                isOpenKeyboard = true;
-                clearShareSelection();
-                checkAndModifyShareSelectionIfNecessary();
-                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard));
+                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard, REPLY_TYPE_DEFAULT, null, null));
                 break;
             case R.id.imgTranslate:
                 showingTranslation = !showingTranslation;
@@ -1750,4 +1908,5 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         ImageHelper.setImage(imgPoetAudioImage, audioContent.getImageUrl());
         audioTitle.setText(audioContent.getAuthorName());
     }
+
 }

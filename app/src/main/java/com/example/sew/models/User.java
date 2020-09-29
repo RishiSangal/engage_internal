@@ -2,8 +2,6 @@ package com.example.sew.models;
 
 import android.text.TextUtils;
 
-import com.example.sew.common.MyConstants;
-
 import org.json.JSONObject;
 
 public class User extends BaseModel {
@@ -33,10 +31,11 @@ public class User extends BaseModel {
     }
 
     public String getImageName() {
-        if (!TextUtils.isEmpty(imageName) && imageName.startsWith("http"))
-            return imageName;
-        else
-            return String.format(MyConstants.getUserProfileImageUrl(), imageName);
+        return imageName;
+//        if (!TextUtils.isEmpty(imageName) && imageName.startsWith("http"))
+//            return imageName;
+//        else
+//            return String.format(MyConstants.getUserProfileImageUrl(), imageName);
     }
 
     public String getHaveImage() {
