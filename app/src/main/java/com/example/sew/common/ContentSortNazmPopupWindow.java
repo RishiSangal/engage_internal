@@ -1,7 +1,6 @@
 package com.example.sew.common;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
+import com.example.sew.activities.ProseShayariCollectionActivity;
 import com.example.sew.fragments.PoetNazmFragment;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
@@ -48,11 +48,11 @@ public class ContentSortNazmPopupWindow extends RelativePopupWindow {
         viewHolder.txtAlphabetic.setVisibility(View.GONE);
         viewHolder.txtRadeef.setVisibility(View.GONE);
         if(sortedBy==Enums.SORT_CONTENT.POPULARITY.getKey())
-            viewHolder.txtPopularity.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtPopularity.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if(sortedBy==Enums.SORT_CONTENT.ALPHABETIC.getKey())
-            viewHolder.txtAlphabetic.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtAlphabetic.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if(sortedBy==Enums.SORT_CONTENT.RADEEF.getKey())
-            viewHolder.txtRadeef.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtRadeef.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {
             viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
         }
@@ -86,19 +86,29 @@ public class ContentSortNazmPopupWindow extends RelativePopupWindow {
 
         @OnClick(R.id.txtPopularity)
         void onPopularityClick() {
-            fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
+            if(getActivity() instanceof ProseShayariCollectionActivity)
+                ((ProseShayariCollectionActivity) getActivity()).sortContent(Enums.SORT_CONTENT.POPULARITY);
+            else
+                fragment.sortContent(Enums.SORT_CONTENT.POPULARITY);
             contentSortPopupWindow.dismiss();
         }
 
         @OnClick(R.id.txtAlphabetic)
         void onAlphabeticallyClick() {
-            fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
+            if(getActivity() instanceof ProseShayariCollectionActivity)
+                ((ProseShayariCollectionActivity) getActivity()).sortContent(Enums.SORT_CONTENT.ALPHABETIC);
+            else
+                fragment.sortContent(Enums.SORT_CONTENT.ALPHABETIC);
             contentSortPopupWindow.dismiss();
         }
 
         @OnClick(R.id.txtRadeef)
         void OnRadeefClick() {
-            fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
+            if(getActivity() instanceof ProseShayariCollectionActivity)
+                ((ProseShayariCollectionActivity) getActivity()).sortContent(Enums.SORT_CONTENT.RADEEF);
+            else
+                fragment.sortContent(Enums.SORT_CONTENT.RADEEF);
+
             contentSortPopupWindow.dismiss();
         }
     }

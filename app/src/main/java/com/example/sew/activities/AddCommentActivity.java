@@ -29,9 +29,11 @@ import com.example.sew.apis.GetAllCommentsByTargetId;
 import com.example.sew.apis.PostAddEditReplyComment;
 import com.example.sew.common.Enums;
 import com.example.sew.common.ICommonValues;
+import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ReplyComment;
+import com.example.sew.models.User;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 
 import org.json.JSONObject;
@@ -272,7 +274,11 @@ public class AddCommentActivity extends BaseActivity {
             currentViewType = REPLY_TYPE_PARENT_EDIT;
         else if (currentViewType == REPLY_TYPE_CHILD_EDIT)
             currentViewType = REPLY_TYPE_CHILD_EDIT;
-
+        if (MyService.isUserLogin()) {
+            User user = MyService.getUser();
+            if (!TextUtils.isEmpty(user.getImageName()))
+                ImageHelper.setImage(imgUserImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
+        }
         filterList = new ArrayList<>();
         filterList.add(getString(R.string.top_comment));
         filterList.add(getString(R.string.newest_comments));

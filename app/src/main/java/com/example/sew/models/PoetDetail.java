@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.MyHelper;
-import com.example.sew.helpers.MyService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -86,10 +85,11 @@ public class PoetDetail extends BaseModel {
             countArray = new JSONArray();
         contentTypes = new ArrayList<>(countArray.length());
         for (int i = 0; i < countArray.length(); i++) {
-            String id = countArray.optJSONObject(i).optString("I");
-            ContentType contentType = MyHelper.getContentById(id);
-            if (!TextUtils.isEmpty(contentType.getContentId()))
-                contentTypes.add(contentType);
+            contentTypes.add(new ContentType(countArray.optJSONObject(i)));
+//            String id = countArray.optJSONObject(i).optString("I");
+//            ContentType contentType = MyHelper.getContentById(id);
+//            if (!TextUtils.isEmpty(contentType.getContentId()))
+//                contentTypes.add(contentType);
         }
     }
 

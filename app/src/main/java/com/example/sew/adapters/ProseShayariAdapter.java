@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
+import com.example.sew.common.ContentSortNazmPopupWindow;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.ShayariContent;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProseShayariAdapter extends BaseMyAdapter {
     private ArrayList<ShayariContent> poetNazams;
@@ -26,11 +29,13 @@ public class ProseShayariAdapter extends BaseMyAdapter {
     final int VIEW_TYPE_CONTENT_GHAZAL_NAZM = 1;
     private String title, description;
     private ContentType contentType;
+    String sortBy;
 
-    public ProseShayariAdapter(BaseActivity activity, ArrayList<ShayariContent> poetNazams, ContentType contentType) {
+    public ProseShayariAdapter(BaseActivity activity, ArrayList<ShayariContent> poetNazams, ContentType contentType, String sortedBy) {
         super(activity);
         this.poetNazams = poetNazams;
         this.contentType = contentType;
+        this.sortBy = sortedBy;
     }
 
     public void setTitle(String title) {
@@ -182,11 +187,29 @@ public class ProseShayariAdapter extends BaseMyAdapter {
         return 2;
     }
 
-    static class CommonViewHolder {
+    class CommonViewHolder {
         @BindView(R.id.txtTitle)
         TextView txtTitle;
         @BindView(R.id.txtDescription)
         TextView txtDescription;
+
+        @BindView(R.id.imgFavorite)
+        ImageView imgFavorite;
+        @BindView(R.id.imgShareUrl)
+        ImageView imgShareUrl;
+        @BindView(R.id.txtFavCount)
+        TextView txtFavCount;
+        @BindView(R.id.txtFilter)
+        TextView txtFilter;
+
+        @OnClick(R.id.txtFilter)
+        void onFilterClick(View view) {
+            if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
+                new ContentSortNazmPopupWindow(getActivity(), contentType.getName().toUpperCase(), null, sortBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
+            else
+                new ContentSortNazmPopupWindow(getActivity(), contentType.getName().toUpperCase(), null, sortBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
+
+        }
 
         CommonViewHolder(View view) {
             ButterKnife.bind(this, view);

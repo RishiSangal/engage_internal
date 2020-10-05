@@ -3,6 +3,7 @@ package com.example.sew.adapters;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.PorterDuff;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,13 @@ import com.example.sew.apis.GetUserComplainType;
 import com.example.sew.apis.PostRemoveComment;
 import com.example.sew.apis.PostUserComplain;
 import com.example.sew.common.Enums;
+import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.SLog;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ComplainType;
+import com.example.sew.models.User;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -85,12 +88,34 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
         commentViewHolder.txtLikeCount.setText(currComment.getTotalLike());
         commentViewHolder.txtDislikeCount.setText(currComment.getTotalDisLike());
         commentViewHolder.txtCommentCount.setText(String.valueOf(currComment.getReplyCount()));
+        if (MyService.isUserLogin()) {
+            if(currComment.isEditable()) {
+                User user = MyService.getUser();
+                if (!TextUtils.isEmpty(user.getImageName())) {
+                    ImageHelper.setImage(commentViewHolder.imgImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
+                    commentViewHolder.txtFirstCharacterName.setVisibility(View.GONE);
+                    commentViewHolder.imgImage.setVisibility(View.VISIBLE);
+                } else {
+                    commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
+                    commentViewHolder.imgImage.setVisibility(View.GONE);
+                    commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+                }
+            }else{
+                commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
+                commentViewHolder.imgImage.setVisibility(View.GONE);
+                commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+            }
 
+        }else {
+            commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
+            commentViewHolder.imgImage.setVisibility(View.GONE);
+            commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+        }
 
         //commentViewHolder.txtTime.setText(MyHelper.getTimeAgo(currComment.getCommentTimeStamp()));
         commentViewHolder.txtTime.setText(currComment.getCommentDate());
 //        ImageHelper.setImage(commentViewHolder.imgImage, currComment.getUserImage());
-        commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+
         if (currComment.getUserFavourite().equalsIgnoreCase("yes")) {
             selectedLiked.add(currComment);
             commentViewHolder.imgLike.setColorFilter(ContextCompat.getColor(getActivity(), R.color.dark_blue), PorterDuff.Mode.SRC_IN);

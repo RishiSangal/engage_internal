@@ -109,7 +109,7 @@ public class PoetGhazalAdapter extends BasePoetContentAdapter {
                 updateFavoriteIcon(ghazalViewHolder.offlineFavIcon, shayariContent.getId());
                 break;
         }
-
+//listingTypek base pr
         return convertView;
     }
 

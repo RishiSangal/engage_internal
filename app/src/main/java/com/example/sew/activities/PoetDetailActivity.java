@@ -158,7 +158,19 @@ public class PoetDetailActivity extends BaseActivity implements AudioPlayerContr
 
         if (isEnglishAvailable || isHindiAvailable || isUrduAvailable)
             poetProfilesTabs.add(MyHelper.getDummyContentTypeProfile());
-        poetProfilesTabs.addAll(poetCompleteProfile.getPoetDetail().getContentTypes());
+        ArrayList<ContentType> saveContentType = MyService.getAllContentType();
+        for (int i = 0; i < poetCompleteProfile.getPoetDetail().getContentTypes().size(); i++) {
+            ContentType localContentType = poetCompleteProfile.getPoetDetail().getContentTypes().get(i);
+            for (int j = 0; j < saveContentType.size(); j++) {
+                ContentType contentTypeSave = saveContentType.get(j);
+                if (contentTypeSave.getContentId().equalsIgnoreCase(localContentType.getContentId())) {
+                    poetProfilesTabs.add(contentTypeSave);
+                }
+            }
+
+        }
+
+        // poetProfilesTabs.addAll(poetCompleteProfile.getPoetDetail().getContentTypes());
         if (MyHelper.convertToInt(poetCompleteProfile.getPoetDetail().getImageShayriCount()) > 0)
             poetProfilesTabs.add(MyHelper.getDummyContentTypeImageShayari());
         if (MyHelper.convertToInt(poetCompleteProfile.getPoetDetail().getAudioCount()) > 0)

@@ -70,6 +70,9 @@ public class MyService {
     private static final String APP_SERVER = "APP_SERVER";
     private static final String IS_FIRST_TIME_OPEN_APP = "IS_FIRST_TIME_OPEN_APP";
     private static final String DARK_MODE_PREF = "DARK_MODE_PREF";
+    private static final String DB_SAVED_ALL_CONTENT_TYPE = "DB_SAVED_ALL_CONTENT_TYPE";
+    private static final String DB_SAVED_ALL_CONTENT_TYPE_LIST = "DB_SAVED_ALL_CONTENT_TYPE_LIST";
+    private static final String SAVED_CONTENT_TYPE_IDS = "SAVED_CONTENT_TYPE_IDS ";
 
     private static final String BASE_URL = "BASE_URL";
     private static final String CDN_URL = "CDN_URL";
@@ -360,6 +363,7 @@ public class MyService {
         Paper.book(DB_SAVED_IMAGE_SHAYARI).destroy();
         Paper.book(DB_SAVED_IMAGE_SHAYARI_LIST_CONTENT).destroy();
         Paper.book(DB_FAVORITE_LIST_OTHER).destroy();
+       // Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).destroy();
     }
 
     public static void removeAllDetailedFavoriteContent() {
@@ -467,10 +471,60 @@ public class MyService {
         wordHistory.add(0, keyword);
         Paper.book(DB_SEARCH_KEYWORDS).write(KEYWORDS, wordHistory);
     }
-
+    public static void deleteSearchKeywordHistory(String keyword) {
+        if (TextUtils.isEmpty(keyword))
+            return;
+        ArrayList<String> wordHistory = Paper.book(DB_SEARCH_KEYWORDS).read(KEYWORDS, new ArrayList<>());
+        keyword = keyword.trim();
+        for (String currentSavedKeyword : wordHistory) {
+            if (currentSavedKeyword.toUpperCase().contentEquals(keyword.toUpperCase())) {
+                wordHistory.remove(currentSavedKeyword);
+                break;
+            }
+        }
+        wordHistory.remove(keyword);
+        Paper.book(DB_SEARCH_KEYWORDS).write(KEYWORDS, wordHistory);
+    }
     public static ArrayList<String> getSearchKeywordHistory() {
         return Paper.book(DB_SEARCH_KEYWORDS).read(KEYWORDS, new ArrayList<>());
     }
+    public static void saveContentType(ContentType contentType){
+        String contentTypeId= contentType.getContentId();
+        if(TextUtils.isEmpty(contentTypeId))
+            return;
+        contentTypeId = contentTypeId.toUpperCase();
+        ArrayList<String> allContentTypeIds = Paper.book(DB_SAVED_ALL_CONTENT_TYPE).read(SAVED_CONTENT_TYPE_IDS, new ArrayList<>());
+        if (!allContentTypeIds.contains(contentTypeId)) {
+            allContentTypeIds.add(contentTypeId);
+            Paper.book(DB_SAVED_ALL_CONTENT_TYPE).write(SAVED_CONTENT_TYPE_IDS, allContentTypeIds);
+        }
+        if (!Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).contains(contentTypeId))
+            Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).write(contentTypeId, contentType.getJsonObject());
+
+    }
+
+    public static void removeContentType(String contentTypeId) {
+        if (TextUtils.isEmpty(contentTypeId))
+            return;
+        contentTypeId = contentTypeId.toUpperCase();
+        ArrayList<String> allFavContentIds = Paper.book(DB_SAVED_ALL_CONTENT_TYPE).read(SAVED_CONTENT_TYPE_IDS, new ArrayList<>());
+        allFavContentIds.remove(contentTypeId);
+        Paper.book(DB_SAVED_ALL_CONTENT_TYPE).write(SAVED_CONTENT_TYPE_IDS, allFavContentIds);
+        Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).delete(contentTypeId);
+    }
+
+    public static ArrayList<ContentType> getAllContentType() {
+        List<String> allKeys = Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).getAllKeys();
+        if (CollectionUtils.isEmpty(allKeys))
+            return new ArrayList<>();
+        ArrayList<ContentType> contentTypesDetails = new ArrayList<>(allKeys.size());
+        for (String contentTypeId : allKeys)
+            contentTypesDetails.add(getContentType(contentTypeId));
+        return contentTypesDetails;
+    }
+
+
+
 
     public static boolean isImageShayariSaved(String imageShayariId) {
         if (TextUtils.isEmpty(imageShayariId))
@@ -516,7 +570,9 @@ public class MyService {
     private static ShayariImage getImageShayari(String imageShayariId) {
         return new ShayariImage(Paper.book(DB_SAVED_IMAGE_SHAYARI_LIST_CONTENT).read(imageShayariId, new JSONObject()));
     }
-
+    private static ContentType getContentType(String contentTypeId) {
+        return new ContentType(Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).read(contentTypeId, new JSONObject()));
+    }
     public static boolean isOfflineSaveEnable() {
         return Paper.book(DB_USER).read(IS_OFFLINE_SAVE_ACTIVE, true);
     }

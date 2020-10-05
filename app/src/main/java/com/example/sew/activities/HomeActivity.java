@@ -23,11 +23,11 @@ import com.example.sew.R;
 import com.example.sew.adapters.HomePageAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAppInfo;
+import com.example.sew.apis.GetContentTypeIds;
 import com.example.sew.apis.GetHomePageCollection;
 import com.example.sew.apis.GetSettings;
 import com.example.sew.apis.GetYouTubeKey;
 import com.example.sew.apis.PostUserAppInfo;
-import com.example.sew.common.ActivityManager;
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.ThemeHelper;
@@ -113,6 +113,7 @@ public class HomeActivity extends BaseHomeActivity {
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_1);
         if (TextUtils.isEmpty(MyService.getYouTubeKey()))
             getYouTubeKeyApiCall();
+        getContentTypeId();
         getHomePageCollection = new GetHomePageCollection();
         getHomePageCollections();
         if (MyService.isUserLogin())
@@ -136,7 +137,9 @@ public class HomeActivity extends BaseHomeActivity {
     }
 
     GetHomePageCollection getHomePageCollection;
-
+    private void getContentTypeId(){
+        new GetContentTypeIds().runAsync(null);
+    }
     private void getHomePageCollections() {
         showDialog();
         if (getHomePageCollection == null)

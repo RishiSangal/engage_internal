@@ -75,6 +75,7 @@ import com.example.sew.models.PreviousNextContent;
 import com.example.sew.models.RenderContentAudio;
 import com.example.sew.models.RenderContentTag;
 import com.example.sew.models.ReplyComment;
+import com.example.sew.models.User;
 import com.example.sew.models.WordContainer;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.google.android.flexbox.FlexboxLayout;
@@ -239,6 +240,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     LinearLayout layCommentPlaceholder;
     LinearLayout layLoadMoreComment;
     LinearLayout layAddComment;
+    CircleImageView imgUserImage;
     TextView txtCommentHeaderCount;
     View layCommentSection;
     View layKeepReading;
@@ -357,6 +359,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         txtCommentHeaderCount = layCommentSection.findViewById(R.id.txtCommentHeaderCount);
         layAddComment = layCommentSection.findViewById(R.id.layAddComment);
         rvComment = layCommentSection.findViewById(R.id.rvComment);
+        imgUserImage= layCommentSection.findViewById(R.id.imgUserImage);
         layCancelComment = layCommentSection.findViewById(R.id.layCancelComment);
         edComment = layCommentSection.findViewById(R.id.edComment);
         txtCancel = layCommentSection.findViewById(R.id.txtCancel);
@@ -372,7 +375,11 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 getAllComments();
             }
         }, BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
-
+        if (MyService.isUserLogin()) {
+            User user = MyService.getUser();
+            if (!TextUtils.isEmpty(user.getImageName()))
+                ImageHelper.setImage(imgUserImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
+        }
 
         if (isOffline()) {
             layBottomContainer1.setVisibility(View.GONE);

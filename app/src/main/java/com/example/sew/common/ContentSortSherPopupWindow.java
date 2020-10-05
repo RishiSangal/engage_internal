@@ -1,7 +1,6 @@
 package com.example.sew.common;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -48,11 +47,11 @@ public class ContentSortSherPopupWindow extends RelativePopupWindow {
         viewHolder.txtAlphabetic.setVisibility(View.GONE);
         viewHolder.txtRadeef.setVisibility(View.GONE);
         if(sortedBy==Enums.SORT_CONTENT.POPULARITY.getKey())
-            viewHolder.txtPopularity.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtPopularity.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if(sortedBy==Enums.SORT_CONTENT.ALPHABETIC.getKey())
-            viewHolder.txtAlphabetic.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtAlphabetic.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if(sortedBy==Enums.SORT_CONTENT.RADEEF.getKey())
-            viewHolder.txtRadeef.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.txtRadeef.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {
             viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
         }

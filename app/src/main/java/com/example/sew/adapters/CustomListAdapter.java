@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.solver.GoalRow;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 
 import com.example.sew.R;
+import com.example.sew.helpers.MyHelper;
+import com.example.sew.helpers.MyService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +53,9 @@ public class CustomListAdapter extends ArrayAdapter {
                     .inflate(layoutResId, parent, false);
         }
         TextView strName = (TextView) view.findViewById(R.id.textView);
-        View view1=(View) view.findViewById(R.id.view);
-        if(dataList.size()>0) {
+        ImageView imgClose = (ImageView) view.findViewById(R.id.imgClose);
+        View view1 = (View) view.findViewById(R.id.view);
+        if (dataList.size() > 0) {
             if (dataList.size() == 1)
                 view1.setVisibility(View.GONE);
             else
@@ -59,7 +64,31 @@ public class CustomListAdapter extends ArrayAdapter {
 
         strName.setText(getItem(position));
         view.setTag(getItem(position));
+        imgClose.setTag(getItem(position));
+        imgClose.setOnClickListener(v -> {
+            String storeString = (String) v.getTag();
+            warningPopup(storeString);
+        });
         return view;
+    }
+
+    private void warningPopup(String storeString) {
+        new AlertDialog.Builder(new ContextThemeWrapper(mContext, R.style.AlertDialogCustom))
+                .setTitle(MyHelper.getString(R.string.rekhta))
+                .setMessage(" Do you want to delete?")
+                .setPositiveButton(MyHelper.getString(R.string.yes), (dialog, which) -> {
+                    dataList.remove(storeString);
+                    notifyDataSetChanged();
+                    MyService.deleteSearchKeywordHistory(storeString);
+                    dialog.dismiss();
+                })
+                .setNegativeButton(MyHelper.getString(R.string.no), (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create().show();
+
+
+
     }
 
     @NonNull

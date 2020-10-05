@@ -29,14 +29,22 @@
 
         <com.example.sew.views.TitleTextViewType2
             android:id="@+id/textView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:paddingEnd="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:textColor="?primaryTextColor"
             android:textSize="@dimen/_14ssp"
             tools:text="Home" />
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_close"
+            android:tint="?appIconColor"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <View

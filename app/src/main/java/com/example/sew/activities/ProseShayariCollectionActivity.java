@@ -10,6 +10,7 @@ import com.example.sew.R;
 import com.example.sew.adapters.ProseShayariAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentListWithPaging;
+import com.example.sew.common.Enums;
 import com.example.sew.common.PagingListView;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.ShayariContent;
@@ -30,7 +31,7 @@ public class ProseShayariCollectionActivity extends BaseActivity {
     @BindView(R.id.lstPoetContent)
     PagingListView lstPoetContent;
     String targetId,slugId;
-
+    private String defaultSortContent = Enums.SORT_CONTENT.POPULARITY.getKey();
     @OnItemClick(R.id.lstPoetContent)
     void onItemClicked(View convertView) {
         if (convertView.getTag(R.id.tag_data) instanceof ShayariContent) {
@@ -86,17 +87,17 @@ public class ProseShayariCollectionActivity extends BaseActivity {
         shimmerViewContainer.startShimmer();
         shimmerViewContainer.setVisibility(View.GONE);
         updateLanguageSpecificContent();
-        getNazamsList();
+        getNazamsList(defaultSortContent);
     }
 
     private GetContentListWithPaging getContentListWithPaging;
 
     // no use shimmer in this page... show only native loader-- Anuj
-    private void getNazamsList() {
+    private void getNazamsList(String sortBy) {
         showDialog();
         lstPoetContent.setIsLoading(true);
         getContentListWithPaging = new GetContentListWithPaging();
-        getContentListWithPaging.setTargetId(targetId)
+        getContentListWithPaging.setTargetId(targetId).setSortBy(sortBy)
                 .setContentTypeId(contentType.getContentId())
                 .addPagination()
                 .runAsync((BaseServiceable.OnApiFinishListener<GetContentListWithPaging>) contentListWithPaging -> {
@@ -130,7 +131,7 @@ public class ProseShayariCollectionActivity extends BaseActivity {
         if (getContentListWithPaging != null)
             setHeaderTitle(getContentListWithPaging.getName());
         if (proseShayariAdapter == null) {
-            proseShayariAdapter = new ProseShayariAdapter(getActivity(), shayariContents, contentType);
+            proseShayariAdapter = new ProseShayariAdapter(getActivity(), shayariContents, contentType,defaultSortContent);
             if (getContentListWithPaging != null) {
                 proseShayariAdapter.setTitle(getContentListWithPaging.getName());
                 proseShayariAdapter.setDescription(getContentListWithPaging.getDescription());
@@ -144,5 +145,9 @@ public class ProseShayariCollectionActivity extends BaseActivity {
             proseShayariAdapter.notifyDataSetChanged();
         }
     }
-
+    public void sortContent(Enums.SORT_CONTENT sortBy) {
+        defaultSortContent = sortBy.getKey();
+        proseShayariAdapter = null;
+        getNazamsList(sortBy.getKey());
+    }
 }
