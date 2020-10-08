@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.sew.R;
-import com.example.sew.adapters.PoetDetailFragmentAdapter;
 import com.example.sew.adapters.ProseShayariCollectionFragmentAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentTypeTabByCollectionType;

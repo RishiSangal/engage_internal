@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
+import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.adapters.PoetAudioAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAudioListWithPaging;
@@ -34,7 +35,6 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
     ShimmerFrameLayout shimmerViewContainer;
     @BindView(R.id.lstPoetContent)
     PagingListView lstPoetContent;
-    private AudioPlayerControls audioPlayerControls;
     PoetAudioInterFace poetAudioInterFace;
 
     public static BasePoetProfileFragment getInstance(PoetDetail poetDetail) {
@@ -92,11 +92,15 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
         updateUI();
     }
 
+    private AudioPlayerControls audioPlayerControls;
+    PoetDetailActivity poetDetailActivity;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_poet_content, container, false);
         ButterKnife.bind(this, view);
-        audioPlayerControls = new AudioPlayerControls(GetActivity(), view);
+        poetDetailActivity = (PoetDetailActivity) getActivity();
+//        audioPlayerControls = new AudioPlayerControls(GetActivity(), view);
+        audioPlayerControls = poetDetailActivity.audioPlayerControls;
         audioPlayerControls.setOnAudioPlayerStateChanged(this);
 
         return view;
@@ -105,7 +109,7 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        poetAudioInterFace = (PoetAudioInterFace) getActivity();
+//        poetAudioInterFace = (PoetAudioInterFace) getActivity();
     }
 
     @Override

@@ -36,5 +36,5 @@
         android:layout_weight="1"
         android:divider="@null"/>
 
-    <include layout="@layout/audio_player" />
+<!--    <include layout="@layout/audio_player" />-->
 </LinearLayout>

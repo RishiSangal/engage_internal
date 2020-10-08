@@ -40,7 +40,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PoetDetailActivity extends BaseActivity implements AudioPlayerControls.onAudioPlayerStateChanged, PoetAudioInterFace {
+public class PoetDetailActivity extends BaseActivity {
+//    implements PoetAudioInterFace
     @BindView(R.id.tabLayout)
     SmartTabLayout tabLayout;
     @BindView(R.id.viewpager)
@@ -69,7 +70,7 @@ public class PoetDetailActivity extends BaseActivity implements AudioPlayerContr
     CollapsingImageLayout CollapseImageLayout;
     @BindView(R.id.searchActivity_mainView)
     RelativeLayout searchActivity_mainView;
-    private AudioPlayerControls audioPlayerControls;
+    public AudioPlayerControls audioPlayerControls;
 
     public static Intent getInstance(Activity activity, String poetId) {
         Intent intent = new Intent(activity, PoetDetailActivity.class);
@@ -103,7 +104,7 @@ public class PoetDetailActivity extends BaseActivity implements AudioPlayerContr
             }
         }
         audioPlayerControls = new AudioPlayerControls(PoetDetailActivity.this, searchActivity_mainView);
-        audioPlayerControls.setOnAudioPlayerStateChanged(this);
+//        audioPlayerControls.setOnAudioPlayerStateChanged(this);
         getPoetDetail();
     }
 
@@ -271,31 +272,31 @@ public class PoetDetailActivity extends BaseActivity implements AudioPlayerContr
             updateFavoriteIcon(imgFavorite, poetCompleteProfile.getPoetDetail().getPoetId());
     }
 
-    private ArrayList<AudioContent> audioContents = new ArrayList<>();
+//    private ArrayList<AudioContent> audioContents = new ArrayList<>();
 
-    @Override
-    public void onPoetAudioPlay(int i, AudioContent audioContent) {
-        audioPlayerControls.playAudio(audioContents.indexOf(audioContent));
-    }
+//    @Override
+//    public void onPoetAudioPlay(int i, AudioContent audioContent) {
+//        audioPlayerControls.playAudio(audioContents.indexOf(audioContent));
+//    }
 
-    @Override
-    public void onAudioPause() {
-
-    }
-
-    @Override
-    public void onAudioStart() {
-
-    }
-
-    @Override
-    public void onAudioWindowClose() {
-
-    }
-
-    @Override
-    public void onAudioSelected(BaseAudioContent audioContent) {
+//    @Override
+//    public void onAudioPause() {
+//
+//    }
+//
+//    @Override
+//    public void onAudioStart() {
+//
+//    }
+//
+//    @Override
+//    public void onAudioWindowClose() {
+//
+//    }
+//
+//    @Override
+//    public void onAudioSelected(BaseAudioContent audioContent) {
 //        if (poetAudioAdapter != null && audioContent instanceof AudioContent)
 //            poetAudioAdapter.setSelectedAudioContent((AudioContent) audioContent);
-    }
+//    }
 }
