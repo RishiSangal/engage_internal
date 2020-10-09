@@ -3,7 +3,6 @@ package com.example.sew.apis;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.sew.common.Enums;
 import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ShayariContent;
@@ -46,8 +45,9 @@ public class GetContentListWithPaging extends Base {
         addParam("keyword", keyword);
         return this;
     }
-    public GetContentListWithPaging setSortBy(String sortContent){
-        addParam("sortBy",sortContent);
+
+    public GetContentListWithPaging setSortBy(String sortContent) {
+        addParam("sortBy", sortContent);
         return this;
     }
 
@@ -56,11 +56,17 @@ public class GetContentListWithPaging extends Base {
     private ArrayList<ShayariContent> shayariContents;
     private String nameEn, nameHi, nameUr;
     private String descriptionEn, descriptionHi, descriptionUr, slug;
+    private String favCount, shareUrlEnglish, shareUrlHin, shareUrlUrdu;
     JSONArray jsonArray1;
+
     public void onPostRun(int statusCode, String response) {
         super.onPostRun(statusCode, response);
         if (isValidResponse()) {
             totalCount = getData().optInt("TC");
+            favCount = getData().optString("FC");
+            shareUrlEnglish = getData().optString("UE");
+            shareUrlHin = getData().optString("UH");
+            shareUrlUrdu = getData().optString("UU");
             JSONArray poetsArray = getData().optJSONArray("CS");
             if (poetsArray == null)
                 poetsArray = new JSONArray();
@@ -81,7 +87,7 @@ public class GetContentListWithPaging extends Base {
                 descriptionUr = jsonObject.optString("DU");
                 slug = jsonObject.optString("S");
             }
-             jsonArray1 = new JSONArray();
+            jsonArray1 = new JSONArray();
             for (int i = 0; i < shayariContents.size(); i++) {
                 try {
                     jsonArray1.put(new JSONObject().put("target_id", shayariContents.get(i).getId()));
@@ -129,6 +135,30 @@ public class GetContentListWithPaging extends Base {
         return "";
     }
 
+    public String getShareUrl() {
+        switch (MyService.getSelectedLanguage()) {
+            case ENGLISH:
+                return getShareUrlEnglish();
+            case HINDI:
+                return getShareUrlHin();
+            case URDU:
+                return getShareUrlUrdu();
+        }
+        return getShareUrlEnglish();
+    }
+
+    public String getShareUrlEnglish() {
+        return shareUrlEnglish;
+    }
+
+    public String getShareUrlHin() {
+        return shareUrlHin;
+    }
+
+    public String getShareUrlUrdu() {
+        return shareUrlUrdu;
+    }
+
     public int getTotalCount() {
         return totalCount;
     }
@@ -141,4 +171,7 @@ public class GetContentListWithPaging extends Base {
         return shayariContents;
     }
 
+    public String getFavCount() {
+        return favCount;
+    }
 }

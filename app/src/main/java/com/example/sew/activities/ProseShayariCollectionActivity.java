@@ -135,12 +135,15 @@ public class ProseShayariCollectionActivity extends BaseActivity {
             if (getContentListWithPaging != null) {
                 proseShayariAdapter.setTitle(getContentListWithPaging.getName());
                 proseShayariAdapter.setDescription(getContentListWithPaging.getDescription());
+                proseShayariAdapter.setFavCount(getContentListWithPaging.getFavCount());
+                proseShayariAdapter.setShareUrl(getContentListWithPaging.getShareUrl());
             }
             lstPoetContent.setAdapter(proseShayariAdapter);
         } else {
             if (getContentListWithPaging != null) {
                 proseShayariAdapter.setTitle(getContentListWithPaging.getName());
                 proseShayariAdapter.setDescription(getContentListWithPaging.getDescription());
+                proseShayariAdapter.setShareUrl(getContentListWithPaging.getShareUrl());
             }
             proseShayariAdapter.notifyDataSetChanged();
         }

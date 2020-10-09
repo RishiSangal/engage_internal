@@ -13,6 +13,7 @@ import com.example.sew.common.ContentSortNazmPopupWindow;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MyConstants;
 import com.example.sew.common.RelativePopupWindow;
+import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.ShayariContent;
@@ -27,7 +28,7 @@ public class ProseShayariAdapter extends BaseMyAdapter {
     private ArrayList<ShayariContent> poetNazams;
     final int VIEW_TYPE_HEADER = 0;
     final int VIEW_TYPE_CONTENT_GHAZAL_NAZM = 1;
-    private String title, description;
+    private String title, description, favCount, sharUrl;
     private ContentType contentType;
     String sortBy;
 
@@ -44,6 +45,14 @@ public class ProseShayariAdapter extends BaseMyAdapter {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setFavCount(String favCount) {
+        this.favCount = favCount;
+    }
+
+    public void setShareUrl(String sharUrl) {
+        this.sharUrl = sharUrl;
     }
 
     @Override
@@ -72,6 +81,7 @@ public class ProseShayariAdapter extends BaseMyAdapter {
                 convertView.setTag(commonViewHolder);
                 commonViewHolder.txtTitle.setText(title);
                 commonViewHolder.txtDescription.setText(description);
+                commonViewHolder.txtFavCount.setText(favCount);
                 if (TextUtils.isEmpty(title))
                     commonViewHolder.txtTitle.setVisibility(View.GONE);
                 else
@@ -80,6 +90,7 @@ public class ProseShayariAdapter extends BaseMyAdapter {
                     commonViewHolder.txtDescription.setVisibility(View.GONE);
                 else
                     commonViewHolder.txtDescription.setVisibility(View.VISIBLE);
+                commonViewHolder.txtFav.setText(MyHelper.getString(R.string.favorites));
                 break;
             case VIEW_TYPE_CONTENT_GHAZAL_NAZM: {
                 NazmAdapter.NazmViewHolder nazmViewHolder;
@@ -197,10 +208,13 @@ public class ProseShayariAdapter extends BaseMyAdapter {
         ImageView imgFavorite;
         @BindView(R.id.imgShareUrl)
         ImageView imgShareUrl;
+
         @BindView(R.id.txtFavCount)
         TextView txtFavCount;
         @BindView(R.id.txtFilter)
         TextView txtFilter;
+        @BindView(R.id.txtFav)
+        TextView txtFav;
 
         @OnClick(R.id.txtFilter)
         void onFilterClick(View view) {
@@ -209,6 +223,11 @@ public class ProseShayariAdapter extends BaseMyAdapter {
             else
                 new ContentSortNazmPopupWindow(getActivity(), contentType.getName().toUpperCase(), null, sortBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
 
+        }
+
+        @OnClick(R.id.imgShareUrl)
+        void onShareUrlClick() {
+            MyHelper.shareTheText(sharUrl, getActivity());
         }
 
         CommonViewHolder(View view) {
