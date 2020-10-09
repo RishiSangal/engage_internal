@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -181,8 +182,15 @@ public class AudioPlayerControls implements Runnable,
         isAudioProessing = true;
         if (mp != null && mp.isPlaying())
             mp.stop();
-        if (layAudioPlayerParent != null)
+        if (layAudioPlayerParent != null){
             layAudioPlayerParent.setVisibility(View.VISIBLE);
+            layAudioPlayerParent.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    return true;
+                }
+            });
+        }
         layAudioLoading.setVisibility(View.VISIBLE);
         currentPosition = position;
         Uri myUri = null;

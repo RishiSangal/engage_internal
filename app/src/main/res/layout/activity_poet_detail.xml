@@ -5,10 +5,10 @@
     android:id="@+id/searchActivity_mainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?appBackgroundColor"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:background="?appBackgroundColor">
 
+<!--    android:orientation="vertical"-->
+<!--    android:fitsSystemWindows="true"-->
 
     <include
         android:id="@+id/header"
@@ -88,15 +88,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <com.example.sew.views.TitleTextViewType5
                                     android:id="@+id/poetNameTemplateTV"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_alignParentEnd="true"
                                     android:layout_marginStart="@dimen/_17sdp"
                                     android:layout_marginTop="@dimen/_5sdp"
-                                    android:layout_toEndOf="@+id/poetProfileImageTemplate"
                                     android:ellipsize="end"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:gravity="center_vertical"
@@ -105,6 +104,7 @@
                                     android:textAllCaps="true"
                                     android:textColor="?primaryTextColor"
                                     android:textSize="@dimen/_24ssp" />
+
                                 <ImageView
                                     android:id="@+id/imgFavorite"
                                     android:layout_width="@dimen/_30sdp"
@@ -226,6 +226,7 @@
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -241,8 +242,12 @@
 
         </LinearLayout>
 
-        <include layout="@layout/audio_player" />
+<!--        <include layout="@layout/audio_player" />-->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <include layout="@layout/audio_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

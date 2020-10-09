@@ -14,3 +14,14 @@
 /.idea/
 /gradle/
 gradlew\.bat
+app/.idea/gradle.xml
+app/.idea/misc.xml
+app/.idea/modules.xml
+app/.idea/vcs.xml
+app/.idea/workspace.xml
+app/.idea/codeStyles/Project.xml
+app/gradle/wrapper/gradle-wrapper.jar
+app/gradle/wrapper/gradle-wrapper.properties
+app/gradlew
+app/local.properties
+gradlew
