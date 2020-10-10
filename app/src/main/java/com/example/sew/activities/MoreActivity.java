@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,8 +50,9 @@ public class MoreActivity extends BaseHomeActivity {
 
     @BindView(R.id.txtLogoutTitle)
     TextView txtLogoutTitle;
- //   @BindView(R.id.imgProfile)
+    //   @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
+    ImageView imgBannerImage;
     @BindView(R.id.txtUserName)
     TextView txtUserName;
     @BindView(R.id.txtLanguageSelectTitle)
@@ -102,6 +104,7 @@ public class MoreActivity extends BaseHomeActivity {
     @BindView(R.id.layWholeDonation)
     LinearLayout layWholeDonation;
     View top_more;
+
     public static Intent getInstance(Activity activity) {
         return new Intent(activity, MoreActivity.class);
     }
@@ -111,10 +114,17 @@ public class MoreActivity extends BaseHomeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
         ButterKnife.bind(this);
-        top_more= findViewById(R.id.top_more);
-        imgProfile= top_more.findViewById(R.id.imgProfile);
-       // setSelectableItemForeground(layDonateViaPaytm,layDonateNow);
+        top_more = findViewById(R.id.top_more);
+        imgProfile = top_more.findViewById(R.id.imgProfile);
+        imgBannerImage = top_more.findViewById(R.id.imgBannerImage);
+        // setSelectableItemForeground(layDonateViaPaytm,layDonateNow);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_4);
+        if (MyService.isUserLogin()) {
+            User user = MyService.getUser();
+            if (!TextUtils.isEmpty(user.getBannerImageName()))
+                ImageHelper.setImage(imgBannerImage, user.getBannerImageName(), Enums.PLACEHOLDER_TYPE.USER_INFO_BANNER);
+        } else
+            imgBannerImage.setImageResource(R.drawable.home);
         updateUI();
         syncFavoriteIfNecessary();
     }

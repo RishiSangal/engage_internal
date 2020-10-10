@@ -11,7 +11,7 @@ public class User extends BaseModel {
     private String id;
     private String selectedHeaderImage;
     private String token;
-
+    private String bannerImageName;
     public User(JSONObject jsonObject) {
         if (jsonObject == null)
             jsonObject = new JSONObject();
@@ -20,6 +20,7 @@ public class User extends BaseModel {
         haveImage = optString(jsonObject, "HaveImage");
         id = optString(jsonObject, "Id");
         selectedHeaderImage = optString(jsonObject, "SelectedHeaderImage");
+        bannerImageName= optString(jsonObject,"BannerImageName");
         JSONObject tokenObject = jsonObject.optJSONObject("TokenDetails");
         if (tokenObject == null)
             tokenObject = new JSONObject();
@@ -56,5 +57,9 @@ public class User extends BaseModel {
 
     public String getToken() {
         return token;
+    }
+
+    public String getBannerImageName() {
+        return bannerImageName;
     }
 }

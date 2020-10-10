@@ -77,6 +77,10 @@ public class ImageHelper {
                     placeHolderResId = R.drawable.collection_placeholder;
                     errorResId = R.drawable.collection_placeholder;
                     break;
+                case USER_INFO_BANNER:
+                    placeHolderResId = R.drawable.home;
+                    errorResId = R.drawable.home;
+                    break;
                 case PROMOTIONAL_BANNER:
                     placeHolderResId = R.drawable.banner_placeholder;
                     errorResId = R.drawable.banner_placeholder;

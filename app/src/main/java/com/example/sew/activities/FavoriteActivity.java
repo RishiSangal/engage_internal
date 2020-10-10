@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -44,6 +45,8 @@ public class FavoriteActivity extends BaseHomeActivity {
     CircleImageView userImage;
     @BindView(R.id.txtFavTabMyFavoriteCount)
     TextView txtFavTabMyFavoriteCount;
+    @BindView(R.id.imgBannerImage)
+    ImageView imgBannerImage;
 
     public static Intent getInstance(Activity activity) {
         return new Intent(activity, FavoriteActivity.class);
@@ -80,8 +83,12 @@ public class FavoriteActivity extends BaseHomeActivity {
             userName.setText(user.getDisplayName());
             if (!TextUtils.isEmpty(user.getImageName()))
                 ImageHelper.setImage(userImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
-        } else
+            if (!TextUtils.isEmpty(user.getBannerImageName()))
+                ImageHelper.setImage(imgBannerImage, user.getBannerImageName(), Enums.PLACEHOLDER_TYPE.USER_INFO_BANNER);
+        } else {
             userName.setText(MyHelper.getString(R.string.guest));
+            imgBannerImage.setImageResource(R.drawable.home);
+        }
         showFavCount();
         resetAndUpdateFavorite();
     }
