@@ -96,7 +96,8 @@ public class FavContentPageModel extends BaseModel {
         htmlOrJsonRenderContentEn = jsonObject.optString("RE");
         JSONObject jSONObject = null;
         try {
-            jSONObject = new JSONObject(htmlOrJsonRenderContentEn);
+            if (!htmlOrJsonRenderContentEn.isEmpty() && !htmlOrJsonRenderContentEn.equalsIgnoreCase("null"))
+                jSONObject = new JSONObject(htmlOrJsonRenderContentEn);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -107,7 +108,8 @@ public class FavContentPageModel extends BaseModel {
         htmlOrJsonRenderContentHi = jsonObject.optString("RH");
         jSONObject = null;
         try {
-            jSONObject = new JSONObject(htmlOrJsonRenderContentHi);
+            if (!htmlOrJsonRenderContentHi.isEmpty() && !htmlOrJsonRenderContentHi.equalsIgnoreCase("null"))
+                jSONObject = new JSONObject(htmlOrJsonRenderContentHi);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -118,7 +120,10 @@ public class FavContentPageModel extends BaseModel {
         htmlOrJsonRenderContentUrdu = jsonObject.optString("RU");
         jSONObject = null;
         try {
-            jSONObject = new JSONObject(htmlOrJsonRenderContentUrdu);
+            if (!htmlOrJsonRenderContentUrdu.isEmpty() && !htmlOrJsonRenderContentUrdu.equalsIgnoreCase("null"))
+                jSONObject = new JSONObject(htmlOrJsonRenderContentUrdu);
+            else
+                jSONObject = new JSONObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }

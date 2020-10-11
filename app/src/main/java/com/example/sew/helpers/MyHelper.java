@@ -233,10 +233,22 @@ public class MyHelper {
     }
 
     public static ContentType getContentById(String contentId) {
-        ArrayList<ContentType> contentTypes = getContentTypes();
+//        ArrayList<ContentType> contentTypes = getContentTypes();
+        ArrayList<ContentType> contentTypes = MyService.getAllContentType();
         for (ContentType contentType : contentTypes)
             if (contentType.getContentId().equalsIgnoreCase(contentId))
                 return contentType;
+        return new ContentType(null);
+    }
+
+    public static ContentType getContentByIdNew(String contentId){
+        ArrayList<ContentType> saveContentType = MyService.getAllContentType();
+        for (int j = 0; j < saveContentType.size(); j++) {
+            ContentType contentTypeSave = saveContentType.get(j);
+            if (contentTypeSave.getContentId().equalsIgnoreCase(contentId)) {
+                return contentTypeSave;
+            }
+        }
         return new ContentType(null);
     }
 

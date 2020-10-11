@@ -115,7 +115,8 @@ public class FavoriteActivity extends BaseHomeActivity {
         allFavoriteDictionary.addAll(MyService.MyFavService.getFavoriteDictionary());
         allFavoritePoet.addAll(MyService.MyFavService.getFavoritePoet());
         if (favoriteFragmentAdapter == null) {
-            favoriteFragmentAdapter = new FavoriteFragmentAdapter(getSupportFragmentManager(), getActivity(), allFavoriteSections, allSavedImageShayari, allFavoriteDictionary,allFavoritePoet);
+            favoriteFragmentAdapter = new FavoriteFragmentAdapter(getSupportFragmentManager(), getActivity(),
+                    allFavoriteSections, allSavedImageShayari, allFavoriteDictionary,allFavoritePoet);
             viewpager.setAdapter(favoriteFragmentAdapter);
         } else {
             favoriteFragmentAdapter.notifyDataSetChanged();
