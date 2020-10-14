@@ -28,6 +28,7 @@ import com.example.sew.models.User;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -125,6 +126,11 @@ public class FavoriteActivity extends BaseHomeActivity {
     }
 
     public ArrayList<FavContentPageModel> getFavContents(ContentType contentType) {
+        for (Map.Entry<ContentType, ArrayList<FavContentPageModel>>
+                entry : allFavoriteSections.entrySet()){
+            if(entry.getKey().equals(contentType))
+                return allFavoriteSections.get(entry.getKey());
+        }
         return allFavoriteSections.get(contentType);
     }
 

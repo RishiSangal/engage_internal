@@ -24,9 +24,10 @@ public class GetContentTypeIds extends Base {
     private String errorMessage;
     private SearchContentAll searchContentAll;
     private ArrayList<ContentType> allContentTypeList;
+
     public void onPostRun(int statusCode, String response) {
         super.onPostRun(statusCode, response);
-        if(isValidResponse()) {
+        if (isValidResponse()) {
             JSONArray contentTypeArray = getData().optJSONArray("R");
             if (contentTypeArray == null)
                 contentTypeArray = new JSONArray();
