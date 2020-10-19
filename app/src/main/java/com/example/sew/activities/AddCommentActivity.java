@@ -36,8 +36,6 @@ import com.example.sew.models.ReplyComment;
 import com.example.sew.models.User;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -248,32 +246,6 @@ public class AddCommentActivity extends BaseActivity {
         // setHeaderTitle(MyHelper.getString(R.string.comments));
         targetId = getIntent().getStringExtra(CONTENT_ID);
         isOpenKeyBoard = getIntent().getBooleanExtra(IS_OPEN_KEYBOARD, false);
-        currentViewType = getIntent().getIntExtra(CURR_COMMENT_TYPE, 0);
-        if (currentViewType == REPLY_TYPE_DEFAULT)
-            currentViewType = REPLY_TYPE_DEFAULT;
-        else if (currentViewType == REPLY_TYPE_PARENT) {
-            currentViewType = REPLY_TYPE_PARENT;
-            try {
-                currComment = new Comment(new JSONObject(getIntent().getStringExtra(CURR_COMMENT)));
-                edComment.requestFocus();
-                openKeyBoard();
-                parentReplyUpdate(currComment);
-            } catch (Exception e) {
-                return;
-            }
-        } else if (currentViewType == REPLY_TYPE_CHILD) {
-            currentViewType = REPLY_TYPE_CHILD;
-            try {
-                currComment = new Comment(new JSONObject(getIntent().getStringExtra(CURR_COMMENT)));
-                currReplyComment = new ReplyComment(new JSONObject(getIntent().getStringExtra(CURR_REPLY_COMMENT)));
-                childReply(true, currReplyComment, currComment);
-            } catch (Exception e) {
-                return;
-            }
-        } else if (currentViewType == REPLY_TYPE_PARENT_EDIT)
-            currentViewType = REPLY_TYPE_PARENT_EDIT;
-        else if (currentViewType == REPLY_TYPE_CHILD_EDIT)
-            currentViewType = REPLY_TYPE_CHILD_EDIT;
         if (MyService.isUserLogin()) {
             User user = MyService.getUser();
             if (!TextUtils.isEmpty(user.getImageName()))
@@ -362,15 +334,10 @@ public class AddCommentActivity extends BaseActivity {
 
     }
 
-    public static Intent getInstance(Activity activity, String targetId, boolean isOpenKeyBoard, int currentCommentType, Comment comment, ReplyComment replyComment) {
+    public static Intent getInstance(Activity activity, String targetId, boolean isOpenKeyBoard) {
         Intent intent = new Intent(activity, AddCommentActivity.class);
         intent.putExtra(CONTENT_ID, targetId);
         intent.putExtra(IS_OPEN_KEYBOARD, isOpenKeyBoard);
-        intent.putExtra(CURR_COMMENT_TYPE, currentCommentType);
-        if (currentCommentType == 1 || currentCommentType == 2)
-            intent.putExtra(CURR_COMMENT, comment.getJsonObject().toString());
-        if (currentCommentType == 2)
-            intent.putExtra(CURR_REPLY_COMMENT, replyComment.getJsonObject().toString());
         return intent;
     }
 

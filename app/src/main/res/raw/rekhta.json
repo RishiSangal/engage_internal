@@ -1124,16 +1124,21 @@
     "hin": "COMMENTS",
     "urdu": "COMMENTS"
   },
+  "comment": {
+    "eng": "Comment",
+    "hin": "टिप्पणी",
+    "urdu": "تبصرہ"
+  },
   "share_your_view": {
     "eng": "SHARE YOUR VIEWS",
     "hin": "SHARE YOUR VIEWS",
     "urdu": "SHARE YOUR VIEWS"
   },
   "add_comment": {
-  "eng": "add comment...",
-  "hin": "add comment...",
-  "urdu": "add comment..."
-},
+    "eng": "add comment...",
+    "hin": "add comment...",
+    "urdu": "add comment..."
+  },
   "did_you_know_header": {
     "eng": "DID YOU KNOW ?",
     "hin": "क्या आप जानते हैं?",
@@ -1199,4 +1204,6 @@
     "hin": "अप्रकाशित ग़ज़ल",
     "urdu": "غیرمطبوعہ غزل"
   }
+
+
 }

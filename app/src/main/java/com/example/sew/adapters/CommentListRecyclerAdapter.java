@@ -23,7 +23,6 @@ import com.example.sew.R;
 import com.example.sew.activities.AddCommentActivity;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.LoginActivity;
-import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetMarkLikeDislike;
 import com.example.sew.apis.GetReplyByParentId;
@@ -156,13 +155,10 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
     }
 
     private View.OnClickListener onParentReplyClickListener;
-    private View.OnClickListener onParentReplyClickOnRenderPageListener;
     public void setOnParentReplyClickListener(View.OnClickListener onItemClickListener) {
         this.onParentReplyClickListener = onItemClickListener;
     }
-    public void setOnParentReplyOnRenderPageClickListener(View.OnClickListener onItemClickListener) {
-        this.onParentReplyClickOnRenderPageListener = onItemClickListener;
-    }
+
     @Override
     public int getItemCount() {
         return commentList.size();
@@ -304,10 +300,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                         if(getActivity() instanceof AddCommentActivity)
                             if (onParentReplyClickListener != null)
                                 onParentReplyClickListener.onClick(view);
-                        if(getActivity() instanceof RenderContentActivity){
-                            if (onParentReplyClickOnRenderPageListener != null)
-                                onParentReplyClickOnRenderPageListener.onClick(view);
-                        }
+
                     } else {
                         getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                         BaseActivity.showToast("Please login");
@@ -337,10 +330,8 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
                             } else {
-                                if(getActivity() instanceof AddCommentActivity)
                                 ((AddCommentActivity) getActivity()).parentEditComment(currComment);
-                                if(getActivity() instanceof RenderContentActivity)
-                                    ((RenderContentActivity) getActivity()).parentEditComment(currComment);
+
                             }
                         } else if (item.toString().equalsIgnoreCase(getString(R.string.delete))) {
                             if (!MyService.isUserLogin()) {
@@ -415,10 +406,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
                     ((AddCommentActivity) getActivity()).refreshInputComment();
                 }
-                if(getActivity() instanceof  RenderContentActivity){
-                    ((RenderContentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
-                    ((RenderContentActivity) getActivity()).refreshInputComment();
-                }
+
                 notifyDataSetChanged();
             }
         });

@@ -18,13 +18,10 @@ import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetPoetProfile;
 import com.example.sew.common.CollapsingImageLayout;
 import com.example.sew.common.Enums;
-import com.example.sew.common.PoetAudioInterFace;
 import com.example.sew.helpers.AudioPlayerControls;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
-import com.example.sew.models.AudioContent;
-import com.example.sew.models.BaseAudioContent;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.PoetCompleteProfile;
 import com.google.android.material.appbar.AppBarLayout;
@@ -41,7 +38,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PoetDetailActivity extends BaseActivity {
-//    implements PoetAudioInterFace
+    //    implements PoetAudioInterFace
     @BindView(R.id.tabLayout)
     SmartTabLayout tabLayout;
     @BindView(R.id.viewpager)

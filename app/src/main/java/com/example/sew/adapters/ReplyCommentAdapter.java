@@ -20,7 +20,6 @@ import com.example.sew.R;
 import com.example.sew.activities.AddCommentActivity;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.LoginActivity;
-import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetMarkLikeDislike;
 import com.example.sew.apis.GetUserComplainType;
@@ -63,11 +62,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ReplyViewHolder(getInflatedView(R.layout.cell_reply_section, parent));
     }
-    private View.OnClickListener onChildMoreClickListener;
 
-    public void setOnChildMoreClickListener(View.OnClickListener onItemClickListener) {
-        this.onChildMoreClickListener = onItemClickListener;
-    }
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         if (!(holder instanceof ReplyViewHolder))
@@ -253,9 +248,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                         if (getActivity() instanceof AddCommentActivity) {
                             ((AddCommentActivity) getActivity()).childReply(true, currReplyComment,currComment);
                         }
-                        if(getActivity() instanceof RenderContentActivity){
-                            ((RenderContentActivity) getActivity()).childReply(true, currReplyComment,currComment);
-                        }
+
 
                     }
                     break;
@@ -286,8 +279,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                             } else {
                                 if(getActivity() instanceof AddCommentActivity)
                                     ((AddCommentActivity) getActivity()).childEditComment(currReplyComment);
-                                if(getActivity() instanceof  RenderContentActivity)
-                                    ((RenderContentActivity) getActivity()).childEditComment(currReplyComment);
+
                             }
                         } else if (item.toString().equalsIgnoreCase(getString(R.string.delete))) {
                             if (!MyService.isUserLogin()) {
@@ -313,10 +305,6 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                     if(getActivity() instanceof  AddCommentActivity) {
                         ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
                         ((AddCommentActivity) getActivity()).refreshCommentAdapter();
-                    }
-                    if(getActivity() instanceof RenderContentActivity){
-                        ((RenderContentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
-                        ((RenderContentActivity) getActivity()).refreshCommentAdapter();
                     }
                     currComment.updateReplyCount(postRemoveComment.getReplyCount());
                     notifyDataSetChanged();

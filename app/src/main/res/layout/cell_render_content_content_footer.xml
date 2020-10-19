@@ -62,6 +62,9 @@
             android:layout_marginBottom="@dimen/_32sdp"
             android:background="?appDividerColor"/>
     </LinearLayout>
+    <include
+        android:id="@+id/layCommentSection"
+        layout="@layout/render_comment_section" />
     <LinearLayout
         android:id="@+id/layNext"
         android:layout_width="match_parent"
@@ -244,9 +247,7 @@
         android:layout_marginTop="@dimen/_14sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="?appDividerColor" />
-    <include
-        android:id="@+id/layCommentSection"
-        layout="@layout/render_comment_section" />
+
     <include
         android:id="@+id/layKeepReading"
         layout="@layout/cell_render_content_keep_reading_like"
