@@ -163,6 +163,8 @@ private String sortedBy;
                             .setLayParaContainer(sherViewHolder.laySher)
                             .setParas(sherContent.getRenderText().get(0))
                             .setLeftRightPadding((int) Utils.pxFromDp(32))
+                            .setIsQuote(true)
+                            .setTextAlignment(Enums.TEXT_ALIGNMENT.CENTER)
                             .setOnWordClick(onWordClickListener)
                             .setOnWordLongClick(onWordLongClick)
                             .Build();

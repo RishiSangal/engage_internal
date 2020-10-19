@@ -52,4 +52,12 @@ public class Para {
     public View getContainerView() {
         return containerView;
     }
+
+    public Para cloneThis() {
+        Para para = new Para(null);
+        para.lines = new ArrayList<>(this.lines);
+        para.translations = new ArrayList<>(this.translations);
+        para.containerView = this.containerView;
+        return para;
+    }
 }
