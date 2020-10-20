@@ -1121,13 +1121,13 @@
   },
   "comments": {
     "eng": "COMMENTS",
-    "hin": "COMMENTS",
-    "urdu": "COMMENTS"
+    "hin": "प्रतिक्रियाएँ",
+    "urdu": "آرا"
   },
   "comment": {
-    "eng": "Comment",
-    "hin": "टिप्पणी",
-    "urdu": "تبصرہ"
+    "eng": "COMMENT",
+    "hin": "प्रतिक्रिया",
+    "urdu": "رائے"
   },
   "share_your_view": {
     "eng": "SHARE YOUR VIEWS",
@@ -1135,9 +1135,9 @@
     "urdu": "SHARE YOUR VIEWS"
   },
   "add_comment": {
-    "eng": "add comment...",
-    "hin": "add comment...",
-    "urdu": "add comment..."
+    "eng": "ADD COMMENT",
+    "hin": "आपके विचार",
+    "urdu": "آپ کی رائے"
   },
   "did_you_know_header": {
     "eng": "DID YOU KNOW ?",

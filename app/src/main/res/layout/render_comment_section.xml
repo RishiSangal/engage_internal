@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/layCommentSection"
     android:layout_width="match_parent"
     android:layoutDirection="ltr"
     android:layout_marginTop="@dimen/_30sdp"
@@ -12,6 +11,7 @@
     android:layout_height="@dimen/_90sdp"
     android:background="@drawable/comment_bg"
     android:layout_gravity="center"
+    android:id="@+id/layCommentSection"
     android:orientation="vertical">
     <com.example.sew.views.TitleTextViewType6
         android:id="@+id/txtCommentCount"

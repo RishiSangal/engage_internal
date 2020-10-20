@@ -1,5 +1,6 @@
 package com.example.sew.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -492,6 +493,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 
     GetAllCommentsByTargetId getAllCommentsByTargetId;
 
+    @SuppressLint("SetTextI18n")
     private void getAllComments() {
         getAllCommentsByTargetId = new GetAllCommentsByTargetId();
         getAllCommentsByTargetId.setTargetId(contentId).setSortBy(Enums.FORUM_SORT_FIELDS.POPULARITY.getKey())
@@ -499,13 +501,16 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 comment = getAllCommentsByTargetIds.getComment();
                 if (comment.size() == 0) {
-                    txtCommentCount.setText("ADD");
-                    txtComment.setText(MyHelper.getString(R.string.comment));
+                    txtCommentCount.setTextSize(13);
+                    txtCommentCount.setText(MyHelper.getString(R.string.add_comment));
+                    txtComment.setVisibility(View.GONE);
                 }
                 else {
                     if (getAllCommentsByTargetId.getTotalCommentsCount().length() > 2) {
                         txtCommentCount.setTextSize(15);
                     }
+                    txtCommentCount.setTextSize(14);
+                    txtComment.setVisibility(View.VISIBLE);
                     txtComment.setText(getAllCommentsByTargetId.getTotalCommentsCount().equalsIgnoreCase("1") ? MyHelper.getString(R.string.comment) : MyHelper.getString(R.string.comments));
                     txtCommentCount.setText(getAllCommentsByTargetId.getTotalCommentsCount());
                 }
