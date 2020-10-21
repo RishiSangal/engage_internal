@@ -46,6 +46,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
 
 public class RenderHelper {
@@ -134,15 +135,13 @@ public class RenderHelper {
             }
             txtPlainContent.setText(MyHelper.fromHtml(htmlContent));
             txtPlainContent.setBackgroundColor(activity.getAppBackgroundColor());
-
-
         } else {
-           final ArrayList<Para> modifiedParas = new ArrayList<>();
+            final ArrayList<Para> modifiedParas = new ArrayList<>();
             if (isQuote) {
                 modifiedParas.addAll(getModifiedPara(activity, paras, leftRightPadding));
             }
             if (modifiedParas.isEmpty())
-               modifiedParas.addAll(paras);
+                modifiedParas.addAll(paras);
             int finalLeftRightPadding = leftRightPadding;
             calculateMaxLength(activity, modifiedParas, leftRightPadding, showLoadingDialog, (maxLength, desiredFontSize) -> {
                 if (zoomLayout != null) {
@@ -375,12 +374,19 @@ public class RenderHelper {
         }).start();
     }
 
+    private static final HashMap<Para, ArrayList<Para>> cacheModifiedParas = new HashMap<>();
+
     private static ArrayList<Para> getModifiedPara(final BaseActivity activity,
                                                    ArrayList<Para> paras,
                                                    int leftRightPadding) {
 
         if (paras.size() > 0 && paras.get(0).getLines().size() > 0) {
-            return convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding);
+            if (cacheModifiedParas.get(paras.get(0)) != null)
+                return
+                        cacheModifiedParas.get(paras.get(0));
+            else
+                cacheModifiedParas.put(paras.get(0), convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding));
+            return cacheModifiedParas.get(paras.get(0));
         }
         return paras;
     }

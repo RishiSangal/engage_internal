@@ -64,22 +64,23 @@ import butterknife.OnClick;
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.view.View.VISIBLE;
 
-public class PoetSherAdapter extends BasePoetContentAdapter {
+public class PoetQuoteAdapter extends BasePoetContentAdapter {
     private ArrayList<SherContent> sherContents;
     private PoetDetail poetDetail;
     private View.OnClickListener onTagClick, onGhazalClick;
     private ContentType contentType;
     private int totalContentCount;
     PoetSherFragment fragment;
-private String sortedBy;
-    public PoetSherAdapter(BaseActivity activity, ArrayList<SherContent> sherContents, PoetDetail poetDetail, ContentType contentType,
-                           PoetSherFragment fragment,String sortedBy) {
+    private String sortedBy;
+
+    public PoetQuoteAdapter(BaseActivity activity, ArrayList<SherContent> sherContents, PoetDetail poetDetail, ContentType contentType,
+                            PoetSherFragment fragment, String sortedBy) {
         super(activity, poetDetail);
         this.sherContents = sherContents;
         this.poetDetail = poetDetail;
         this.contentType = contentType;
         this.fragment = fragment;
-        this.sortedBy= sortedBy;
+        this.sortedBy = sortedBy;
     }
 
     public void setTotalContentCount(int totalContentCount) {
@@ -114,7 +115,7 @@ private String sortedBy;
                 } else
                     poetsProfileViewHolder = (PoetsProfileViewHolder) convertView.getTag();
                 convertView.setTag(poetsProfileViewHolder);
-                if(sherContents.size()>1)
+                if (sherContents.size() > 1)
                     poetsProfileViewHolder.txtFilter.setVisibility(View.VISIBLE);
                 else
                     poetsProfileViewHolder.txtFilter.setVisibility(View.GONE);
@@ -124,7 +125,7 @@ private String sortedBy;
                 SherViewHolder sherViewHolder;
                 SherContent sherContent = getItem(position);
                 if (convertView == null) {
-                    convertView = getInflatedView(R.layout.cell_poet_shers);
+                    convertView = getInflatedView(R.layout.cell_poet_quotes);
                     sherViewHolder = new SherViewHolder(convertView);
                 } else
                     sherViewHolder = (SherViewHolder) convertView.getTag();
@@ -163,6 +164,8 @@ private String sortedBy;
                             .setLayParaContainer(sherViewHolder.laySher)
                             .setParas(sherContent.getRenderText().get(0))
                             .setLeftRightPadding((int) Utils.pxFromDp(32))
+                            .setIsQuote(true)
+                            .setTextAlignment(Enums.TEXT_ALIGNMENT.LEFT)
                             .setOnWordClick(onWordClickListener)
                             .setOnWordLongClick(onWordLongClick)
                             .Build();
@@ -263,15 +266,18 @@ private String sortedBy;
     private int getClickableTextColor() {
         return ContextCompat.getColor(getActivity(), R.color.dark_blue);
     }
+
     private View.OnClickListener onEnableCritiqueClickListener = v -> {
         SherContent sherContent = (SherContent) v.getTag(R.id.tag_data);
         enableCritiqueWordContainer(sherContent);
     };
+
     private void enableCritiqueWordContainer(SherContent sherContent) {
         Para para = sherContent.getRenderText().get(0);
         Line line = para.getLines().get(0);
         ShowCritiqueSubmitForm(1, line.getFullText(), sherContent);
     }
+
     private View.OnLongClickListener onWordLongClick = v -> {
         Para para = (Para) v.getTag(R.id.tag_para);
         if (para == null)
@@ -384,15 +390,16 @@ private String sortedBy;
     String getContentCount() {
         return String.valueOf(totalContentCount);
     }
-    ArrayList<String>sortContent;
+
+    ArrayList<String> sortContent;
+
     @Override
     void contentFilter(View view) {
 
         if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
-            new ContentSortSherPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
+            new ContentSortSherPopupWindow(getActivity(), getContentTitle(), fragment, sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_LEFT, false); // Creation of popup
         else
-            new ContentSortSherPopupWindow(getActivity(),getContentTitle(),fragment,sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
-
+            new ContentSortSherPopupWindow(getActivity(), getContentTitle(), fragment, sortedBy).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
 
 
 //        sortContent = new ArrayList<>();
@@ -515,6 +522,7 @@ private String sortedBy;
         clipboard.setPrimaryClip(clip);
         Toast.makeText(getActivity(), AppErrorMessage.poetsher_adapter_copied_to_clipboard, Toast.LENGTH_SHORT).show();
     }
+
     Dialog critiqueSubmitForm;
 
     public void ShowCritiqueSubmitForm(final int lineNumber, final String ghazalLine, SherContent sherContent) {
