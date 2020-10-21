@@ -19,8 +19,10 @@ import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,7 +105,33 @@ public class FavoriteDictionaryFragment extends BaseFragment {
 //                allData.add("REKHTA DICTIONARY");
             allData.addAll(searchDictionaries);
         }
+        sortDictionaryList(searchDictionaries);
         lstDictionary.setAdapter(dictionaryRecyclerAdapter = new DictionaryRecyclerAdapter(GetActivity(), allData));
+    }
+
+    private void sortDictionaryList(ArrayList<FavoriteDictionary> searchDictionaries) {
+        try {
+            Collections.sort(searchDictionaries, new DictionaryComparator());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    public class DictionaryComparator implements Comparator<FavoriteDictionary> {
+        @Override
+        public int compare(FavoriteDictionary favoriteDictionary, FavoriteDictionary t1) {
+            try {
+                SimpleDateFormat dictionaryDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                long f1 = dictionaryDate.parse(t1.getFD()).getTime();
+                long f2 = dictionaryDate.parse(favoriteDictionary.getFD()).getTime();
+                if (f1 > f2) return 1;
+                else if (f1 < f2) return -1;
+                return 0;
+            } catch (Exception e) {
+                // TODO: handle exception
+                return 0;
+            }
+        }
     }
 
 }

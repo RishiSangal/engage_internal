@@ -3,6 +3,7 @@ package com.example.sew.models;
 import android.text.TextUtils;
 
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyService;
 
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ public class FavoriteDictionary extends BaseOtherFavModel {
     private String Urdu;
     private String Hindi;
     private String English;
+    private String FD;
     private String Meaning1_En;
     private String Meaning2_En;
     private String Meaning3_En;
@@ -45,6 +47,7 @@ public class FavoriteDictionary extends BaseOtherFavModel {
         Urdu = optString(jsonObject, "WU");
         Hindi = optString(jsonObject, "WH");
         English = optString(jsonObject, "WE");
+        FD = optString(jsonObject, "FD");
         Meaning1_En = optString(jsonObject, "ME");
         Meaning2_En = optString(jsonObject, "ME");
         Meaning3_En = optString(jsonObject, "ME");
@@ -55,6 +58,13 @@ public class FavoriteDictionary extends BaseOtherFavModel {
         Meaning2_Ur = optString(jsonObject, "MU");
         Meaning3_Ur = optString(jsonObject, "MU");
         isHaveAudio = jsonObject.optBoolean("HA",false);
+    }
+
+    public String getFD() {
+        if (FD.isEmpty())
+            return Utils.getCurrentFM();
+        else
+            return FD;
     }
 
     public String getId() {

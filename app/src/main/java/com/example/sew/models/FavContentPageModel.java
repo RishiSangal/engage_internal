@@ -57,14 +57,14 @@ public class FavContentPageModel extends BaseModel {
             renderContentHi,
             renderContentUrdu;
     private boolean isHTML;
-    private String htmlOrJsonRenderContentEn,htmlOrJsonRenderContentHi,htmlOrJsonRenderContentUrdu, FM;
+    private String htmlOrJsonRenderContentEn,htmlOrJsonRenderContentHi,htmlOrJsonRenderContentUrdu, FD;
     JSONObject jsonObject;
 
     public FavContentPageModel(JSONObject jsonObject) {
         if (jsonObject == null)
             jsonObject = new JSONObject();
         this.jsonObject = jsonObject;
-        this.FM = optString(jsonObject, "FM");
+        this.FD = optString(jsonObject, "FD");
         this.UrlUrdu = optString(jsonObject, "UU");
         this.UrlHindi = optString(jsonObject, "UH");
         this.UrlEnglish = optString(jsonObject, "UE");
@@ -167,11 +167,11 @@ public class FavContentPageModel extends BaseModel {
 //        this.renderContentUrdu = new RenderContent(jSONObject);
     }
 
-    public String getFM() {
-        if (FM.isEmpty())
+    public String getFD() {
+        if (FD.isEmpty())
             return Utils.getCurrentFM();
         else
-            return FM;
+            return FD;
     }
 
     public void setHaveEn(String haveEn) {

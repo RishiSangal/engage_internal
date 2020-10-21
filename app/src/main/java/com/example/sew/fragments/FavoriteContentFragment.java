@@ -100,8 +100,8 @@ public class FavoriteContentFragment extends BaseFragment {
         public int compare(FavContentPageModel favContentPageModel, FavContentPageModel t1) {
             try {
                 SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-                long f1 = sdf_billdate.parse(t1.getFM()).getTime();
-                long f2 = sdf_billdate.parse(favContentPageModel.getFM()).getTime();
+                long f1 = sdf_billdate.parse(t1.getFD()).getTime();
+                long f2 = sdf_billdate.parse(favContentPageModel.getFD()).getTime();
                 if (f1 > f2) return 1;
                 else if (f1 < f2) return -1;
                 return 0;

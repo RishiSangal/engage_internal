@@ -201,7 +201,7 @@ public class FavoriteShayariImageFragment extends BaseFragment {
         @Override
         public int compare(ShayariImage shayariImage, ShayariImage t1) {
             try {
-                SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS");
                 long f1 = sdf_billdate.parse(t1.getDateCreated()).getTime();
                 long f2 = sdf_billdate.parse(shayariImage.getDateCreated()).getTime();
                 if (f1 > f2) return 1;

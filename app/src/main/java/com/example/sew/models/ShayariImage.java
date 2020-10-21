@@ -30,6 +30,7 @@ public class ShayariImage extends BaseOtherFavModel {
     private String shareUrlEN;
     private String shareUrlHI;
     private String shareUrlUR;
+    private String FD;
 
     /*
     "UE":"http://rek.ht/a/07ps",
@@ -67,6 +68,7 @@ public class ShayariImage extends BaseOtherFavModel {
         shareUrlEN = optString(jsonObject, "UE");
         shareUrlHI = optString(jsonObject, "UH");
         shareUrlUR = optString(jsonObject, "UU");
+        FD = optString(jsonObject, "FD");
 
     }
 
@@ -125,10 +127,10 @@ public class ShayariImage extends BaseOtherFavModel {
     }
 
     public String getDateCreated() {
-        if (dateCreated.isEmpty())
+        if (FD.isEmpty())
             return Utils.getCurrentFM();
         else
-            return dateCreated;
+            return FD;
     }
 
     public int getLanguageCode() {
