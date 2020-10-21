@@ -3,6 +3,7 @@ package com.example.sew.models;
 import android.text.TextUtils;
 
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 
@@ -124,7 +125,10 @@ public class ShayariImage extends BaseOtherFavModel {
     }
 
     public String getDateCreated() {
-        return dateCreated;
+        if (dateCreated.isEmpty())
+            return Utils.getCurrentFM();
+        else
+            return dateCreated;
     }
 
     public int getLanguageCode() {

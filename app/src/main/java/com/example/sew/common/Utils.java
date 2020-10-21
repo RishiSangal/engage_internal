@@ -1,12 +1,15 @@
 package com.example.sew.common;
 
 import android.content.res.Resources;
-import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sew.MyApplication;
-import com.example.sew.helpers.MyService;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
     public static float dpFromPx(final float px) {
@@ -42,5 +45,11 @@ public class Utils {
             p.setMarginStart(start);
             view.requestLayout();
         }
+    }
+
+    public static String getCurrentFM() {
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        return formatter1.format(calendar.getTime());
     }
 }
