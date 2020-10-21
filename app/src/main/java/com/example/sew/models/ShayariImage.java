@@ -3,6 +3,7 @@ package com.example.sew.models;
 import android.text.TextUtils;
 
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 
@@ -29,6 +30,7 @@ public class ShayariImage extends BaseOtherFavModel {
     private String shareUrlEN;
     private String shareUrlHI;
     private String shareUrlUR;
+    private String FD;
 
     /*
     "UE":"http://rek.ht/a/07ps",
@@ -66,6 +68,7 @@ public class ShayariImage extends BaseOtherFavModel {
         shareUrlEN = optString(jsonObject, "UE");
         shareUrlHI = optString(jsonObject, "UH");
         shareUrlUR = optString(jsonObject, "UU");
+        FD = optString(jsonObject, "FD");
 
     }
 
@@ -124,7 +127,10 @@ public class ShayariImage extends BaseOtherFavModel {
     }
 
     public String getDateCreated() {
-        return dateCreated;
+        if (FD.isEmpty())
+            return Utils.getCurrentFM();
+        else
+            return FD;
     }
 
     public int getLanguageCode() {

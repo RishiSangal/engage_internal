@@ -31,10 +31,25 @@ public class Line {
     }
 
     public String getFullText() {
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < wordContainers.size(); i++) {
+            WordContainer wordContainer = wordContainers.get(i);
+            if (i != 0)
+                stringBuffer.append(" ");
+            stringBuffer.append(wordContainer.getWord());
+        }
+        fullText = stringBuffer.toString();
         return fullText;
     }
 
     public ArrayList<WordContainer> getWordContainers() {
         return this.wordContainers;
+    }
+
+    public Line cloneThis() {
+        Line line = new Line(null);
+        line.wordContainers = new ArrayList<>(this.wordContainers);
+        line.fullText = this.fullText;
+        return line;
     }
 }

@@ -268,7 +268,7 @@ public class MyService {
     }
 
     public static void addFavorite(String contentId) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (TextUtils.isEmpty(contentId))
             return;
@@ -280,7 +280,7 @@ public class MyService {
     }
 
     public static void addFavorite(String contentId, String contentTypeId) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (TextUtils.isEmpty(contentId) || TextUtils.isEmpty(contentTypeId))
             return;
@@ -298,7 +298,7 @@ public class MyService {
     }
 
     public static void addFavoriteListContent(FavContentPageModel favContentPageModel) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (favContentPageModel == null || TextUtils.isEmpty(favContentPageModel.getId()))
             return;
@@ -310,7 +310,7 @@ public class MyService {
     }
 
     public static void addFavoriteDetailedContent(FavContentPageModel favContentPageModel) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (favContentPageModel == null || TextUtils.isEmpty(favContentPageModel.getId()) || TextUtils.isEmpty(favContentPageModel.getContentTypeId()))
             return;
@@ -471,6 +471,7 @@ public class MyService {
         wordHistory.add(0, keyword);
         Paper.book(DB_SEARCH_KEYWORDS).write(KEYWORDS, wordHistory);
     }
+
     public static void deleteSearchKeywordHistory(String keyword) {
         if (TextUtils.isEmpty(keyword))
             return;
@@ -485,12 +486,14 @@ public class MyService {
         wordHistory.remove(keyword);
         Paper.book(DB_SEARCH_KEYWORDS).write(KEYWORDS, wordHistory);
     }
+
     public static ArrayList<String> getSearchKeywordHistory() {
         return Paper.book(DB_SEARCH_KEYWORDS).read(KEYWORDS, new ArrayList<>());
     }
-    public static void saveContentType(ContentType contentType){
-        String contentTypeId= contentType.getContentId();
-        if(TextUtils.isEmpty(contentTypeId))
+
+    public static void saveContentType(ContentType contentType) {
+        String contentTypeId = contentType.getContentId();
+        if (TextUtils.isEmpty(contentTypeId))
             return;
         contentTypeId = contentTypeId.toUpperCase();
         ArrayList<String> allContentTypeIds = Paper.book(DB_SAVED_ALL_CONTENT_TYPE).read(SAVED_CONTENT_TYPE_IDS, new ArrayList<>());
@@ -500,7 +503,6 @@ public class MyService {
         }
         if (!Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).contains(contentTypeId))
             Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).write(contentTypeId, contentType.getJsonObject());
-
     }
 
     public static void removeContentType(String contentTypeId) {
@@ -522,8 +524,6 @@ public class MyService {
             contentTypesDetails.add(getContentType(contentTypeId));
         return contentTypesDetails;
     }
-
-
 
 
     public static boolean isImageShayariSaved(String imageShayariId) {
@@ -570,9 +570,11 @@ public class MyService {
     private static ShayariImage getImageShayari(String imageShayariId) {
         return new ShayariImage(Paper.book(DB_SAVED_IMAGE_SHAYARI_LIST_CONTENT).read(imageShayariId, new JSONObject()));
     }
+
     private static ContentType getContentType(String contentTypeId) {
         return new ContentType(Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).read(contentTypeId, new JSONObject()));
     }
+
     public static boolean isOfflineSaveEnable() {
         return Paper.book(DB_USER).read(IS_OFFLINE_SAVE_ACTIVE, true);
     }
@@ -625,7 +627,7 @@ public class MyService {
     }
 
     public static void addFavoriteOther(BaseOtherFavModel otherFavModel) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (otherFavModel == null || TextUtils.isEmpty(otherFavModel.getId()) || TextUtils.isEmpty(otherFavModel.getContentTypeId()))
             return;
@@ -638,7 +640,7 @@ public class MyService {
     }
 
     public static void addFavoriteOther(String contentId, Enums.FAV_TYPES favType) {
-        if(!MyService.isUserLogin())
+        if (!MyService.isUserLogin())
             return;
         if (favType == null || TextUtils.isEmpty(contentId))
             return;

@@ -3,6 +3,7 @@ package com.example.sew.models;
 import android.text.TextUtils;
 
 import com.example.sew.common.Enums;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 
@@ -56,13 +57,14 @@ public class FavContentPageModel extends BaseModel {
             renderContentHi,
             renderContentUrdu;
     private boolean isHTML;
-    private String htmlOrJsonRenderContentEn,htmlOrJsonRenderContentHi,htmlOrJsonRenderContentUrdu;
+    private String htmlOrJsonRenderContentEn,htmlOrJsonRenderContentHi,htmlOrJsonRenderContentUrdu, FD;
     JSONObject jsonObject;
 
     public FavContentPageModel(JSONObject jsonObject) {
         if (jsonObject == null)
             jsonObject = new JSONObject();
         this.jsonObject = jsonObject;
+        this.FD = optString(jsonObject, "FD");
         this.UrlUrdu = optString(jsonObject, "UU");
         this.UrlHindi = optString(jsonObject, "UH");
         this.UrlEnglish = optString(jsonObject, "UE");
@@ -163,6 +165,13 @@ public class FavContentPageModel extends BaseModel {
 //            jSONObject = new JSONObject();
 //        }
 //        this.renderContentUrdu = new RenderContent(jSONObject);
+    }
+
+    public String getFD() {
+        if (FD.isEmpty())
+            return Utils.getCurrentFM();
+        else
+            return FD;
     }
 
     public void setHaveEn(String haveEn) {

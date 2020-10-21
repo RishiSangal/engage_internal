@@ -281,7 +281,7 @@ public class MyHelper {
     }
 
     public static ContentType getContentBySlug(String contentSlug) {
-        ArrayList<ContentType> contentTypes = getContentTypes();
+        ArrayList<ContentType> contentTypes = MyService.getAllContentType();
         for (ContentType contentType : contentTypes)
             if (contentType.getSlug().equalsIgnoreCase(contentSlug))
                 return contentType;

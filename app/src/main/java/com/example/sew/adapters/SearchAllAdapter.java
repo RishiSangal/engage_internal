@@ -227,7 +227,7 @@ public class SearchAllAdapter extends BaseMyAdapter {
                 contentViewHolder.txtContentAuthor.setText(content.getPoetName());
                 String bodyData = content.getBody().replace("<br/>", "\n");
                 String body = content.getBody().substring(0, content.getBody().lastIndexOf("\n") + 1) + "";
-                if (content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER) {
+                if (content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER||content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE) {
                     contentViewHolder.txtSher.setText(content.getBody());
                     contentViewHolder.txtContentBodySecond.setVisibility(View.GONE);
                     contentViewHolder.txtContentBody.setVisibility(View.GONE);
@@ -301,6 +301,7 @@ public class SearchAllAdapter extends BaseMyAdapter {
                         contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_blue_A800));
                         break;
                     case SHER:
+                    case QUOTE:
                         contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.sher).toUpperCase());
                         contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_green_A800));
                         contentViewHolder.topLayout.setVisibility(View.GONE);

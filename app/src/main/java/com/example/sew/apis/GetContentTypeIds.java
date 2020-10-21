@@ -1,6 +1,7 @@
 package com.example.sew.apis;
 
 import com.example.sew.common.MyConstants;
+import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.SearchContentAll;
@@ -35,6 +36,11 @@ public class GetContentTypeIds extends Base {
             for (int i = 0; i < contentTypeArray.length(); i++) {
                 allContentTypeList.add(new ContentType(contentTypeArray.optJSONObject(i)));
                 MyService.saveContentType(new ContentType(contentTypeArray.optJSONObject(i)));
+            }
+            ArrayList<ContentType> customContentTypes = MyHelper.getContentTypes();
+            for(ContentType currContentType:customContentTypes){
+                allContentTypeList.add(currContentType);
+                MyService.saveContentType(currContentType);
             }
 //        setValidResponse(data != null && data.optString("Message").contentEquals("success"));
 //        if (isValidResponse()) {

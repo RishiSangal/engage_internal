@@ -22,8 +22,10 @@ import com.google.android.gms.common.util.CollectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +78,8 @@ public class FavoriteContentFragment extends BaseFragment {
             if (!CollectionUtils.isEmpty(data))
                 favContentPageModels.addAll(data);
         }
-        Collections.reverse(favContentPageModels);
+        sortFavouriteList(favContentPageModels);
+//        Collections.reverse(favContentPageModels);
         if (favoriteContentAdapter == null) {
             favoriteContentAdapter = new FavoriteContentRecyclerAdapter(GetActivity(), favContentPageModels);
             favoriteContentAdapter.setOnItemClickListener(this::onGhazalClick);
@@ -85,6 +88,29 @@ public class FavoriteContentFragment extends BaseFragment {
             favoriteContentAdapter.notifyDataSetChanged();
     }
 
+    private void sortFavouriteList(ArrayList<FavContentPageModel> favContentPageModels) {
+        try {
+            Collections.sort(favContentPageModels, new FavouriteComparator());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+    public class FavouriteComparator implements Comparator<FavContentPageModel> {
+        @Override
+        public int compare(FavContentPageModel favContentPageModel, FavContentPageModel t1) {
+            try {
+                SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                long f1 = sdf_billdate.parse(t1.getFD()).getTime();
+                long f2 = sdf_billdate.parse(favContentPageModel.getFD()).getTime();
+                if (f1 > f2) return 1;
+                else if (f1 < f2) return -1;
+                return 0;
+            } catch (Exception e) {
+                // TODO: handle exception
+                return 0;
+            }
+        }
+    }
     @Override
     public void onLanguageChanged() {
         super.onLanguageChanged();

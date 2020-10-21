@@ -1,8 +1,6 @@
 package com.example.sew.fragments;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -24,10 +22,14 @@ import com.example.sew.apis.GetShayariImageWithSearch;
 import com.example.sew.apis.PostRemoveAllFavoriteListByType;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
+import com.example.sew.models.FavContentPageModel;
 import com.example.sew.models.ShayariImage;
 import com.google.android.gms.common.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,6 +167,7 @@ public class FavoriteShayariImageFragment extends BaseFragment {
         if (CollectionUtils.isEmpty(selectedShayariImages))
             currentSelectionType = SELECTION_TYPE_SINGLE;
         if (shayariImageAdapter == null) {
+            sortShayariImagesList(shayariImages);
             shayariImageAdapter = new FavoriteShayariImageAdapter(GetActivity(), shayariImages, selectedShayariImages);
             shayariImageAdapter.setOnItemClickListener(onItemClick);
             shayariImageAdapter.setOnItemLongClickListener(onItemLongClick);
@@ -185,6 +188,30 @@ public class FavoriteShayariImageFragment extends BaseFragment {
             txtRemoveAll.setBackgroundResource(R.drawable.touch_effect);
         }
         updateLanguageSpecificUi();
+    }
+
+    private void sortShayariImagesList(ArrayList<ShayariImage> favContentPageModels) {
+        try {
+            Collections.sort(favContentPageModels, new ShayariComparator());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+    public class ShayariComparator implements Comparator<ShayariImage> {
+        @Override
+        public int compare(ShayariImage shayariImage, ShayariImage t1) {
+            try {
+                SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS");
+                long f1 = sdf_billdate.parse(t1.getDateCreated()).getTime();
+                long f2 = sdf_billdate.parse(shayariImage.getDateCreated()).getTime();
+                if (f1 > f2) return 1;
+                else if (f1 < f2) return -1;
+                return 0;
+            } catch (Exception e) {
+                // TODO: handle exception
+                return 0;
+            }
+        }
     }
 
     private void updateLanguageSpecificUi() {

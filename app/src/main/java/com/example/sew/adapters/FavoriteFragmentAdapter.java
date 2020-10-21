@@ -102,7 +102,6 @@ public class FavoriteFragmentAdapter extends UpdatableFragmentPagerAdapter {
                 return FavoriteDictionaryFragment.getInstance();
             else
                 return FavoritePoetFragment.getInstance();
-
         } else {
             return FavoriteContentFragment.getInstance(mapKeys[position]);
         }

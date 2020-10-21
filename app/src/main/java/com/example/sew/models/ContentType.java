@@ -106,9 +106,12 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
                 return Enums.LIST_RENDERING_FORMAT.NAZM;
             else
                 return Enums.LIST_RENDERING_FORMAT.GHAZAL;
-        } else if (getContentListType().contentEquals("2"))
-            return Enums.LIST_RENDERING_FORMAT.SHER;
-        else if (getContentListType().contentEquals(MyConstants.TMP_POET_PROFILE_ID))
+        } else if (getContentListType().contentEquals("2")) {
+            if (getContentCompositionType().contentEquals("2"))
+                return Enums.LIST_RENDERING_FORMAT.QUOTE;
+            else
+                return Enums.LIST_RENDERING_FORMAT.SHER;
+        } else if (getContentListType().contentEquals(MyConstants.TMP_POET_PROFILE_ID))
             return Enums.LIST_RENDERING_FORMAT.PROFILE;
         else if (getContentListType().contentEquals(MyConstants.TMP_AUDIO_ID))
             return Enums.LIST_RENDERING_FORMAT.AUDIO;

@@ -76,7 +76,7 @@ public class ExploreShayariRecyclerAdapter extends BaseRecyclerAdapter {
                     break;
                 case COLLECTION:
                     ContentType contentType = MyHelper.getContentById(proseCollection.getContentTypeId());
-                    if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER) {
+                    if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER||contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE) {
                         HomeSherCollection homeOccasionCollection = MyHelper.getDummyDefaultSherCollection(proseCollection.getContentTypeId(), proseCollection.getName());
                         getActivity().startActivity(SherTagOccasionActivity.getInstance(getActivity(), homeOccasionCollection));
                     } else

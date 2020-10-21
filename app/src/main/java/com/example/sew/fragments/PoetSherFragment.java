@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import com.example.sew.R;
 import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
+import com.example.sew.adapters.PoetQuoteAdapter;
 import com.example.sew.adapters.PoetSherAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetCoupletListWithPaging;
@@ -47,6 +48,7 @@ public class PoetSherFragment extends BasePoetProfileFragment {
     public void onLanguageChanged() {
         super.onLanguageChanged();
         poetSherAdapter = null;
+        poetQuoteAdapter = null;
         updateUI();
     }
 
@@ -107,6 +109,7 @@ public class PoetSherFragment extends BasePoetProfileFragment {
 
     private ArrayList<SherContent> sherContents = new ArrayList<>();
     private PoetSherAdapter poetSherAdapter;
+    private PoetQuoteAdapter poetQuoteAdapter;
     private View.OnClickListener onWordClickListener = v -> {
         WordContainer wordContainer = (WordContainer) v.getTag(R.id.tag_word);
 //        MeaningBottomSheetFragment.getInstance(wordContainer.getWord(), wordContainer.getMeaning()).show(GetActivity().getSupportFragmentManager(), "MEANING");
@@ -123,18 +126,34 @@ public class PoetSherFragment extends BasePoetProfileFragment {
     };
 
     private void updateUI() {
-        if (poetSherAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
-            poetSherAdapter = new PoetSherAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
-            poetSherAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
-            poetSherAdapter.setOnWordClickListener(onWordClickListener);
-            poetSherAdapter.setOnTagClick(onTagClickListener);
-            poetSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
-            lstPoetContent.setAdapter(poetSherAdapter);
-            if (state != null)
-                lstPoetContent.onRestoreInstanceState(state);
-        } else
-            poetSherAdapter.notifyDataSetChanged();
+        if(getContentType().getListRenderingFormat()== Enums.LIST_RENDERING_FORMAT.SHER){
+            if (poetSherAdapter == null) {
+                Parcelable state = lstPoetContent.onSaveInstanceState();
+                poetSherAdapter = new PoetSherAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
+                poetSherAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
+                poetSherAdapter.setOnWordClickListener(onWordClickListener);
+                poetSherAdapter.setOnTagClick(onTagClickListener);
+                poetSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
+                lstPoetContent.setAdapter(poetSherAdapter);
+                if (state != null)
+                    lstPoetContent.onRestoreInstanceState(state);
+            } else
+                poetSherAdapter.notifyDataSetChanged();
+        }else if(getContentType().getListRenderingFormat()== Enums.LIST_RENDERING_FORMAT.QUOTE){
+            if (poetQuoteAdapter == null) {
+                Parcelable state = lstPoetContent.onSaveInstanceState();
+                poetQuoteAdapter = new PoetQuoteAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
+                poetQuoteAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
+                poetQuoteAdapter.setOnWordClickListener(onWordClickListener);
+                poetQuoteAdapter.setOnTagClick(onTagClickListener);
+                poetQuoteAdapter.setOnGhazalClickListener(onGhazalClickListener);
+                lstPoetContent.setAdapter(poetQuoteAdapter);
+                if (state != null)
+                    lstPoetContent.onRestoreInstanceState(state);
+            } else
+                poetQuoteAdapter.notifyDataSetChanged();
+        }
+
     }
 
     public void sortContent(Enums.SORT_CONTENT sortBy) {

@@ -49,6 +49,7 @@ public class PoetDetailFragmentAdapter extends CustomFragmentStatePagerAdapter {
             case NAZM:
                 return PoetNazmFragment.getInstance(poetDetail, poetProfilesTabs.get(position));
             case SHER:
+            case QUOTE:
                 return PoetSherFragment.getInstance(poetDetail, poetProfilesTabs.get(position));
             case AUDIO:
                 return PoetAudioFragment.getInstance(poetDetail);

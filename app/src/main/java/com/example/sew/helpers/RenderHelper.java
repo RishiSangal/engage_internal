@@ -46,6 +46,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
 
 public class RenderHelper {
@@ -73,7 +74,7 @@ public class RenderHelper {
                                       final View.OnClickListener onWordClick,
                                       final View.OnLongClickListener onWordLongClick,
                                       LinearLayout layParaContainer, GestureFrameLayout zoomLayout, int textColor, int leftRightPadding,
-                                      boolean isHTML, String htmlContent, boolean showLoadingDialog, boolean showTranslation) {
+                                      boolean isHTML, boolean isQuote, String htmlContent, boolean showLoadingDialog, boolean showTranslation) {
         // Para para = paras.get(0);
         leftRightPadding += 5;
         int dp_5 = (int) Utils.pxFromDp(5);
@@ -134,11 +135,15 @@ public class RenderHelper {
             }
             txtPlainContent.setText(MyHelper.fromHtml(htmlContent));
             txtPlainContent.setBackgroundColor(activity.getAppBackgroundColor());
-
-
         } else {
+            final ArrayList<Para> modifiedParas = new ArrayList<>();
+            if (isQuote) {
+                modifiedParas.addAll(getModifiedPara(activity, paras, leftRightPadding));
+            }
+            if (modifiedParas.isEmpty())
+                modifiedParas.addAll(paras);
             int finalLeftRightPadding = leftRightPadding;
-            calculateMaxLength(activity, paras, leftRightPadding, showLoadingDialog, (maxLength, desiredFontSize) -> {
+            calculateMaxLength(activity, modifiedParas, leftRightPadding, showLoadingDialog, (maxLength, desiredFontSize) -> {
                 if (zoomLayout != null) {
                     if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
                         zoomLayout.getController().getSettings().setMaxZoom((maxFontSize / (float) desiredFontSize) * 2);
@@ -162,7 +167,7 @@ public class RenderHelper {
                 } else if (layParaContainer.getParent() instanceof FrameLayout)
                     layParaContainer.setLayoutParams(new FrameLayout.LayoutParams((int) Math.ceil(maxLength), LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                createParaViews(activity, paras, onWordClick, onWordLongClick, textAlignment, desiredFontSize, textColor, showLoadingDialog, showTranslation, views -> {
+                createParaViews(activity, modifiedParas, onWordClick, onWordLongClick, textAlignment, desiredFontSize, textColor, showLoadingDialog, showTranslation, views -> {
                     activity.dismissDialog();
                     if (!CollectionUtils.isEmpty(views)) {
                         layParaContainer.removeAllViews();
@@ -367,6 +372,88 @@ public class RenderHelper {
             }
 
         }).start();
+    }
+
+    private static final HashMap<Para, ArrayList<Para>> cacheModifiedParas = new HashMap<>();
+
+    private static ArrayList<Para> getModifiedPara(final BaseActivity activity,
+                                                   ArrayList<Para> paras,
+                                                   int leftRightPadding) {
+
+        if (paras.size() > 0 && paras.get(0).getLines().size() > 0) {
+            if (cacheModifiedParas.get(paras.get(0)) != null)
+                return
+                        cacheModifiedParas.get(paras.get(0));
+            else
+                cacheModifiedParas.put(paras.get(0), convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding));
+            return cacheModifiedParas.get(paras.get(0));
+        }
+        return paras;
+    }
+
+    private static ArrayList<Para> convertToMultiLines(final BaseActivity activity, Line line, Para para,
+                                                       int leftRightPadding) {
+        final float[] maxLength = {0};
+        final float maxHindiFontSize = 15f;
+        final float maxOtherFontSize = 18f;
+        int finalLeftRightPadding = leftRightPadding;
+        int desireScreenWidth = (int) (Utils.getScreenWidth() - Math.max(Utils.pxFromDp(5), finalLeftRightPadding));
+        int dp_5 = (int) Utils.pxFromDp(5);
+        int dp_1 = (int) Utils.pxFromDp(1);
+        Typeface entTf, hindiTf, urduTf;
+        entTf = ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
+        hindiTf = ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
+        urduTf = ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+        final float maxFontSize = MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI ? maxHindiFontSize : maxOtherFontSize;
+        float desiredFontSize = maxOtherFontSize;
+        TextPaint paint = new TextPaint();
+        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH) {//for urdu, we need to use roboto, otherwise custom font
+            paint.setTypeface(entTf);
+        } else if (MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {//for urdu, we need to use roboto, otherwise custom font
+            paint.setTypeface(hindiTf);
+            desiredFontSize = maxHindiFontSize;
+        } else if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU) {//for urdu, we need to use roboto, otherwise custom font
+            paint.setTypeface(urduTf);
+        }
+
+        Line tmpLine = line.cloneThis();
+        Para tmpPara = para.cloneThis();
+        tmpPara.getLines().clear();
+        ArrayList<Para> tmpParas = new ArrayList<>();
+        ArrayList<WordContainer> tmpWordContainer;
+        tmpParas.add(tmpPara);
+        while (!tmpLine.getWordContainers().isEmpty()) {
+            Line currentLine = line.cloneThis();
+            currentLine.getWordContainers().clear();
+            tmpPara.getLines().add(currentLine);
+            tmpWordContainer = currentLine.getWordContainers();
+            for (int i = 0; i < tmpLine.getWordContainers().size(); i++) {
+                if (i == 0) {
+                    tmpWordContainer.add(tmpLine.getWordContainers().get(i));
+                    if (tmpLine.getWordContainers().size() == 1) {
+                        tmpLine.getWordContainers().remove(tmpLine.getWordContainers().get(i));
+                        break;
+                    } else
+                        continue;
+                }
+                tmpWordContainer.add(tmpLine.getWordContainers().get(i));
+                float maxLengthToFillThisText = getMaxLengthToFillThisText(activity, tmpParas, (int) desiredFontSize, desireScreenWidth, finalLeftRightPadding);
+                boolean canTextRender = maxLengthToFillThisText < desireScreenWidth;
+                if (!canTextRender) {
+                    tmpWordContainer.remove(tmpLine.getWordContainers().get(i));
+                    for (WordContainer currWord : tmpWordContainer) {
+                        tmpLine.getWordContainers().remove(currWord);
+                    }
+                    break;
+                } else if (i == tmpLine.getWordContainers().size() - 1) {
+                    for (WordContainer currWord : tmpWordContainer) {
+                        tmpLine.getWordContainers().remove(currWord);
+                    }
+                    break;
+                }
+            }
+        }
+        return tmpParas;
     }
 
     private static void calculateMaxLength(final BaseActivity activity,
@@ -618,6 +705,7 @@ public class RenderHelper {
         private GestureFrameLayout zoomLayout;
         private int leftRightPadding;
         private boolean isHTML;
+        private boolean isQuote;
         private String htmlContent = "";
         private boolean showLoadingDialog = false;
         private boolean showTranslation = false;
@@ -691,6 +779,11 @@ public class RenderHelper {
             return this;
         }
 
+        public RenderContentBuilder setIsQuote(boolean isQuote) {
+            this.isQuote = isQuote;
+            return this;
+        }
+
         public RenderContentBuilder setHtmlContent(String htmlContent) {
             this.htmlContent = htmlContent;
             return this;
@@ -708,7 +801,7 @@ public class RenderHelper {
                 throw new IllegalArgumentException("activity cannot be null");
             else if (paras == null && !isHTML)
                 throw new IllegalArgumentException("paras cannot be null");
-            renderContent(paras, activity, textAlignment, onWordClick, onWordLongClick, layParaContainer, zoomLayout, textColor, leftRightPadding, isHTML, htmlContent, showLoadingDialog, showTranslation);
+            renderContent(paras, activity, textAlignment, onWordClick, onWordLongClick, layParaContainer, zoomLayout, textColor, leftRightPadding, isHTML, isQuote, htmlContent, showLoadingDialog, showTranslation);
         }
     }
 
