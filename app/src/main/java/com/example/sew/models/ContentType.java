@@ -43,7 +43,10 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
         contentCount = MyHelper.convertToInt(optString(jsonObject, "C"));
         contentListType = optString(jsonObject, "LT");
         contentCompositionType = optString(jsonObject, "CT");
-        sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
+        if (jsonObject.has("CS"))
+            sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
+        else
+            sequence = jsonObject.hashCode();
     }
 
     @Override
@@ -111,7 +114,7 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
             return Enums.LIST_RENDERING_FORMAT.AUDIO;
         else if (getContentListType().contentEquals(MyConstants.TMP_VIDEO_ID))
             return Enums.LIST_RENDERING_FORMAT.VIDEO;
-        else if(getContentListType().contentEquals(MyConstants.TMP_IMAGE_SHAYRI_ID))
+        else if (getContentListType().contentEquals(MyConstants.TMP_IMAGE_SHAYRI_ID))
             return Enums.LIST_RENDERING_FORMAT.IMAGE_SHAYRI;
         return Enums.LIST_RENDERING_FORMAT.NAZM;
     }
@@ -151,7 +154,7 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
 
     @Override
     public int hashCode() {
-        return getContentId().hashCode();
+        return jsonObject.hashCode();
     }
 
     public int getSequence() {

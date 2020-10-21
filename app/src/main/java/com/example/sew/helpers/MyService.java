@@ -363,7 +363,7 @@ public class MyService {
         Paper.book(DB_SAVED_IMAGE_SHAYARI).destroy();
         Paper.book(DB_SAVED_IMAGE_SHAYARI_LIST_CONTENT).destroy();
         Paper.book(DB_FAVORITE_LIST_OTHER).destroy();
-       // Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).destroy();
+        // Paper.book(DB_SAVED_ALL_CONTENT_TYPE_LIST).destroy();
     }
 
     public static void removeAllDetailedFavoriteContent() {
@@ -435,15 +435,15 @@ public class MyService {
         List<String> allContentTypeIdsKeys = Paper.book(DB_FAVORITE).getAllKeys();
         if (CollectionUtils.isEmpty(allContentTypeIdsKeys))
             allContentTypeIdsKeys = new ArrayList<>();
-        TreeMap<ContentType, ArrayList<FavContentPageModel>> contentTypeArrayListHashMap = new TreeMap<>();
+        TreeMap<ContentType, ArrayList<FavContentPageModel>> contentTypeHashMap = new TreeMap<>();
         for (String contentTypeId : allContentTypeIdsKeys) {
             if (!isDiscardedContentType(contentTypeId)) {
                 ArrayList<FavContentPageModel> favContentPageModels = getAllFavorite(contentTypeId);
                 if (!CollectionUtils.isEmpty(favContentPageModels))
-                    contentTypeArrayListHashMap.put(MyHelper.getContentById(contentTypeId), favContentPageModels);
+                    contentTypeHashMap.put(MyHelper.getContentById(contentTypeId), favContentPageModels);
             }
         }
-        return contentTypeArrayListHashMap;
+        return contentTypeHashMap;
     }
 
     private static boolean isDiscardedContentType(String contentTypeId) {
