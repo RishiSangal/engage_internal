@@ -5,6 +5,7 @@
     android:layoutDirection="ltr"
     android:layout_marginTop="@dimen/_30sdp"
     android:layout_marginBottom="@dimen/_40sdp"
+    android:gravity="center"
     android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="@dimen/_90sdp"
