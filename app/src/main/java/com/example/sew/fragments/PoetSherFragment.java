@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,28 +127,22 @@ public class PoetSherFragment extends BasePoetProfileFragment {
     private void updateUI() {
         if(getContentType().getListRenderingFormat()== Enums.LIST_RENDERING_FORMAT.SHER){
             if (poetSherAdapter == null) {
-                Parcelable state = lstPoetContent.onSaveInstanceState();
                 poetSherAdapter = new PoetSherAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
                 poetSherAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
                 poetSherAdapter.setOnWordClickListener(onWordClickListener);
                 poetSherAdapter.setOnTagClick(onTagClickListener);
                 poetSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
                 lstPoetContent.setAdapter(poetSherAdapter);
-                if (state != null)
-                    lstPoetContent.onRestoreInstanceState(state);
             } else
                 poetSherAdapter.notifyDataSetChanged();
         }else if(getContentType().getListRenderingFormat()== Enums.LIST_RENDERING_FORMAT.QUOTE){
             if (poetQuoteAdapter == null) {
-                Parcelable state = lstPoetContent.onSaveInstanceState();
                 poetQuoteAdapter = new PoetQuoteAdapter(GetActivity(), sherContents, getPoetDetail(), getContentType(), PoetSherFragment.this, defaultSortContent);
                 poetQuoteAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
                 poetQuoteAdapter.setOnWordClickListener(onWordClickListener);
                 poetQuoteAdapter.setOnTagClick(onTagClickListener);
                 poetQuoteAdapter.setOnGhazalClickListener(onGhazalClickListener);
                 lstPoetContent.setAdapter(poetQuoteAdapter);
-                if (state != null)
-                    lstPoetContent.onRestoreInstanceState(state);
             } else
                 poetQuoteAdapter.notifyDataSetChanged();
         }
@@ -159,6 +152,7 @@ public class PoetSherFragment extends BasePoetProfileFragment {
     public void sortContent(Enums.SORT_CONTENT sortBy) {
         defaultSortContent = sortBy.getKey();
         poetSherAdapter = null;
+        poetQuoteAdapter= null;
         getSherContent(sortBy.getKey());
     }
 }

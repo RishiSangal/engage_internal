@@ -28,10 +28,7 @@
             <com.alexvasilkov.gestures.commons.circle.CircleImageView
                 android:id="@+id/imgProfile"
                 android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon" />
+                android:layout_height="@dimen/_70sdp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

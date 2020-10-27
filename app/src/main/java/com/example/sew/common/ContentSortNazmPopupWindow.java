@@ -13,7 +13,6 @@ import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.ProseShayariCollectionActivity;
 import com.example.sew.fragments.PoetNazmFragment;
 import com.example.sew.helpers.MyHelper;
-import com.example.sew.helpers.MyService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +44,7 @@ public class ContentSortNazmPopupWindow extends RelativePopupWindow {
         viewHolder.txtAlphabetic.setText(MyHelper.getString(R.string.alphabetic));
         viewHolder.txtPopularity.setText(MyHelper.getString(R.string.popularity));
         viewHolder.txtRadeef.setText(MyHelper.getString(R.string.radeef));
-        viewHolder.txtAlphabetic.setVisibility(View.GONE);
+        viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
         viewHolder.txtRadeef.setVisibility(View.GONE);
         if(sortedBy==Enums.SORT_CONTENT.POPULARITY.getKey())
             viewHolder.txtPopularity.setTextColor(activity.getResources().getColor(R.color.dark_blue));
@@ -53,10 +52,12 @@ public class ContentSortNazmPopupWindow extends RelativePopupWindow {
             viewHolder.txtAlphabetic.setTextColor(activity.getResources().getColor(R.color.dark_blue));
         if(sortedBy==Enums.SORT_CONTENT.RADEEF.getKey())
             viewHolder.txtRadeef.setTextColor(activity.getResources().getColor(R.color.dark_blue));
-        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {
-            viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
+//        if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH || MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {
+//            viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
+//        }
+        if (contentTitle.equalsIgnoreCase(MyHelper.getString(R.string.ghazal)) | contentTitle.equalsIgnoreCase(MyHelper.getString(R.string.unpublished_ghazal))) {
+            viewHolder.txtRadeef.setVisibility(View.VISIBLE);
         }
-
     }
 
     public BaseActivity getActivity() {

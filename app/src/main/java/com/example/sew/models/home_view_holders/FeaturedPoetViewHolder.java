@@ -11,21 +11,16 @@ import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MeaningBottomPopupWindow;
-import com.example.sew.common.MyConstants;
 import com.example.sew.common.Utils;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.RenderHelper;
-import com.example.sew.models.ContentType;
 import com.example.sew.models.HomeFeatured;
 import com.example.sew.models.Para;
-import com.example.sew.models.RenderContent;
 import com.example.sew.models.WordContainer;
 import com.example.sew.views.IconTextView;
-import com.example.sew.views.TitleTextViewType6;
 import com.google.android.gms.common.util.CollectionUtils;
-import com.google.zxing.client.result.VINParsedResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,7 +163,7 @@ public class FeaturedPoetViewHolder extends BaseHomeViewHolder {
         txtFeaturedType.setVisibility(View.VISIBLE);
         switch (featured.getDayType()) {
             case DAY_TYPE_BIRTHDAY:
-                txtFeaturedType.setText(String.format("%s: %s", MyHelper.getString(R.string.remembering), MyHelper.getString(R.string.birth__anniversary)));
+                txtFeaturedType.setText(String.format("%s: %s", MyHelper.getString(R.string.remembering), MyHelper.getString(R.string.birth_anniversary)));
                 break;
             case DAY_TYPE_DEATH_ANNIVERSARY:
                 txtFeaturedType.setText(String.format("%s: %s", MyHelper.getString(R.string.remembering), MyHelper.getString(R.string.death_anniversary)));

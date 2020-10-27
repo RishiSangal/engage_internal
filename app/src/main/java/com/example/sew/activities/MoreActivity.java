@@ -160,6 +160,7 @@ public class MoreActivity extends BaseHomeActivity {
         int totalFavoriteCount = MyService.getTotalFavoriteCount();
         layWholeDonation.setVisibility(View.GONE);
         txtMoreMyFavoriteCount.setText(totalFavoriteCount == 0 ? "" : String.valueOf(totalFavoriteCount) + " " + MyHelper.getString(R.string.myfavorites));
+        imgProfile.setImageResource(R.drawable.icon);
         if (MyService.isUserLogin()) {
             txtLogoutTitle.setText(MyHelper.getString(R.string.logout));
             txtLogin.setText(getString(R.string.rico_logout));

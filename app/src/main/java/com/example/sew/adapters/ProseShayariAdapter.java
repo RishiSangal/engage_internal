@@ -91,6 +91,13 @@ public class ProseShayariAdapter extends BaseMyAdapter {
                 else
                     commonViewHolder.txtDescription.setVisibility(View.VISIBLE);
                 commonViewHolder.txtFav.setText(MyHelper.getString(R.string.favorites));
+                if (poetNazams.size() > 1) {
+                    commonViewHolder.txtFilter.setVisibility(View.VISIBLE);
+                    commonViewHolder.viewDivider.setVisibility(View.VISIBLE);
+                }else {
+                    commonViewHolder.txtFilter.setVisibility(View.GONE);
+                    commonViewHolder.viewDivider.setVisibility(View.GONE);
+                }
                 break;
             case VIEW_TYPE_CONTENT_GHAZAL_NAZM: {
                 NazmAdapter.NazmViewHolder nazmViewHolder;
@@ -215,6 +222,8 @@ public class ProseShayariAdapter extends BaseMyAdapter {
         TextView txtFilter;
         @BindView(R.id.txtFav)
         TextView txtFav;
+        @BindView(R.id.viewDivider)
+        View viewDivider;
 
         @OnClick(R.id.txtFilter)
         void onFilterClick(View view) {

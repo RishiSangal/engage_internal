@@ -1,8 +1,6 @@
 package com.example.sew.apis;
 
-import com.example.sew.R;
 import com.example.sew.common.MyConstants;
-import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.DidYouKnow;
 import com.example.sew.models.HomeBannerCollection;
@@ -18,10 +16,8 @@ import com.example.sew.models.HomeTodayTop;
 import com.example.sew.models.HomeTopPoet;
 import com.example.sew.models.HomeVideo;
 import com.example.sew.models.HomeWordOfTheDay;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,7 +32,8 @@ public class GetHomePageCollection extends Base {
 
     public GetHomePageCollection setCommonParams() {
         addParam("lang", String.valueOf(MyService.getSelectedLanguageInt()));
-        addParam("lastFetchDate", "");
+        //addParam("lastFetchDate", "");
+        addParam("lastFetchDate", "2020-10-23");
         return this;
     }
 

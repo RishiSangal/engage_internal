@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.common.Enums;
-
-import com.example.sew.common.MyConstants;
 import com.example.sew.fragments.TagGhazalFragment;
 import com.example.sew.fragments.TagNazmFragment;
 import com.example.sew.fragments.TagShayriImagefrgment;
@@ -48,6 +46,7 @@ public class SherTagOccassionFragmentAdapter extends FragmentStatePagerAdapter {
             case NAZM:
                 return TagNazmFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
             case SHER:
+            case QUOTE:
                 return TagSherFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
             case IMAGE_SHAYRI:
                 return TagShayriImagefrgment.getInstance(cumulatedContentTypes.get(position), sherCollectionType,contentTypeTab);

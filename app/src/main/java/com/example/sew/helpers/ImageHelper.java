@@ -117,6 +117,12 @@ public class ImageHelper {
 //                                String imageUrl1 = imageUrl.substring(0, imageUrl.lastIndexOf('.')) + ".jpg";
                                 setImage(imageView, getJPEGUrl(imageUrl), progressBar, placeholderType);
                             }
+                            if(imageUrl.endsWith(".jpg")){
+                                if (!failedImages.contains(imageUrl))
+                                    failedImages.add(imageUrl);
+//                                String imageUrl1 = imageUrl.substring(0, imageUrl.lastIndexOf('.')) + ".jpg";
+                                setImage(imageView, getPNGUrl(imageUrl), progressBar, placeholderType);
+                            }
                         }
                     });
         }
@@ -129,7 +135,13 @@ public class ImageHelper {
             return imageUrl.substring(0, imageUrl.lastIndexOf('.')) + ".jpg";
         return imageUrl;
     }
-
+    private static String getPNGUrl(String imageUrl) {
+        if (TextUtils.isEmpty(imageUrl))
+            return imageUrl;
+        if (imageUrl.endsWith(".jpg"))
+            return imageUrl.substring(0, imageUrl.lastIndexOf('.')) + ".png";
+        return imageUrl;
+    }
     public static void setShayariImage(final ImageView imageView, final String imageUrl, final Enums.PLACEHOLDER_TYPE placeholderType) {
         final ProgressBar progressBar = null;
         if (progressBar != null)

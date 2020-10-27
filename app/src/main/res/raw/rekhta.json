@@ -759,8 +759,8 @@
     "hin": "प्रस्तावित शायर",
     "urdu": "مجوزہ شاعر"
   },
-  "Birth  Anniversary": {
-    "eng": "Birth  Anniversary",
+  "birth_anniversary": {
+    "eng": "Birth Anniversary",
     "hin": "जन्मदिन",
     "urdu": "یوم پیدائش"
   },

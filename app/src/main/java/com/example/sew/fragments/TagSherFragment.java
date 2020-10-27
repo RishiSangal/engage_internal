@@ -13,18 +13,16 @@ import androidx.core.view.ViewCompat;
 import com.example.sew.R;
 import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.RenderContentActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
-import com.example.sew.adapters.PoetSherAdapter;
+import com.example.sew.adapters.TagQuoteAdapter;
 import com.example.sew.adapters.TagSherAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetCoupletListWithPaging;
+import com.example.sew.common.Enums;
 import com.example.sew.common.MeaningBottomPopupWindow;
 import com.example.sew.common.PagingListView;
-import com.example.sew.models.ContentType;
 import com.example.sew.models.ContentTypeTab;
 import com.example.sew.models.CumulatedContentType;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.SherContent;
 import com.example.sew.models.SherTag;
 import com.example.sew.models.WordContainer;
@@ -123,6 +121,7 @@ public class TagSherFragment extends BaseFragment {
     private ArrayList<SherContent> sherContents = new ArrayList<>();
     //private PoetSherAdapter poetSherAdapter;
     private TagSherAdapter tagSherAdapter;
+    private TagQuoteAdapter tagQuoteAdapter;
     private View.OnClickListener onWordClickListener = v -> {
         WordContainer wordContainer = (WordContainer) v.getTag(R.id.tag_word);
 //        MeaningBottomSheetFragment.getInstance(wordContainer.getWord(), wordContainer.getMeaning()).show(GetActivity().getSupportFragmentManager(), "MEANING");
@@ -142,17 +141,33 @@ public class TagSherFragment extends BaseFragment {
         startActivity(PoetDetailActivity.getInstance(GetActivity(), sherContent.getPI()));
     };
     private void updateUI() {
-        if (tagSherAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
-            tagSherAdapter = new TagSherAdapter(GetActivity(), sherContents);
-            tagSherAdapter.setOnWordClickListener(onWordClickListener);
-            tagSherAdapter.setOnTagClick(onTagClickListener);
-            tagSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
-            tagSherAdapter.setOnPoetNameClickListener(onPoetNameClickListener);
-            lstPoetContent.setAdapter(tagSherAdapter);
-            if (state != null)
-                lstPoetContent.onRestoreInstanceState(state);
-        } else
-            tagSherAdapter.notifyDataSetChanged();
+        if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER){
+            if (tagSherAdapter == null) {
+                Parcelable state = lstPoetContent.onSaveInstanceState();
+                tagSherAdapter = new TagSherAdapter(GetActivity(), sherContents);
+                tagSherAdapter.setOnWordClickListener(onWordClickListener);
+                tagSherAdapter.setOnTagClick(onTagClickListener);
+                tagSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
+                tagSherAdapter.setOnPoetNameClickListener(onPoetNameClickListener);
+                lstPoetContent.setAdapter(tagSherAdapter);
+                if (state != null)
+                    lstPoetContent.onRestoreInstanceState(state);
+            } else
+                tagSherAdapter.notifyDataSetChanged();
+    }else if(contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE){
+            if (tagQuoteAdapter == null) {
+                Parcelable state = lstPoetContent.onSaveInstanceState();
+
+                tagQuoteAdapter = new TagQuoteAdapter(GetActivity(), sherContents);
+                tagQuoteAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
+                tagQuoteAdapter.setOnWordClickListener(onWordClickListener);
+                tagQuoteAdapter.setOnTagClick(onTagClickListener);
+                tagQuoteAdapter.setOnGhazalClickListener(onGhazalClickListener);
+                lstPoetContent.setAdapter(tagQuoteAdapter);
+                if (state != null)
+                    lstPoetContent.onRestoreInstanceState(state);
+            } else
+                tagQuoteAdapter.notifyDataSetChanged();
+        }
     }
 }

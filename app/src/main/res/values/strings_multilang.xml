@@ -120,7 +120,6 @@
     <string name="more_extra">More</string>
     <string name="feaured_video">Feaured Video</string>
     <string name="celebrating_today">Celebrating Today</string>
-    <string name="birth_anneversary">Birth Anneversary</string>
     <string name="explore_by_categories">Explore By Categories</string>
     <string name="more_see">more</string>
     <string name="added_to_favorite">Added to Favorite</string>
@@ -146,7 +145,7 @@
     <string name="shayari_collection">Shayari Collection</string>
     <string name="discover">Discover</string>
     <string name="featured_poet">Featured Poet</string>
-    <string name="birth__anniversary">Birth  Anniversary</string>
+    <string name="birth_anniversary">birth_anniversary</string>
     <string name="death_anniversary">Death Anniversary</string>
     <string name="remembering">Remembering</string>
     <string name="performed_by">Performed by</string>

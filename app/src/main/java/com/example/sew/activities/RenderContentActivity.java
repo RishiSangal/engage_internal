@@ -88,6 +88,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.view.View.GONE;
+
 public class RenderContentActivity extends BaseActivity implements RenderActivityAudioPlayerControls.onAudioPlayerStateChanged {
     @BindView(R.id.layLoadingPlaceholder)
     View layLoadingPlaceholder;
@@ -353,8 +355,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         }
 
         if (isOffline()) {
-            layBottomContainer1.setVisibility(View.GONE);
-            layBottomShareFavorite.setVisibility(View.GONE);
+            layBottomContainer1.setVisibility(GONE);
+            layBottomShareFavorite.setVisibility(GONE);
             if (MyService.isFavoriteContentDetailAvailable(contentId)) {
                 favContentPageModel = MyService.getDetailedFavorite(contentId);
                 updateUIOffline();
@@ -391,7 +393,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                             });
                         }
                     }
-                layLoadingPlaceholder.setVisibility(View.GONE);
+                layLoadingPlaceholder.setVisibility(GONE);
             }
         }, BROADCAST_CONTENT_RENDERED);
 /*        registerBroadcastListener(new BroadcastReceiver() {
@@ -503,7 +505,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 if (comment.size() == 0) {
                     txtCommentCount.setTextSize(13);
                     txtCommentCount.setText(MyHelper.getString(R.string.add_comment));
-                    txtComment.setVisibility(View.GONE);
+                    txtComment.setVisibility(GONE);
                 }
                 else {
                     if (getAllCommentsByTargetId.getTotalCommentsCount().length() > 2) {
@@ -540,7 +542,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         }
         renderContentBuilder.Build();
 
-        layContentTags.setVisibility(View.GONE);
+        layContentTags.setVisibility(GONE);
         boolean isEnglishAvailable = favContentPageModel.getHaveEn().contentEquals("true");
         boolean isHindiAvailable = favContentPageModel.getHaveHi().contentEquals("true");
         boolean isUrduAvailable = favContentPageModel.getHaveUr().contentEquals("true");
@@ -555,8 +557,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         txtHeaderContentTitle.setText(favContentPageModel.getTitle());
 
         setHeaderTitle(favContentPageModel.getTitle());
-        imgHEaderEditorChoice.setVisibility(favContentPageModel.isEditorChoice() ? View.VISIBLE : View.GONE);
-        imgHeaderPopularChoice.setVisibility(favContentPageModel.isPopularChoice() ? View.VISIBLE : View.GONE);
+        imgHEaderEditorChoice.setVisibility(favContentPageModel.isEditorChoice() ? View.VISIBLE : GONE);
+        imgHeaderPopularChoice.setVisibility(favContentPageModel.isPopularChoice() ? View.VISIBLE : GONE);
         zoomLayout.post(() -> {
             zoomLayout.getChildAt(0).setMinimumHeight(zoomLayout.getHeight());
             ViewGroup paraHolder = (ViewGroup) layMainContainer.getParent();
@@ -593,6 +595,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         boolean isUrduAvailable = contentPageModel.getHaveUr().contentEquals("true");
         checkAndSetLanguageChangeValues(isEnglishAvailable, isHindiAvailable, isUrduAvailable);
 
+        if(contentPageModel.isHTML())
+            imgCritiqueInfo.setVisibility(GONE);
         txtFooterViewPoetProfile.setText(MyHelper.getString(R.string.view_profile));
 //        txtPrevTitle.setText(MyHelper.getString(R.string.previous));
 //        txtNextTitle.setText(MyHelper.getString(R.string.next));
@@ -601,19 +605,19 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         txtHeaderContentTitle.setText(contentPageModel.getTitle());
         txtContentTagsTitle.setText(MyHelper.getString(R.string.tagged_under));
         setHeaderTitle(contentPageModel.getTitle());
-        imgHEaderEditorChoice.setVisibility(contentPageModel.isEditorChoice() ? View.VISIBLE : View.GONE);
-        imgHeaderPopularChoice.setVisibility(contentPageModel.isPopularChoice() ? View.VISIBLE : View.GONE);
-        txtPoetDescription.setVisibility(!TextUtils.isEmpty(contentPoet.getShortDescription()) ? View.VISIBLE : View.GONE);
+        imgHEaderEditorChoice.setVisibility(contentPageModel.isEditorChoice() ? View.VISIBLE : GONE);
+        imgHeaderPopularChoice.setVisibility(contentPageModel.isPopularChoice() ? View.VISIBLE : GONE);
+        txtPoetDescription.setVisibility(!TextUtils.isEmpty(contentPoet.getShortDescription()) ? View.VISIBLE : GONE);
         txtPoetDescription.setText(contentPoet.getShortDescription());
-        txtFooterPoetTenure.setVisibility(!TextUtils.isEmpty(contentPoet.getPoetTenure().trim()) ? View.VISIBLE : View.GONE);
+        txtFooterPoetTenure.setVisibility(!TextUtils.isEmpty(contentPoet.getPoetTenure().trim()) ? View.VISIBLE : GONE);
         txtFooterPoetTenure.setText(contentPoet.getPoetTenure());
         txtPerformedBy.setText(MyHelper.getString(R.string.performed_by));
         if (TextUtils.isEmpty(contentPoet.getPoetPlace()))
-            txtDobPlaceSeparator.setVisibility(View.GONE);
+            txtDobPlaceSeparator.setVisibility(GONE);
         txtFooterPoetPlace.setText(contentPoet.getPoetPlace());
         ImageHelper.setImage(authorImg, contentPoet.getImageUrl());
         if (TextUtils.isEmpty(contentPoet.getPoetID()))
-            poetProfileSection.setVisibility(View.GONE);
+            poetProfileSection.setVisibility(GONE);
         else
             poetProfileSection.setVisibility(View.VISIBLE);
         if (previousContent != null) {
@@ -622,19 +626,19 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
             txtPrevContentTitle.setText(previousContent.getContentTitle());
             txtPrevTitle.setText(previousContent.getPreviousTitle());
         } else
-            prevLinearLayout.setVisibility(View.GONE);
+            prevLinearLayout.setVisibility(GONE);
         if (nextContent != null) {
             layNext.setVisibility(View.VISIBLE);
             txtNextPoetName.setText(nextContent.getPoetName());
             txtNextContentTitle.setText(nextContent.getContentTitle());
             txtNextTitle.setText(nextContent.getNextTitle());
         } else {
-            layNext.setVisibility(View.GONE);
-            viewDividerLineBelowPrevious.setVisibility(View.GONE);
-            viewDividerNextPrevious.setVisibility(View.GONE);
+            layNext.setVisibility(GONE);
+            viewDividerLineBelowPrevious.setVisibility(GONE);
+            viewDividerNextPrevious.setVisibility(GONE);
         }
         if (previousContent == null)
-            viewDividerNextPrevious.setVisibility(View.GONE);
+            viewDividerNextPrevious.setVisibility(GONE);
         else
             viewDividerNextPrevious.setVisibility(View.VISIBLE);
         txtViewAllContent.setText(String.format(MyHelper.getString(R.string.see_all_template), pluralContentName.getPluralName()));
@@ -646,23 +650,23 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         txtYouMayLikeSubtitle.setText(MyHelper.getString(R.string.you_may_like_sub_title));
         layKeepReadingContentPlaceholder.removeAllViews();
         if (CollectionUtils.isEmpty(keepReadings))
-            layKeepReading.setVisibility(View.GONE);
+            layKeepReading.setVisibility(GONE);
         else {
             layKeepReading.setVisibility(View.VISIBLE);
             for (int i = 0; i < keepReadings.size(); i++) {
                 KeepReading keepReading = keepReadings.get(i);
                 KeepReadingYouMayLikeViewHolder viewHolder = new KeepReadingYouMayLikeViewHolder(getInflatedView(R.layout.cell_keep_reading_you_may_like_item));
-                viewHolder.txtPoetName.setVisibility(View.GONE);
-                viewHolder.imgPoetProfile.setVisibility(View.GONE);
+                viewHolder.txtPoetName.setVisibility(GONE);
+                viewHolder.imgPoetProfile.setVisibility(GONE);
                 if (i == (keepReadings.size() - 1))
-                    viewHolder.layDivider.setVisibility(View.GONE);
+                    viewHolder.layDivider.setVisibility(GONE);
                 else
                     viewHolder.layDivider.setVisibility(View.VISIBLE);
                 viewHolder.txtTitle.setText(keepReading.getContentTitle());
                 if (CollectionUtils.isEmpty(keepReading.getRenderContent()))
-                    viewHolder.txtSher.setVisibility(View.GONE);
+                    viewHolder.txtSher.setVisibility(GONE);
                 else {
-                    viewHolder.txtSher.setVisibility(View.GONE);
+                    viewHolder.txtSher.setVisibility(GONE);
                     String sher = "";
                     for (Line line : keepReading.getRenderContent().get(0).getLines()) {
                         if (TextUtils.isEmpty(sher))
@@ -671,9 +675,9 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                             sher = String.format("%s%s", sher, String.format("\n%s", line.getFullText()));
                     }
                     if (TextUtils.isEmpty(sher))
-                        viewHolder.txtSher.setVisibility(View.GONE);
+                        viewHolder.txtSher.setVisibility(GONE);
                     else {
-                        viewHolder.txtSher.setVisibility(View.GONE);
+                        viewHolder.txtSher.setVisibility(GONE);
                         viewHolder.txtSher.setText(sher);
                     }
                 }
@@ -688,14 +692,14 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 
         layYouMayLikeContentPlaceholder.removeAllViews();
         if (CollectionUtils.isEmpty(maybeLikes))
-            layYouMayLike.setVisibility(View.GONE);
+            layYouMayLike.setVisibility(GONE);
         else {
             layYouMayLike.setVisibility(View.VISIBLE);
             for (int i = 0; i < maybeLikes.size(); i++) {
                 MaybeLike maybeLike = maybeLikes.get(i);
                 KeepReadingYouMayLikeViewHolder viewHolder = new KeepReadingYouMayLikeViewHolder(getInflatedView(R.layout.cell_keep_reading_you_may_like_item));
                 if (i == (maybeLikes.size() - 1))
-                    viewHolder.layDivider.setVisibility(View.GONE);
+                    viewHolder.layDivider.setVisibility(GONE);
                 else
                     viewHolder.layDivider.setVisibility(View.VISIBLE);
                 viewHolder.txtPoetName.setVisibility(View.VISIBLE);
@@ -705,9 +709,9 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 viewHolder.txtLikeCount.setText(maybeLike.getTotalFavorite());
                 ImageHelper.setImage(viewHolder.imgPoetProfile, maybeLike.getImageUrl());
                 if (CollectionUtils.isEmpty(maybeLike.getRenderContent()))
-                    viewHolder.txtSher.setVisibility(View.GONE);
+                    viewHolder.txtSher.setVisibility(GONE);
                 else {
-                    viewHolder.txtSher.setVisibility(View.GONE);
+                    viewHolder.txtSher.setVisibility(GONE);
                     String sher = "";
                     for (Line line : maybeLike.getRenderContent().get(0).getLines()) {
                         if (TextUtils.isEmpty(sher))
@@ -716,9 +720,9 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                             sher = String.format("%s%s", sher, String.format("\n%s", line.getFullText()));
                     }
                     if (TextUtils.isEmpty(sher))
-                        viewHolder.txtSher.setVisibility(View.GONE);
+                        viewHolder.txtSher.setVisibility(GONE);
                     else {
-                        viewHolder.txtSher.setVisibility(View.GONE);
+                        viewHolder.txtSher.setVisibility(GONE);
                         viewHolder.txtSher.setText(sher);
                     }
                 }
@@ -742,7 +746,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 flexTags.addView(view);
             }
         } else
-            layContentTags.setVisibility(View.GONE);
+            layContentTags.setVisibility(GONE);
         zoomLayout.post(() -> {
             zoomLayout.getChildAt(0).setMinimumHeight(zoomLayout.getHeight());
             ViewGroup paraHolder = (ViewGroup) layMainContainer.getParent();
@@ -754,13 +758,13 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     }
 
     private void checkAndSetLanguageChangeValues(boolean isEnglishAvailable, boolean isHindiAvailable, boolean isUrduAvailable) {
-        txtContentNotAvailable.setVisibility(View.GONE);
-        layContentUnavailable.setVisibility(View.GONE);
-        imgFlower.setVisibility(View.GONE);
+        txtContentNotAvailable.setVisibility(GONE);
+        layContentUnavailable.setVisibility(GONE);
+        imgFlower.setVisibility(GONE);
         if ((MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH && !isEnglishAvailable)
                 || (MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI && !isHindiAvailable)
                 || (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU && !isUrduAvailable)) {
-            imgFlower.setVisibility(View.GONE);
+            imgFlower.setVisibility(GONE);
             if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH) {
                 layContentUnavailable.setVisibility(View.VISIBLE);
                 if (isHindiAvailable)
@@ -805,16 +809,16 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
             if (!CollectionUtils.isEmpty(contentPageModel.getContentVideos()))
                 layFooterVideo.setVisibility(View.VISIBLE);
             else
-                layFooterVideo.setVisibility(View.GONE);
+                layFooterVideo.setVisibility(GONE);
         }
         if (contentPageModel != null) {
             if (!CollectionUtils.isEmpty(contentPageModel.getContentAudios()))
                 layAudioSection.setVisibility(View.VISIBLE);
             else
-                layAudioSection.setVisibility(View.GONE);
+                layAudioSection.setVisibility(GONE);
         }
         if (contentPageModel != null) {
-            layTranslate.setVisibility(contentPageModel.isHaveTranslation() ? View.VISIBLE : View.GONE);
+            layTranslate.setVisibility(contentPageModel.isHaveTranslation() ? View.VISIBLE : GONE);
         }
 
         if (showingTranslation)
@@ -822,11 +826,11 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         else
             imgTranslate.setColorFilter(getActivity().getAppIconColor(), PorterDuff.Mode.SRC_IN);
 
-        mainFooterContent.setVisibility(View.GONE);
-        critiqueFooter.setVisibility(View.GONE);
-        layCritiqueMode.setVisibility(View.GONE);
-        audioFooterBar.setVisibility(View.GONE);
-        shareFooter.setVisibility(View.GONE);
+        mainFooterContent.setVisibility(GONE);
+        critiqueFooter.setVisibility(GONE);
+        layCritiqueMode.setVisibility(GONE);
+        audioFooterBar.setVisibility(GONE);
+        shareFooter.setVisibility(GONE);
         imgFooterAudio.setColorFilter(getAppIconColor(), PorterDuff.Mode.SRC_IN);
         switch (currentPageType) {
             case PAGE_TYPE_BASIC:
@@ -889,7 +893,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 //            isRecreateRequired = true;
 
 
-        mainView.setVisibility(View.GONE);
+        mainView.setVisibility(GONE);
         if (activityVisible) {
             startActivity(getIntent());
             finish();
@@ -1284,28 +1288,28 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         btnHindiLanguage = findViewById(R.id.btnHindiLanguage);
         btnUrduLanguage = findViewById(R.id.btnUrduLanguage);
         layContentUnavailable = findViewById(R.id.layContentUnavailable);
-        layContentUnavailable.setVisibility(View.GONE);
-        btnEnglishLanguage.setVisibility(View.GONE);
-        btnHindiLanguage.setVisibility(View.GONE);
-        btnUrduLanguage.setVisibility(View.GONE);
-        txtAnd1.setVisibility(View.GONE);
-        txtAnd2.setVisibility(View.GONE);
+        layContentUnavailable.setVisibility(GONE);
+        btnEnglishLanguage.setVisibility(GONE);
+        btnHindiLanguage.setVisibility(GONE);
+        btnUrduLanguage.setVisibility(GONE);
+        txtAnd1.setVisibility(GONE);
+        txtAnd2.setVisibility(GONE);
         String descriptionNotAvailable = MyHelper.getString(R.string.content_not_available);
         txtAnd1.setText(MyHelper.getString(R.string.and));
         txtAnd2.setText(MyHelper.getString(R.string.and));
         btnEnglishLanguage.setOnClickListener(v -> {
-            mainView.setVisibility(View.GONE);
+            mainView.setVisibility(GONE);
             MyService.setSelectedLanguage(Enums.LANGUAGE.ENGLISH);
         });
         btnHindiLanguage.setOnClickListener(v -> {
-            mainView.setVisibility(View.GONE);
+            mainView.setVisibility(GONE);
             MyService.setSelectedLanguage(Enums.LANGUAGE.HINDI);
         });
         btnUrduLanguage.setOnClickListener(v -> {
-            mainView.setVisibility(View.GONE);
+            mainView.setVisibility(GONE);
             MyService.setSelectedLanguage(Enums.LANGUAGE.URDU);
         });
-        layContentUnavailable.setVisibility(View.GONE);
+        layContentUnavailable.setVisibility(GONE);
     }
 
     private void shareRenderContent() {
@@ -1408,15 +1412,15 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         if (MyService.isUserLogin()) {
             critiqueUserName.setText(MyService.getUser().getDisplayName());
             critiqueUserEmail.setText(MyService.getEmail());
-            citiqueEMAIL.setVisibility(View.GONE);
-            userProfile.setVisibility(View.GONE);
+            citiqueEMAIL.setVisibility(GONE);
+            userProfile.setVisibility(GONE);
             //ImageHelper.setImage(userProfile,MyService.getUser().);
             critiqueUserName.setEnabled(false);
             critiqueUserEmail.setEnabled(false);
         } else {
             critiqueUserName.setText("");
             critiqueUserEmail.setText("");
-            userProfile.setVisibility(View.GONE);
+            userProfile.setVisibility(GONE);
             citiqueEMAIL.setVisibility(View.VISIBLE);
         }
         critiqueSubmitText.setOnClickListener(view -> {
@@ -1678,7 +1682,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     private void closeAudioBarUI() {
         if (currentPageType == PAGE_TYPE_AUDIO_PLAY)
             currentPageType = PAGE_TYPE_BASIC;
-        audioFooterBar.setVisibility(View.GONE);
+        audioFooterBar.setVisibility(GONE);
         imgFooterAudio.setColorFilter(getAppIconColor(), PorterDuff.Mode.SRC_IN);
         if (audioPlayerControls != null)
             audioPlayerControls.stopAudioAndCloseWindow();

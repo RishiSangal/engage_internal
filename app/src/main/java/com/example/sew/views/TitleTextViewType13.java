@@ -4,11 +4,11 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.example.sew.R;
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyService;
-
-import androidx.core.content.res.ResourcesCompat;
 
 public class TitleTextViewType13 extends CommonTextView {
     public TitleTextViewType13(Context context, AttributeSet attrs, int defStyle) {
@@ -53,7 +53,7 @@ public class TitleTextViewType13 extends CommonTextView {
                 else if (MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI) {
                     fontName = R.font.laila_regular_hin;
                 } else {
-                    fontName = R.font.merriweather_extended_light_italic_eng;
+                    fontName = R.font.laila_regular_hin;
                 }
                 break;
         }

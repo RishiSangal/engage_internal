@@ -19,7 +19,6 @@ import com.example.sew.activities.BaseActivity;
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
-import com.example.sew.helpers.ServiceManager;
 import com.example.sew.models.FavoriteDictionary;
 import com.example.sew.models.PlattsDictionary;
 import com.example.sew.models.SearchDictionary;
@@ -170,11 +169,15 @@ public class DictionaryRecyclerAdapter extends BaseRecyclerAdapter {
                 dictionaryViewHolder.imgWordAudio.setTag(dictionary != null ? dictionary.getAudioUrl() : favoriteDictionary.getAudioUrl());
                 if (getItem(position) instanceof SearchDictionary) {
                     assert dictionary != null;
-                    dictionaryViewHolder.imgWordAudio.setVisibility(dictionary.isHaveAudio()? View.VISIBLE : View.GONE);
+                    dictionaryViewHolder.imgWordAudio.setVisibility(dictionary.isHaveAudio() ? View.VISIBLE : View.GONE);
                 }
                 if (getItem(position) instanceof FavoriteDictionary) {
                     assert favoriteDictionary != null;
-                    dictionaryViewHolder.imgWordAudio.setVisibility(favoriteDictionary.isHaveAudio()? View.VISIBLE : View.GONE);
+                    if(MyApplication.getInstance().isBrowsingOffline())
+                        dictionaryViewHolder.imgWordAudio.setVisibility(View.GONE) ;
+                    else
+                        dictionaryViewHolder.imgWordAudio.setVisibility(favoriteDictionary.isHaveAudio() ? View.VISIBLE : View.GONE);
+
                 }
                 dictionaryViewHolder.imgWordFavorite.setVisibility(MyApplication.getInstance().isBrowsingOffline() ? View.GONE : View.VISIBLE);
             }
@@ -210,7 +213,7 @@ public class DictionaryRecyclerAdapter extends BaseRecyclerAdapter {
 
         @OnClick(R.id.imgWordAudio)
         void onAudioIconClick(View view) {
-            MyHelper.playAudio(view.getTag().toString(), getActivity(),imgWordAudio);
+            MyHelper.playAudio(view.getTag().toString(), getActivity(), imgWordAudio);
         }
 
         DictionaryViewHolder(View view) {

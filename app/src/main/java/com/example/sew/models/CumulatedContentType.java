@@ -1,13 +1,12 @@
 package com.example.sew.models;
 
 import com.example.sew.common.Enums;
-import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.MyHelper;
 
 import org.json.JSONObject;
 
-import static com.example.sew.common.MyConstants.GHAZAL_ID;
 import static com.example.sew.common.MyConstants.NAZM_ID;
+import static com.example.sew.common.MyConstants.SHER_ID;
 
 public class CumulatedContentType extends BaseModel {
     JSONObject jsonObject;
@@ -68,8 +67,16 @@ public class CumulatedContentType extends BaseModel {
                 return Enums.LIST_RENDERING_FORMAT.NAZM;
             else
                 return Enums.LIST_RENDERING_FORMAT.GHAZAL;
-        } else if (getListingType() == 2)
-            return Enums.LIST_RENDERING_FORMAT.SHER;
+        }
+        else if (getListingType()==2) {
+            if (SHER_ID.contentEquals(getTypeId()))
+                return Enums.LIST_RENDERING_FORMAT.SHER;
+            else
+                return Enums.LIST_RENDERING_FORMAT.QUOTE;
+
+        }
+//        else if (getListingType() == 2)
+//            return Enums.LIST_RENDERING_FORMAT.SHER;
         else
             return Enums.LIST_RENDERING_FORMAT.IMAGE_SHAYRI;
         // return Enums.LIST_RENDERING_FORMAT.NAZM;

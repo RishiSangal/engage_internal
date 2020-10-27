@@ -7,11 +7,7 @@ import com.example.sew.helpers.MyService;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import static com.example.sew.common.MyConstants.GHAZAL_ID;
-import static com.example.sew.common.MyConstants.GHAZAL_ID_1;
 import static com.example.sew.common.MyConstants.NAZM_ID;
 import static com.example.sew.common.MyConstants.SHER_ID;
 
@@ -46,17 +42,18 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
         contentCount = MyHelper.convertToInt(optString(jsonObject, "C"));
         contentListType = optString(jsonObject, "LT");
         contentCompositionType = optString(jsonObject, "CT");
-        if (jsonObject.has("CS"))
-            sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
-        else {
-            ArrayList<ContentType> customContentTypes = MyHelper.getContentTypes();
-            for (ContentType currContentType : customContentTypes) {
-                if (currContentType.getContentId().equalsIgnoreCase(contentId))
-                    sequence = currContentType.getSequence();
-            }
-            if (sequence == 0)
-                sequence = contentId.hashCode();
-        }
+        sequence = (optString(jsonObject, "S") + optString(jsonObject, "NE")).hashCode();
+//        if (jsonObject.has("CS"))
+//            sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
+//        else {
+//            ArrayList<ContentType> customContentTypes = MyHelper.getContentTypes();
+//            for (ContentType currContentType : customContentTypes) {
+//                if (currContentType.getContentId().equalsIgnoreCase(contentId))
+//                    sequence = currContentType.getSequence();
+//            }
+//            if (sequence == 0)
+//                sequence = contentId.hashCode();
+//        }
     }
 
     @Override
