@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -143,7 +144,7 @@ public class RenderHelper {
             if (modifiedParas.isEmpty())
                 modifiedParas.addAll(paras);
             int finalLeftRightPadding = leftRightPadding;
-            calculateMaxLength(activity, modifiedParas, leftRightPadding, showLoadingDialog, (maxLength, desiredFontSize) -> {
+            calculateMaxLength(activity, modifiedParas, leftRightPadding, showLoadingDialog, isQuote, (maxLength, desiredFontSize) -> {
                 if (zoomLayout != null) {
                     if (MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU)
                         zoomLayout.getController().getSettings().setMaxZoom((maxFontSize / (float) desiredFontSize) * 2);
@@ -277,6 +278,15 @@ public class RenderHelper {
 
             }
         });
+        if (cacheViews.get(paras.hashCode()) != null) {
+            ArrayList<View> cachedViews = cacheViews.get(paras.hashCode());
+            for (int i = 0; i < cachedViews.size(); i++) {
+                if (cachedViews.get(i).getParent() != null)
+                    ((ViewGroup) cachedViews.get(i).getParent()).removeAllViews();
+            }
+            activity.runOnUiThread(() -> onParaViewsCreatedListener.onParaViewsCreated(cacheViews.get(paras.hashCode())));
+            return;
+        }
         new Thread(() -> {
             int lineNumber = 0;
             try {
@@ -364,7 +374,10 @@ public class RenderHelper {
                         }
                     }
                 }
-                activity.runOnUiThread(() -> onParaViewsCreatedListener.onParaViewsCreated(views));
+                activity.runOnUiThread(() -> {
+                    cacheViews.put(paras.hashCode(), views);
+                    onParaViewsCreatedListener.onParaViewsCreated(views);
+                });
             } catch (Exception e) {
                 if (showLoadingDialog)
                     activity.dismissDialog();
@@ -375,6 +388,7 @@ public class RenderHelper {
     }
 
     private static final HashMap<Para, ArrayList<Para>> cacheModifiedParas = new HashMap<>();
+    private static final HashMap<Integer, ArrayList<View>> cacheViews = new HashMap<>();
 
     private static ArrayList<Para> getModifiedPara(final BaseActivity activity,
                                                    ArrayList<Para> paras,
@@ -382,8 +396,7 @@ public class RenderHelper {
 
         if (paras.size() > 0 && paras.get(0).getLines().size() > 0) {
             if (cacheModifiedParas.get(paras.get(0)) != null)
-                return
-                        cacheModifiedParas.get(paras.get(0));
+                return cacheModifiedParas.get(paras.get(0));
             else
                 cacheModifiedParas.put(paras.get(0), convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding));
             return cacheModifiedParas.get(paras.get(0));
@@ -460,6 +473,7 @@ public class RenderHelper {
                                            ArrayList<Para> paras,
                                            int leftRightPadding,
                                            boolean showLoadingDialog,
+                                           boolean isQuote,
                                            final OnMaxLengthCalculatedListener onMaxLengthCalculatedListener) {
         if (showLoadingDialog)
             activity.showDialog();
@@ -485,6 +499,10 @@ public class RenderHelper {
                 paint.setTypeface(urduTf);
             }
             int desireScreenWidth = (int) (Utils.getScreenWidth() - Math.max(Utils.pxFromDp(5), finalLeftRightPadding));
+            if (isQuote) {
+                activity.runOnUiThread(() -> onMaxLengthCalculatedListener.onMaxLengthCalculated(desireScreenWidth, (int) maxFontSize));
+                return;
+            }
             String maxContent = "";
             boolean maxLengthCalculated = false;
             int maxLengthPara = 0;
@@ -801,6 +819,9 @@ public class RenderHelper {
                 throw new IllegalArgumentException("activity cannot be null");
             else if (paras == null && !isHTML)
                 throw new IllegalArgumentException("paras cannot be null");
+            if (isQuote) {
+                layParaContainer.setTag(R.id.tag_para_id, paras.hashCode());
+            }
             renderContent(paras, activity, textAlignment, onWordClick, onWordLongClick, layParaContainer, zoomLayout, textColor, leftRightPadding, isHTML, isQuote, htmlContent, showLoadingDialog, showTranslation);
         }
     }
