@@ -28,6 +28,7 @@ import com.example.sew.models.User;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -124,14 +125,27 @@ public class FavoriteActivity extends BaseHomeActivity {
         if (new ServiceManager(getActivity()).isNetworkAvailable())
             allSavedImageShayari.addAll(MyService.MyFavService.getShayariImages());
         allFavoriteSections.putAll(MyService.MyFavService.getAllFavoriteSections());
-        for(Map.Entry<ContentType, ArrayList<FavContentPageModel>> entry : allFavoriteSections.entrySet()) {
-//            String key = entry.getKey();
-//            Integer value = entry.getValue();
+        Iterator<Map.Entry<ContentType, ArrayList<FavContentPageModel>>>
+                iterator = allFavoriteSections.entrySet().iterator();
+        while (iterator.hasNext()) {
+
+            // Get the entry at this iteration
+            Map.Entry<ContentType, ArrayList<FavContentPageModel>> entry = iterator.next();
             if (entry.getValue() == null || entry.getValue().isEmpty()){
-                allFavoriteSections.remove(entry.getKey());
-                break;
+                iterator.remove();
+//                allFavoriteSections.remove(entry.getKey());
+//                break;
             }
         }
+
+//        for(Map.Entry<ContentType, ArrayList<FavContentPageModel>> entry : allFavoriteSections.entrySet()) {
+//            String key = entry.getKey();
+//            Integer value = entry.getValue();
+//            if (entry.getValue() == null || entry.getValue().isEmpty()){
+//                allFavoriteSections.remove(entry.getKey());
+////                break;
+//            }
+//        }
 //        for (int i =allFavoriteSections.size()-1; i >=0; i--){
 //            if (allFavoriteSections.get())
 //        }
