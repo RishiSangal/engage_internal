@@ -327,10 +327,7 @@ public class RenderHelper {
                                 layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word_ur, null);
                                 txtWord = layWordContainer.findViewById(R.id.txtWord);
                             } else {
-                                if(isQuote)
-                                    layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word_quote, null);
-                                else
-                                    layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word, null);
+                                layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word, null);
                                 txtWord = layWordContainer.findViewById(R.id.txtWord);
                             }
                             if (textColor != activity.getDarkGreyTextColor())

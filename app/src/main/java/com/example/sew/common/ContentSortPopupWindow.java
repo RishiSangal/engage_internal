@@ -43,7 +43,7 @@ public class ContentSortPopupWindow extends RelativePopupWindow {
         viewHolder.txtAlphabetic.setText(MyHelper.getString(R.string.alphabetic));
         viewHolder.txtPopularity.setText(MyHelper.getString(R.string.popularity));
         viewHolder.txtRadeef.setText(MyHelper.getString(R.string.radeef));
-        viewHolder.txtAlphabetic.setVisibility(View.GONE);
+        viewHolder.txtAlphabetic.setVisibility(View.VISIBLE);
         viewHolder.txtRadeef.setVisibility(View.GONE);
         if(sortedBy==Enums.SORT_CONTENT.POPULARITY.getKey())
             viewHolder.txtPopularity.setTextColor(activity.getResources().getColor(R.color.dark_blue));
