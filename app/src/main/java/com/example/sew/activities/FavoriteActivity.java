@@ -66,6 +66,7 @@ public class FavoriteActivity extends BaseHomeActivity {
     ArrayList<ShayariImage> allSavedImageShayari = new ArrayList<>();
     ArrayList<FavoriteDictionary> allFavoriteDictionary = new ArrayList<>();
     ArrayList<FavoritePoet> allFavoritePoet = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

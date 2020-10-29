@@ -20,7 +20,7 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
     private String slug;
     private String contentListType;
     private String contentCompositionType;
-    private int sequence = 0;
+    private String sequence = "";
     private int contentCount;
     JSONObject jsonObject;
 
@@ -42,7 +42,7 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
         contentCount = MyHelper.convertToInt(optString(jsonObject, "C"));
         contentListType = optString(jsonObject, "LT");
         contentCompositionType = optString(jsonObject, "CT");
-        sequence = (optString(jsonObject, "S") + optString(jsonObject, "NE")).hashCode();
+        sequence = optString(jsonObject, "S") + optString(jsonObject, "NE");
 //        if (jsonObject.has("CS"))
 //            sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
 //        else {
@@ -162,18 +162,18 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
         return getContentId().equalsIgnoreCase(contentType.getContentId());
     }
 
-    @Override
-    public int hashCode() {
-        return jsonObject.hashCode();
-    }
+//    @Override
+//    public int hashCode() {
+//        return jsonObject.hashCode();
+//    }
 
-    public int getSequence() {
+    public String getSequence() {
         return sequence;
     }
 
     @Override
     public int compareTo(ContentType o) {
-        return (getSequence() - o.getSequence());//>= 0 ? 1 : -1;
+        return (getSequence().compareTo(o.getSequence()));//>= 0 ? 1 : -1;
     }
 
     public int getPriority() {

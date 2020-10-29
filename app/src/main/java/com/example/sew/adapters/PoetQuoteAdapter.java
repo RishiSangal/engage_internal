@@ -55,6 +55,7 @@ import com.google.android.gms.common.util.CollectionUtils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -102,6 +103,8 @@ public class PoetQuoteAdapter extends BasePoetContentAdapter {
         return false;
     }
 
+    HashMap<Integer, View> cachedViews = new HashMap<>();
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (isLayoutDirectionMismatched(convertView))
@@ -124,9 +127,11 @@ public class PoetQuoteAdapter extends BasePoetContentAdapter {
             case VIEW_TYPE_CONTENT:
                 SherViewHolder sherViewHolder;
                 SherContent sherContent = getItem(position);
+                convertView = cachedViews.get(position);
                 if (convertView == null) {
                     convertView = getInflatedView(R.layout.cell_poet_quotes);
                     sherViewHolder = new SherViewHolder(convertView);
+                    cachedViews.put(position, convertView);
                 } else
                     sherViewHolder = (SherViewHolder) convertView.getTag();
                 convertView.setTag(sherViewHolder);
