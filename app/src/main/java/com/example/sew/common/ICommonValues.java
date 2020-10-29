@@ -13,6 +13,7 @@ public interface ICommonValues {
     public static final int DARK_MODE_AUTO = 2;
     String BROADCAST_LANGUAGE_CHANGED = "broadcast_language_changed";
     String BROADCAST_FAVORITE_UPDATED = "broadcast_favorite_updated";
+    String BROADCAST_FAVORITE_TO_RESET = "BROADCAST_FAVORITE_TO_RESET";
     String BROADCAST_SEARCH_TEXT_CHANGED = "broadcast_search_text_changed";
     String BROADCAST_SAVED_IMAGE_SHAYARI_UPDATED = "broadcast_saved_image_shayari_updated";
     String BROADCAST_CONTENT_RENDERED = "broadcast_content_rendered";

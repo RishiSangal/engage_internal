@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sew.R;
+import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.FavoriteActivity;
 import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.adapters.FavoriteContentRecyclerAdapter;
@@ -78,6 +79,7 @@ public class FavoriteContentFragment extends BaseFragment {
             if (!CollectionUtils.isEmpty(data))
                 favContentPageModels.addAll(data);
         }
+
         sortFavouriteList(favContentPageModels);
 //        Collections.reverse(favContentPageModels);
         if (favoriteContentAdapter == null) {
@@ -121,7 +123,18 @@ public class FavoriteContentFragment extends BaseFragment {
     @Override
     public void onFavoriteUpdated() {
         super.onFavoriteUpdated();
+//        ArrayList<FavContentPageModel> favContentPageModels = ((FavoriteActivity) GetActivity()).getFavContents(getContentType());
+//        if (favContentPageModels != null && favContentPageModels.isEmpty()){
+//            // send Broadcast to reset
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    BaseActivity.sendBroadCast(BROADCAST_FAVORITE_TO_RESET);
+//                }
+//            }, 300);
+//        } else {
         lazyRefreshContent();
+//        }
     }
 
     private ContentType contentType;
@@ -140,6 +153,7 @@ public class FavoriteContentFragment extends BaseFragment {
     }
 
     public final void lazyRefreshContent() {
+
         if (lstFavContent == null || favoriteContentAdapter == null)
             return;
         new Handler().postDelayed(this::updateUI, 300);

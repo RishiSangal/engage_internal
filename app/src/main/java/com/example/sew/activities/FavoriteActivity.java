@@ -72,12 +72,23 @@ public class FavoriteActivity extends BaseHomeActivity {
         ButterKnife.bind(this);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_3);
         getFavorites();
+        viewpager.setSaveFromParentEnabled(false);
         registerBroadcastListener(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 updateUI();
             }
         }, BROADCAST_FAVORITE_UPDATED);
+//        registerBroadcastListener(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                favoriteFragmentAdapter = null;
+////                viewpager.removeAllViews();
+////                tabLayout.removeAllViews();
+//                updateUI();
+////                lazyRefreshTabPositioning(tabLayout, viewpager);
+//            }
+//        }, BROADCAST_FAVORITE_TO_RESET);
 //        updateUI();
         if (MyService.isUserLogin()) {
             User user = MyService.getUser();
@@ -113,6 +124,17 @@ public class FavoriteActivity extends BaseHomeActivity {
         if (new ServiceManager(getActivity()).isNetworkAvailable())
             allSavedImageShayari.addAll(MyService.MyFavService.getShayariImages());
         allFavoriteSections.putAll(MyService.MyFavService.getAllFavoriteSections());
+        for(Map.Entry<ContentType, ArrayList<FavContentPageModel>> entry : allFavoriteSections.entrySet()) {
+//            String key = entry.getKey();
+//            Integer value = entry.getValue();
+            if (entry.getValue() == null || entry.getValue().isEmpty()){
+                allFavoriteSections.remove(entry.getKey());
+                break;
+            }
+        }
+//        for (int i =allFavoriteSections.size()-1; i >=0; i--){
+//            if (allFavoriteSections.get())
+//        }
         allFavoriteDictionary.addAll(MyService.MyFavService.getFavoriteDictionary());
         allFavoritePoet.addAll(MyService.MyFavService.getFavoritePoet());
         if (favoriteFragmentAdapter == null) {
@@ -120,7 +142,14 @@ public class FavoriteActivity extends BaseHomeActivity {
                     allFavoriteSections, allSavedImageShayari, allFavoriteDictionary,allFavoritePoet);
             viewpager.setAdapter(favoriteFragmentAdapter);
         } else {
+//            int oldCount = favoriteFragmentAdapter.getCount();
             favoriteFragmentAdapter.notifyDataSetChanged();
+//            int newCount = favoriteFragmentAdapter.getCount();
+//            if (oldCount != newCount) {
+//                favoriteFragmentAdapter = new FavoriteFragmentAdapter(getSupportFragmentManager(), getActivity(),
+//                        allFavoriteSections, allSavedImageShayari, allFavoriteDictionary, allFavoritePoet);
+//                viewpager.setAdapter(favoriteFragmentAdapter);
+//            }
         }
         tabLayout.setViewPager(viewpager);
     }

@@ -390,7 +390,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ICommonV
         addFavoriteClick(imgFavIcon, contentId, null, favType, null);
     }
 
-    public final void addFavoriteClick(ImageView imgFavIcon, String contentId, String contentTypeId, String favType, View.OnClickListener onClickListener) {
+    public final void addFavoriteClick(ImageView imgFavIcon, String contentId, String contentTypeId,
+                                       String favType, View.OnClickListener onClickListener) {
         if (imgFavIcon == null || TextUtils.isEmpty(contentId))
             return;
         imgFavIcon.setTag(R.id.tag_content_id, contentId);
