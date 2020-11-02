@@ -153,6 +153,8 @@ public class PoetSherFragment extends BasePoetProfileFragment {
         defaultSortContent = sortBy.getKey();
         poetSherAdapter = null;
         poetQuoteAdapter= null;
+        shimmerViewContainer.startShimmer();
+        shimmerViewContainer.setVisibility(View.VISIBLE);
         getSherContent(sortBy.getKey());
     }
 }

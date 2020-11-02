@@ -28,7 +28,6 @@ import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllCommentsByTargetId;
 import com.example.sew.apis.PostAddEditReplyComment;
 import com.example.sew.common.Enums;
-import com.example.sew.common.ICommonValues;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
@@ -75,12 +74,14 @@ public class AddCommentActivity extends BaseActivity {
     TextView txtTagName;
     @BindView(R.id.viewShadow)
     View viewShadow;
+    @BindView(R.id.txtContentTitle)
+    TextView txtContentTitle;
     CommentListRecyclerAdapter commentListRecyclerAdapter;
 
     boolean isParentReply, isChildReply;
     ReplyComment currReplyComment;
     Comment currComment;
-    String commentId;
+    String commentId, contentTitle;
 
     String commentHeader = "Remember to keep comments respectful and to follow our Community Guidelines";
     String defaultFilterKey = Enums.FORUM_SORT_FIELDS.POPULARITY.getKey();
@@ -202,9 +203,9 @@ public class AddCommentActivity extends BaseActivity {
                 defaultFilterKey = Enums.FORUM_SORT_FIELDS.RECENT_COMMENT.getKey();
                 defaultAscKey = Enums.COMMENT_SORT_LIST.DESCENDING.getKey();
                 getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
-            } else {
+            } else if (item.toString().equalsIgnoreCase(getString(R.string.replied_by_rekhta))) {
                 defaultFilterKey = Enums.FORUM_SORT_FIELDS.COMMENT_BY_REKHTA.getKey();
-                defaultAscKey = Enums.COMMENT_SORT_LIST.ASCENDING.getKey();
+                defaultAscKey = Enums.COMMENT_SORT_LIST.DESCENDING.getKey();
                 getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
             }
             return true;
@@ -246,11 +247,13 @@ public class AddCommentActivity extends BaseActivity {
         // setHeaderTitle(MyHelper.getString(R.string.comments));
         targetId = getIntent().getStringExtra(CONTENT_ID);
         isOpenKeyBoard = getIntent().getBooleanExtra(IS_OPEN_KEYBOARD, false);
+        contentTitle= getIntent().getStringExtra(CONTENT_TITLE);
         if (MyService.isUserLogin()) {
             User user = MyService.getUser();
             if (!TextUtils.isEmpty(user.getImageName()))
                 ImageHelper.setImage(imgUserImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
         }
+        txtContentTitle.setText(contentTitle);
         filterList = new ArrayList<>();
         filterList.add(getString(R.string.top_comment));
         filterList.add(getString(R.string.newest_comments));
@@ -301,7 +304,7 @@ public class AddCommentActivity extends BaseActivity {
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 dismissDialog();
                 targetId = getAllCommentsByTargetIds.getTargetId();
-                BaseActivity.sendBroadCast(ICommonValues.BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
+                // BaseActivity.sendBroadCast(ICommonValues.BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
                 if (getAllCommentsByTargetIds.isFirstPage())
                     commentList.clear();
                 commentList.addAll(getAllCommentsByTargetIds.getComment());
@@ -320,7 +323,7 @@ public class AddCommentActivity extends BaseActivity {
     private void updateUI() {
         rvComment.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         if (commentListRecyclerAdapter == null) {
-            commentListRecyclerAdapter = new CommentListRecyclerAdapter(getActivity(), commentList);
+            commentListRecyclerAdapter = new CommentListRecyclerAdapter(getActivity(), commentList, defaultAscKey, defaultFilterKey);
             commentListRecyclerAdapter.setOnParentReplyClickListener(onParentReplyClickListener);
             rvComment.setAdapter(commentListRecyclerAdapter);
             rvComment.setOnPagingListener((view1, direction) -> {
@@ -334,10 +337,11 @@ public class AddCommentActivity extends BaseActivity {
 
     }
 
-    public static Intent getInstance(Activity activity, String targetId, boolean isOpenKeyBoard) {
+    public static Intent getInstance(Activity activity, String targetId, boolean isOpenKeyBoard, String contentTitle) {
         Intent intent = new Intent(activity, AddCommentActivity.class);
         intent.putExtra(CONTENT_ID, targetId);
         intent.putExtra(IS_OPEN_KEYBOARD, isOpenKeyBoard);
+        intent.putExtra(CONTENT_TITLE, contentTitle);
         return intent;
     }
 

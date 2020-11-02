@@ -1059,6 +1059,11 @@
     "hin": "Yes",
     "urdu": "Yes"
   },
+  "do_you_want_to_delete": {
+    "eng": "Do you want to delete?",
+    "hin": "Do you want to delete?",
+    "urdu": "Do you want to delete?"
+  },
   "tagged_under": {
     "eng": "Tagged Under",
     "hin": " संबंधित टैग",

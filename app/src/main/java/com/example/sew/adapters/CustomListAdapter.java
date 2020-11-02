@@ -75,7 +75,7 @@ public class CustomListAdapter extends ArrayAdapter {
     private void warningPopup(String storeString) {
         new AlertDialog.Builder(new ContextThemeWrapper(mContext, R.style.AlertDialogCustom))
                 .setTitle(MyHelper.getString(R.string.rekhta))
-                .setMessage(" Do you want to delete?")
+                .setMessage(MyHelper.getString(R.string.do_you_want_to_delete))
                 .setPositiveButton(MyHelper.getString(R.string.yes), (dialog, which) -> {
                     dataList.remove(storeString);
                     notifyDataSetChanged();

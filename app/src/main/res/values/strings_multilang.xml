@@ -239,4 +239,5 @@
     <string name="unpublished_ghazal">unpublished_ghazal</string>
     <string name="comment">comment</string>
     <string name="add_comment">add_comment</string>
+    <string name="do_you_want_to_delete">do_you_want_to_delete</string>
 </resources>

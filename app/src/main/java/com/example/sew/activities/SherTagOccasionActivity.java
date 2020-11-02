@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.sew.R;
-import com.example.sew.adapters.ProseShayariCollectionFragmentAdapter;
 import com.example.sew.adapters.SherTagOccassionFragmentAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentTypeTabByType;
@@ -19,9 +18,7 @@ import com.example.sew.common.Enums;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.models.BaseModel;
 import com.example.sew.models.BaseSherTag;
-import com.example.sew.models.ContentType;
 import com.example.sew.models.ContentTypeTab;
-import com.example.sew.models.CumulatedContentType;
 import com.example.sew.models.HomeImageTag;
 import com.example.sew.models.HomeSherCollection;
 import com.example.sew.models.OccasionCollection;
@@ -30,8 +27,6 @@ import com.example.sew.models.SherTag;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -173,7 +168,7 @@ public class SherTagOccasionActivity extends BaseActivity {
     public void onLanguageChanged() {
         super.onLanguageChanged();
         lazyRefreshTabPositioning(tabLayout, viewPager);
-        getContentTypeTab();
+       // getContentTypeTab();
         updateLanguageSpecificContent();
     }
 

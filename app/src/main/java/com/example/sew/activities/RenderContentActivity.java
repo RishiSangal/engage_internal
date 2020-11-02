@@ -345,7 +345,6 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         registerBroadcastListener(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 getAllComments();
             }
         }, BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
@@ -1022,7 +1021,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 isOpenKeyboard = false;
                 clearShareSelection();
                 checkAndModifyShareSelectionIfNecessary();
-                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard));
+                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard,contentPageModel.getTitle()));
 //                break;
             case R.id.imgTranslate:
                 showingTranslation = !showingTranslation;

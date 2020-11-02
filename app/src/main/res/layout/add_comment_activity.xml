@@ -52,7 +52,17 @@
                         android:padding="@dimen/_8sdp"
                         android:visibility="visible"
                         app:layout_collapseMode="pin">
-
+                        <TextView
+                            android:id="@+id/txtContentTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16ssp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:fontFamily="@font/merriweather_heavy_eng"
+                            android:text=""
+                            android:textColor="?primaryTextColor"
+                            android:textSize="@dimen/_20ssp" />
 
                         <TextView
                             android:id="@+id/txtTitle"

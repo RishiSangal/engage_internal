@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,10 +53,13 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
     private ArrayList<Comment> selectedLiked = new ArrayList<Comment>();
     private ArrayList<Comment> selectedDisLiked = new ArrayList<Comment>();
     private ArrayList<Comment> selectedShowReplies = new ArrayList<Comment>();
+    private String sortOrder, sortFilter;
 
-    public CommentListRecyclerAdapter(BaseActivity activity, ArrayList<Comment> commentList) {
+    public CommentListRecyclerAdapter(BaseActivity activity, ArrayList<Comment> commentList, String sortOrder, String sortFilter) {
         super(activity);
         this.commentList = commentList;
+        this.sortOrder = sortOrder;
+        this.sortFilter = sortFilter;
     }
 
     public Comment getItem(int position) {
@@ -88,7 +92,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
         commentViewHolder.txtDislikeCount.setText(currComment.getTotalDisLike());
         commentViewHolder.txtCommentCount.setText(String.valueOf(currComment.getReplyCount()));
         if (MyService.isUserLogin()) {
-            if(currComment.isEditable()) {
+            if (currComment.isEditable()) {
                 User user = MyService.getUser();
                 if (!TextUtils.isEmpty(user.getImageName())) {
                     ImageHelper.setImage(commentViewHolder.imgImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
@@ -99,13 +103,13 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     commentViewHolder.imgImage.setVisibility(View.GONE);
                     commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
                 }
-            }else{
+            } else {
                 commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
                 commentViewHolder.imgImage.setVisibility(View.GONE);
                 commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
             }
 
-        }else {
+        } else {
             commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
             commentViewHolder.imgImage.setVisibility(View.GONE);
             commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
@@ -155,6 +159,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
     }
 
     private View.OnClickListener onParentReplyClickListener;
+
     public void setOnParentReplyClickListener(View.OnClickListener onItemClickListener) {
         this.onParentReplyClickListener = onItemClickListener;
     }
@@ -297,7 +302,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     break;
                 case R.id.layComment:
                     if (MyService.isUserLogin()) {
-                        if(getActivity() instanceof AddCommentActivity)
+                        if (getActivity() instanceof AddCommentActivity)
                             if (onParentReplyClickListener != null)
                                 onParentReplyClickListener.onClick(view);
 
@@ -307,7 +312,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     }
                     break;
                 case R.id.imgMore:
-                    PopupMenu popup = new PopupMenu(getActivity(), imgMore,Gravity.TOP);
+                    PopupMenu popup = new PopupMenu(getActivity(), imgMore, Gravity.TOP);
                     ArrayList<String> popupList = new ArrayList<>();
                     if (currComment.isEditable()) {
                         popupList.add(getString(R.string.edit));
@@ -338,7 +343,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
                             } else
-                                getDeleteCommentApiCall(currComment);
+                                warningPopup(currComment);
                         }
                         return true;
                     });
@@ -395,6 +400,22 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
         }
     }
 
+    private void warningPopup(Comment currComment) {
+        new androidx.appcompat.app.AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))
+                .setTitle(MyHelper.getString(R.string.rekhta))
+                .setMessage("Do you want to delete?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    getDeleteCommentApiCall(currComment);
+                    dialog.dismiss();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create().show();
+
+
+    }
+
     private void getDeleteCommentApiCall(Comment currComment) {
         getActivity().showDialog();
         new PostRemoveComment().setCommentId(currComment.getId()).runAsync((BaseServiceable.OnApiFinishListener<PostRemoveComment>) postRemoveComment -> {
@@ -402,7 +423,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
             if (postRemoveComment.isValidResponse()) {
                 showToast("Deleted Successfully");
                 commentList.remove(currComment);
-                if(getActivity() instanceof  AddCommentActivity) {
+                if (getActivity() instanceof AddCommentActivity) {
                     ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
                     ((AddCommentActivity) getActivity()).refreshInputComment();
                 }
@@ -414,7 +435,7 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
 
 
     private void getReplyByParentIdApiCall(final CommentViewHolder viewHolder, final Comment currComment) {
-        new GetReplyByParentId().setParentCommentId(currComment.getId()).setSortBy(Enums.FORUM_SORT_FIELDS.RECENT_COMMENT.getKey()).setIsAsc(Enums.COMMENT_SORT_LIST.ASCENDING.getKey())
+        new GetReplyByParentId().setParentCommentId(currComment.getId()).setSortBy(sortFilter).setIsAsc(sortOrder)
                 .setPageCount(currComment.getCurrentPageIndex()).runAsync((BaseServiceable.OnApiFinishListener<GetReplyByParentId>) getReplyByParentId -> {
             currComment.setDataLoading(false);
             if (getReplyByParentId.isValidResponse()) {

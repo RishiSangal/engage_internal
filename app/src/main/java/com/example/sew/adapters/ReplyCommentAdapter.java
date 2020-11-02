@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 
@@ -102,7 +103,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
             replyViewHolder.imgImage.setVisibility(View.GONE);
             replyViewHolder.txtFirstCharacter.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
         }
-        
+
 
 //        replyViewHolder.txtTime.setText(MyHelper.getTimeAgo(currReply.getCommentTimeStamp()));
 //        ImageHelper.setImage(replyViewHolder.imgImage, currReply.getUserImage());
@@ -286,7 +287,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
                             } else
-                                getDeleteCommentApiCall(currReplyComment);
+                                warningPopup(currReplyComment);
                         }
                         return true;
 
@@ -294,6 +295,19 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                     popup.show();
                     break;
             }
+        }
+        private void warningPopup(ReplyComment currReplyComment) {
+            new androidx.appcompat.app.AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))
+                    .setTitle(MyHelper.getString(R.string.rekhta))
+                    .setMessage("Do you want to delete?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        getDeleteCommentApiCall(currReplyComment);
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .create().show();
         }
         private void getDeleteCommentApiCall(ReplyComment currReplyComment) {
             getActivity().showDialog();

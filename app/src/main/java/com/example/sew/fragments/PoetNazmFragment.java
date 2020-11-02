@@ -126,6 +126,8 @@ public class PoetNazmFragment extends BasePoetProfileFragment {
     public void sortContent(Enums.SORT_CONTENT sortBy) {
         defaultSortContent = sortBy.getKey();
         poetNazmAdapter = null;
+        shimmerViewContainer.startShimmer();
+        shimmerViewContainer.setVisibility(View.VISIBLE);
         getPoetGhazals(sortBy.getKey());
     }
 }
