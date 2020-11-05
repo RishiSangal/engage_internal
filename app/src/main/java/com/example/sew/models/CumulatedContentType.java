@@ -2,6 +2,7 @@ package com.example.sew.models;
 
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyHelper;
+import com.example.sew.helpers.MyService;
 
 import org.json.JSONObject;
 
@@ -17,12 +18,16 @@ public class CumulatedContentType extends BaseModel {
     private int seq;
     private int listingType;
 
+    private String contentNameEn, contentNameHi, contentNameUr;
 
     public CumulatedContentType(JSONObject jsonObject) {
         if (jsonObject == null)
             jsonObject = new JSONObject();
         this.jsonObject = jsonObject;
         typeId = optString(jsonObject, "TypeId");
+        contentNameEn= optString(jsonObject,"Name_En");
+        contentNameHi= optString(jsonObject,"Name_Hi");
+        contentNameUr= optString(jsonObject,"Name_Ur");
         contentType = optString(jsonObject, "ContentType");
         typeSlug = optString(jsonObject, "TypeSlug");
         totalContent = MyHelper.convertToInt(optString(jsonObject, "TotalContent"));
@@ -80,5 +85,27 @@ public class CumulatedContentType extends BaseModel {
         else
             return Enums.LIST_RENDERING_FORMAT.IMAGE_SHAYRI;
         // return Enums.LIST_RENDERING_FORMAT.NAZM;
+    }
+    public String getContentNameEn() {
+        return contentNameEn;
+    }
+
+    public String getContentNameHi() {
+        return contentNameHi;
+    }
+
+    public String getContentNameUr() {
+        return contentNameUr;
+    }
+    public String getContentTypeName() {
+        switch (MyService.getSelectedLanguage()) {
+            case ENGLISH:
+                return getContentNameEn();
+            case HINDI:
+                return getContentNameHi();
+            case URDU:
+                return getContentNameUr();
+        }
+        return contentNameEn;
     }
 }

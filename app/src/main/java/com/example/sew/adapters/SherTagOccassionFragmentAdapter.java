@@ -34,7 +34,7 @@ public class SherTagOccassionFragmentAdapter extends FragmentStatePagerAdapter {
         this.activity = activity;
         this.sherCollectionType = sherCollectionTypes;
         this.cumulatedContentTypes = cumulatedContentTypes;
-        this.contentTypeTab=contentTypeTab;
+        this.contentTypeTab = contentTypeTab;
     }
 
     @NonNull
@@ -42,16 +42,16 @@ public class SherTagOccassionFragmentAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (cumulatedContentTypes.get(position).getListRenderingFormat()) {
             case GHAZAL:
-                return TagGhazalFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
+                return TagGhazalFragment.getInstance(cumulatedContentTypes.get(position), contentTypeTab);
             case NAZM:
-                return TagNazmFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
+                return TagNazmFragment.getInstance(cumulatedContentTypes.get(position), contentTypeTab);
             case SHER:
             case QUOTE:
-                return TagSherFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
+                return TagSherFragment.getInstance(cumulatedContentTypes.get(position), contentTypeTab);
             case IMAGE_SHAYRI:
-                return TagShayriImagefrgment.getInstance(cumulatedContentTypes.get(position), sherCollectionType,contentTypeTab);
+                return TagShayriImagefrgment.getInstance(cumulatedContentTypes.get(position), sherCollectionType, contentTypeTab);
         }
-        return TagGhazalFragment.getInstance(cumulatedContentTypes.get(position),contentTypeTab);
+        return TagGhazalFragment.getInstance(cumulatedContentTypes.get(position), contentTypeTab);
     }
 
     @Override
@@ -63,10 +63,11 @@ public class SherTagOccassionFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         int size = cumulatedContentTypes.get(position).getTotalContent();
-        SpannableString spannable = new SpannableString(String.format(Locale.getDefault(), "%s %d", cumulatedContentTypes.get(position).getContentType().toUpperCase(), size));
+        SpannableString spannable = new SpannableString(String.format(Locale.getDefault(), "%s %d", cumulatedContentTypes.get(position).getContentTypeName().toUpperCase(), size));
         increaseFontSizeForPath(spannable, " " + size, 0.6f);
         return spannable;
     }
+
     private void increaseFontSizeForPath(Spannable spannable, String path, float multiplier) {
         int startIndexOfPath = spannable.toString().indexOf(path);
         spannable.setSpan(new RelativeSizeSpan(multiplier), startIndexOfPath,

@@ -41,6 +41,7 @@ public interface ICommonValues {
     String SEARCH_TEXT = "search_text";
     String CONTENT_TYPE = "content_type";
     String CONTENT_TITLE = "content_title";
+    String CONTENT_TYPE_NAME="content_type_name";
     String CONTENT_ID = "content_id";
     String CONTENT_DATA_OBJ = "content_data_obj";
     String SHER_COLLECTION_TYPE = "sher_collection_type ";

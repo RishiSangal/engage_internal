@@ -48,6 +48,7 @@ public class ContentPageModel extends BaseModel {
     private String htmlOrJsonRenderContent;
     private String favCount;
     private boolean originalIsFav;
+    private String contentTyeName;
 
     public ContentPageModel(JSONObject jsonObject) {
         if (jsonObject == null)
@@ -76,6 +77,7 @@ public class ContentPageModel extends BaseModel {
         isHTML = optString(jsonObject, "IH").contentEquals("true");
         this.favCount = optString(jsonObject, "FC");
         this.TypeSlug = optString(jsonObject, "TS");
+        this.contentTyeName = optString(jsonObject, "CTN");
         this.originalIsFav = MyService.isFavorite(getId());
         htmlOrJsonRenderContent = jsonObject.optString("CR");
         JSONObject jSONObject = null;
@@ -340,5 +342,9 @@ public class ContentPageModel extends BaseModel {
 
     public ContentPoet getPoet() {
         return this.poet;
+    }
+
+    public String getContentTyeName() {
+        return contentTyeName;
     }
 }
