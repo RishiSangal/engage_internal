@@ -42,7 +42,7 @@ public class ContentType extends BaseModel implements Comparable<ContentType> {
         contentCount = MyHelper.convertToInt(optString(jsonObject, "C"));
         contentListType = optString(jsonObject, "LT");
         contentCompositionType = optString(jsonObject, "CT");
-        sequence = optString(jsonObject, "S") + optString(jsonObject, "NE");
+        sequence = optString(jsonObject, "S");
 //        if (jsonObject.has("CS"))
 //            sequence = MyHelper.convertToInt(optString(jsonObject, "CS"));
 //        else {

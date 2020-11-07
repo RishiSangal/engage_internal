@@ -1051,18 +1051,18 @@
   },
   "no": {
     "eng": "No",
-    "hin": "No",
-    "urdu": "No"
+    "hin": "नहीं",
+    "urdu": "نہیں"
   },
   "yes": {
     "eng": "Yes",
-    "hin": "Yes",
-    "urdu": "Yes"
+    "hin": "हाँ",
+    "urdu": "ہاں"
   },
   "do_you_want_to_delete": {
     "eng": "Do you want to delete?",
-    "hin": "Do you want to delete?",
-    "urdu": "Do you want to delete?"
+    "hin": "क्या आप रद्द करना चाहते हैं?",
+    "urdu": "کیا آپ منسوخ کرنا چاہتے ہیں؟"
   },
   "tagged_under": {
     "eng": "Tagged Under",

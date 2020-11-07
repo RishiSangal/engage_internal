@@ -373,8 +373,13 @@ public class AddCommentActivity extends BaseActivity {
     public void onFavoriteUpdated() {
         super.onFavoriteUpdated();
     }
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getActivity().isFinishing()) {
+            BaseActivity.sendBroadCast(BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
+        }
+    }
     public void childReply(boolean isChildReply, ReplyComment replyComment, Comment currComment) {
         this.isChildReply = isChildReply;
         currentViewType = REPLY_TYPE_CHILD;
