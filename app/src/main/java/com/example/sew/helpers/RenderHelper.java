@@ -825,5 +825,12 @@ public class RenderHelper {
             renderContent(paras, activity, textAlignment, onWordClick, onWordLongClick, layParaContainer, zoomLayout, textColor, leftRightPadding, isHTML, isQuote, htmlContent, showLoadingDialog, showTranslation);
         }
     }
+/*
+1
+1
+2
+10
+3
 
+ */
 }
