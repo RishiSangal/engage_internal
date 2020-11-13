@@ -21,8 +21,10 @@ import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +95,7 @@ public class FavoritePoetFragment extends BaseFragment {
     private void getFavoritePoet() {
         favoritePoets.clear();
         favoritePoets.addAll(MyService.getAllFavoritePoet());
-        Collections.reverse(favoritePoets);
+       // Collections.reverse(favoritePoets);
         updateUI();
         lstPoets.onNoMoreData();
         lstPoets.onHide();
@@ -104,6 +106,7 @@ public class FavoritePoetFragment extends BaseFragment {
     private void updateUI() {
         dismissDialog();
         lstPoets.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        sortFavouriteList(favoritePoets);
         if (favoritePoetAdapter == null) {
             favoritePoetAdapter = new FavoritePoetAdapter(GetActivity(), favoritePoets);
             favoritePoetAdapter.setOnItemClickListener(this::onPoetClick);
@@ -113,6 +116,29 @@ public class FavoritePoetFragment extends BaseFragment {
 
 
 
+    }
+    private void sortFavouriteList(ArrayList<FavoritePoet> favoritePoets) {
+        try {
+            Collections.sort(favoritePoets, new FavouritePoetComparator());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+    public class FavouritePoetComparator implements Comparator<FavoritePoet> {
+        @Override
+        public int compare(FavoritePoet favoritePoet1, FavoritePoet favoritePoet2) {
+            try {
+                SimpleDateFormat sdf_billdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                long f1 = sdf_billdate.parse(favoritePoet2.getFD()).getTime();
+                long f2 = sdf_billdate.parse(favoritePoet1.getFD()).getTime();
+                if (f1 > f2) return 1;
+                else if (f1 < f2) return -1;
+                return 0;
+            } catch (Exception e) {
+                // TODO: handle exception
+                return 0;
+            }
+        }
     }
 
 }

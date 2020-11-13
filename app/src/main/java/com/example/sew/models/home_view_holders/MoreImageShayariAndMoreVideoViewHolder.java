@@ -2,6 +2,9 @@ package com.example.sew.models.home_view_holders;
 
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.adapters.HomeShayariImageRecyclerAdapter;
@@ -9,12 +12,11 @@ import com.example.sew.adapters.HomeVideoRecyclerAdapter;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.models.HomeShayariImage;
 import com.example.sew.models.HomeVideo;
+import com.example.sew.models.ShayariImage;
 import com.example.sew.views.TitleTextViewType6;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,12 +45,20 @@ public class MoreImageShayariAndMoreVideoViewHolder extends BaseHomeViewHolder {
         return moreImageShayariAndMoreVideoViewHolder;
     }
 
+    ArrayList<ShayariImage> commonShayariImages = new ArrayList<>();
+
     public BaseHomeViewHolder loadMoreImageShayari(ArrayList<HomeShayariImage> shayariImages) {
         txtCollectionTitle.setText(MyHelper.getString(R.string.more_image_shayeri));
-        if (rvCollection.getAdapter() == null)
-            rvCollection.setAdapter(new HomeShayariImageRecyclerAdapter(getActivity(), shayariImages));
+        if (rvCollection.getAdapter() == null) {
+            for (int i = 0; i < shayariImages.size(); i++) {
+                ShayariImage shayariImage = new ShayariImage(shayariImages.get(i).getJsonObject());
+                commonShayariImages.add(shayariImage);
+            }
+            rvCollection.setAdapter(new HomeShayariImageRecyclerAdapter(getActivity(), commonShayariImages, shayariImages));
+        }
         return this;
     }
+
     public BaseHomeViewHolder loadMoreVideo(ArrayList<HomeVideo> videos) {
         txtCollectionTitle.setText(MyHelper.getString(R.string.more_video));
         if (rvCollection.getAdapter() == null)

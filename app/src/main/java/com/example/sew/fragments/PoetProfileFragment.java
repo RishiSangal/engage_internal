@@ -28,7 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.binaryfork.spanny.Spanny;
-import com.example.sew.MyApplication;
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.PoetDetailActivity;
@@ -166,7 +165,7 @@ public class PoetProfileFragment extends BasePoetProfileFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_poet_profile, container, false);
         ButterKnife.bind(this, view);
-     //   setSelectableItemForeground(btnEnglishLanguage, btnHindiLanguage, btnUrduLanguage);
+     // setSelectableItemForeground(btnEnglishLanguage, btnHindiLanguage, btnUrduLanguage);
         wvPoetDescription.setOnLongClickListener(v -> true);
         wvPoetDescription.setLongClickable(false);
         return view;

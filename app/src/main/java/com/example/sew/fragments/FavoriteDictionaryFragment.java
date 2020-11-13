@@ -88,7 +88,7 @@ public class FavoriteDictionaryFragment extends BaseFragment {
     private void getRekhtaDictionary() {
         searchDictionaries.clear();
         searchDictionaries.addAll(MyService.getAllFavoriteWordDictionary());
-        Collections.reverse(searchDictionaries);
+//        Collections.reverse(searchDictionaries);
         updateUI();
         lstDictionary.onNoMoreData();
         lstDictionary.onHide();
