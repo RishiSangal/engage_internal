@@ -33,7 +33,7 @@ public class GetHomePageCollection extends Base {
     public GetHomePageCollection setCommonParams() {
         addParam("lang", String.valueOf(MyService.getSelectedLanguageInt()));
         //addParam("lastFetchDate", "");
-        addParam("lastFetchDate", "2020-10-23");
+        addParam("lastFetchDate", "");
         return this;
     }
 
