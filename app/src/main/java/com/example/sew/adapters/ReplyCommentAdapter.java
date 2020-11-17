@@ -48,10 +48,10 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
     private ArrayList<ReplyComment> selectedDisLiked = new ArrayList<ReplyComment>();
     private Comment currComment;
 
-    public ReplyCommentAdapter(BaseActivity activity, ArrayList<ReplyComment> replyComments,Comment currComments) {
+    public ReplyCommentAdapter(BaseActivity activity, ArrayList<ReplyComment> replyComments, Comment currComments) {
         super(activity);
         this.replyComments = replyComments;
-        this.currComment= currComments;
+        this.currComment = currComments;
     }
 
     public ReplyComment getItem(int position) {
@@ -81,7 +81,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
         replyViewHolder.txtTime.setText(currReply.getCommentDate());
 
         if (MyService.isUserLogin()) {
-            if(currComment.isEditable()) {
+            if (currReply.isEditable()) {
                 User user = MyService.getUser();
                 if (!TextUtils.isEmpty(user.getImageName())) {
                     ImageHelper.setImage(replyViewHolder.imgImage, user.getImageName(), Enums.PLACEHOLDER_TYPE.PROFILE);
@@ -92,13 +92,20 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                     replyViewHolder.imgImage.setVisibility(View.GONE);
                     replyViewHolder.txtFirstCharacter.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
                 }
-            }else{
-                replyViewHolder.txtFirstCharacter.setVisibility(View.VISIBLE);
-                replyViewHolder.imgImage.setVisibility(View.GONE);
-                replyViewHolder.txtFirstCharacter.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+            } else {
+                if (!TextUtils.isEmpty(currReply.getOtheruserImage())) {
+                    ImageHelper.setImage(replyViewHolder.imgImage, currReply.getOtheruserImage(), Enums.PLACEHOLDER_TYPE.PROFILE);
+                    replyViewHolder.txtFirstCharacter.setVisibility(View.GONE);
+                    replyViewHolder.imgImage.setVisibility(View.VISIBLE);
+                } else {
+                    replyViewHolder.txtFirstCharacter.setVisibility(View.VISIBLE);
+                    replyViewHolder.imgImage.setVisibility(View.GONE);
+                    replyViewHolder.txtFirstCharacter.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+                }
+
             }
 
-        }else {
+        } else {
             replyViewHolder.txtFirstCharacter.setVisibility(View.VISIBLE);
             replyViewHolder.imgImage.setVisibility(View.GONE);
             replyViewHolder.txtFirstCharacter.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
@@ -164,7 +171,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
             ReplyComment currReplyComment = (ReplyComment) view.getTag(R.id.tag_data);
             switch (view.getId()) {
                 case R.id.layLike:
-                    if(MyService.isUserLogin()) {
+                    if (MyService.isUserLogin()) {
                         if (isLikeChecked(currReplyComment)) {
                             imgLike.setColorFilter(getActivity().getAppIconColor(), PorterDuff.Mode.SRC_IN);
                             imgDislike.setColorFilter(getActivity().getAppIconColor(), PorterDuff.Mode.SRC_IN);
@@ -197,13 +204,13 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
 
                             });
                         }
-                    }else{
+                    } else {
                         getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                         BaseActivity.showToast("Please login");
                     }
                     break;
                 case R.id.layDislike:
-                    if(MyService.isUserLogin()) {
+                    if (MyService.isUserLogin()) {
                         imgDislike.setColorFilter(getActivity().getAppIconColor(), PorterDuff.Mode.SRC_IN);
                         imgLike.setColorFilter(getActivity().getAppIconColor(), PorterDuff.Mode.SRC_IN);
                         if (isDisLikeChecked(currReplyComment)) {
@@ -236,7 +243,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
 
                             });
                         }
-                    }else{
+                    } else {
                         getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                         BaseActivity.showToast("Please login");
                     }
@@ -247,7 +254,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                         BaseActivity.showToast("Please login");
                     } else {
                         if (getActivity() instanceof AddCommentActivity) {
-                            ((AddCommentActivity) getActivity()).childReply(true, currReplyComment,currComment);
+                            ((AddCommentActivity) getActivity()).childReply(true, currReplyComment, currComment);
                         }
 
 
@@ -278,7 +285,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                                 getActivity().startActivity(LoginActivity.getInstance(getActivity()));
                                 BaseActivity.showToast("Please login");
                             } else {
-                                if(getActivity() instanceof AddCommentActivity)
+                                if (getActivity() instanceof AddCommentActivity)
                                     ((AddCommentActivity) getActivity()).childEditComment(currReplyComment);
 
                             }
@@ -296,6 +303,7 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                     break;
             }
         }
+
         private void warningPopup(ReplyComment currReplyComment) {
             new androidx.appcompat.app.AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))
                     .setTitle(MyHelper.getString(R.string.rekhta))
@@ -309,14 +317,15 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                     })
                     .create().show();
         }
+
         private void getDeleteCommentApiCall(ReplyComment currReplyComment) {
             getActivity().showDialog();
             new PostRemoveComment().setCommentId(currReplyComment.getId()).runAsync((BaseServiceable.OnApiFinishListener<PostRemoveComment>) postRemoveComment -> {
                 getActivity().dismissDialog();
-                if(postRemoveComment.isValidResponse()){
+                if (postRemoveComment.isValidResponse()) {
                     showToast("Deleted Successfully");
                     replyComments.remove(currReplyComment);
-                    if(getActivity() instanceof  AddCommentActivity) {
+                    if (getActivity() instanceof AddCommentActivity) {
                         ((AddCommentActivity) getActivity()).refreshTotalCommentCount(postRemoveComment.getTotalCommentCount());
                         ((AddCommentActivity) getActivity()).refreshCommentAdapter();
                     }
@@ -325,8 +334,6 @@ public class ReplyCommentAdapter extends BaseRecyclerAdapter {
                 }
             });
         }
-
-
 
 
     }
