@@ -161,7 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/rico_controls"
-                            android:textColor="?appIconColor"
+                            android:textColor="@color/dark_blue"
                             android:textSize="@dimen/_30ssp" />
 
                     </LinearLayout>

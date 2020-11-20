@@ -207,7 +207,7 @@ public class AddCommentActivity extends BaseActivity {
 
         public MyClickableSpan(String string) {
             super();
-            clicked = string;
+            this.clicked = string;
         }
 
         @Override
@@ -289,7 +289,6 @@ public class AddCommentActivity extends BaseActivity {
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 dismissDialog();
                 targetId = getAllCommentsByTargetIds.getTargetId();
-                // BaseActivity.sendBroadCast(ICommonValues.BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
                 if (getAllCommentsByTargetIds.isFirstPage())
                     commentList.clear();
                 commentList.addAll(getAllCommentsByTargetIds.getComment());
@@ -297,7 +296,8 @@ public class AddCommentActivity extends BaseActivity {
                 rvComment.onNoMoreData();
                 rvComment.onHide();
                 txtCommentHeaderCount.setText(getAllCommentsByTargetIds.getTotalCommentsCount());
-
+                if(getAllCommentsByTargetIds.getComment().size()==0)
+                    txtFilter.setEnabled(false);
             } else {
                 finish();
                 showToast(getAllCommentsByTargetIds.getErrorMessage());

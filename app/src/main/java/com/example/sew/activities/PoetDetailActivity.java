@@ -126,8 +126,8 @@ public class PoetDetailActivity extends BaseActivity {
     private void updateUI() {
         poetProfilesTabs.clear();
         boolean isEnglishAvailable = poetCompleteProfile.getPoetDetail().isEngDescriptionAvailable();
-        boolean isHindiAvailable = poetCompleteProfile.getPoetDetail().isEngDescriptionAvailable();
-        boolean isUrduAvailable = poetCompleteProfile.getPoetDetail().isEngDescriptionAvailable();
+        boolean isHindiAvailable = poetCompleteProfile.getPoetDetail().isHinDescriptionAvailable();
+        boolean isUrduAvailable = poetCompleteProfile.getPoetDetail().isUrDescriptionAvailable();
 
         poetNameTemplateTV.setText(poetCompleteProfile.getPoetDetail().getPoetName().toUpperCase());
         poetBirthPlaceTemplate.setText(poetCompleteProfile.getPoetDetail().getDomicile());

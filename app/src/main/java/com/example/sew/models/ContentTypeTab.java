@@ -1,6 +1,7 @@
 package com.example.sew.models;
 
 import com.example.sew.helpers.MyHelper;
+import com.example.sew.helpers.MyService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ public class ContentTypeTab extends BaseModel {
     JSONObject jsonObject;
     private String targetId;
     private String targetName;
+    private String TargetNameEn,TargetNameHi, TargetNameUr;
     private String targetSlug;
     private boolean isHaveBannerImage;
     private int targetType;
@@ -23,6 +25,9 @@ public class ContentTypeTab extends BaseModel {
         this.jsonObject = jsonObject;
         targetId = optString(jsonObject, "TargetId");
         targetName = optString(jsonObject, "TargetName");
+        TargetNameEn=  optString(jsonObject,"TargetNameEn");
+        TargetNameHi=  optString(jsonObject,"TargetNameHi");
+        TargetNameUr=  optString(jsonObject,"TargetNameUr");
         targetSlug = optString(jsonObject, "TargetSlug");
         isHaveBannerImage = optString(jsonObject, "HaveBannerImage").equalsIgnoreCase("true");
         targetType = MyHelper.convertToInt(optString(jsonObject, "TargetType"));
@@ -66,5 +71,29 @@ public class ContentTypeTab extends BaseModel {
 
     public ArrayList<CumulatedContentType> getCumulatedContentType() {
         return cumulatedContentType;
+    }
+
+    public String getTargetNameEn() {
+        return TargetNameEn;
+    }
+
+    public String getTargetNameHi() {
+        return TargetNameHi;
+    }
+
+    public String getTargetNameUr() {
+        return TargetNameUr;
+    }
+
+    public String getTitleName(){
+        switch (MyService.getSelectedLanguage()) {
+            case ENGLISH:
+                return getTargetNameEn();
+            case HINDI:
+                return getTargetNameHi();
+            case URDU:
+                return getTargetNameUr();
+        }
+        return getTargetNameEn();
     }
 }

@@ -1,5 +1,8 @@
 package com.example.sew.activities;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -127,8 +130,12 @@ public abstract class BaseHomeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (!(getActivity() instanceof HomeActivity)) {
-            startActivity(HomeActivity.getInstance(getActivity(),false));
-            finish();
+            if(!isNetworkAvailable()){
+                finish();
+            }else {
+                startActivity(HomeActivity.getInstance(getActivity(), false));
+                finish();
+            }
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
@@ -139,5 +146,10 @@ public abstract class BaseHomeActivity extends BaseActivity {
             new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         }
 
+    }
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

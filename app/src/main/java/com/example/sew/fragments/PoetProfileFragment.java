@@ -460,7 +460,7 @@ public class PoetProfileFragment extends BasePoetProfileFragment {
         else if (isEnglishAvailable && isHindiAvailable)
             txtAnd1.setVisibility(View.VISIBLE);
         else if (isHindiAvailable && isUrduAvailable)
-            txtAnd1.setVisibility(View.VISIBLE);
+            txtAnd2.setVisibility(View.VISIBLE);
     }
 
     public class CustomClickableSpan extends ClickableSpan {

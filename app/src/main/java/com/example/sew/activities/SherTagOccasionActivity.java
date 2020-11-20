@@ -136,7 +136,6 @@ public class SherTagOccasionActivity extends BaseActivity {
                     dismissDialog();
                     if (getCoupletListWithPaging.isValidResponse()) {
                         contentTypeTab = getCoupletListWithPaging.getContentTypeTab();
-
                         updateUI();
                     } else {
                         showToast(getCoupletListWithPaging.getErrorMessage());
@@ -145,15 +144,7 @@ public class SherTagOccasionActivity extends BaseActivity {
     }
 
     private void updateUI() {
-        if (contentTypeTab.isHaveBannerImage()) {
-            imgBanner.setVisibility(View.VISIBLE);
-            layTitle.setVisibility(View.GONE);
-            ImageHelper.setImage(imgBanner, contentTypeTab.getImageFile(), null, Enums.PLACEHOLDER_TYPE.PROMOTIONAL_BANNER);
-        } else {
-            imgBanner.setVisibility(View.GONE);
-            layTitle.setVisibility(View.VISIBLE);
-            txtTitle.setText(contentTypeTab.getTargetName().toUpperCase());
-        }
+        updateLanguageSpecificContent();
         viewPager.setAdapter(new SherTagOccassionFragmentAdapter(getSupportFragmentManager(), this, sherCollectionType, contentTypeTab, contentTypeTab.getCumulatedContentType()));
         viewPager.setOffscreenPageLimit(Math.min(contentTypeTab.getCumulatedContentType().size(), 5));
         tabLayout.setViewPager(viewPager);
@@ -173,6 +164,15 @@ public class SherTagOccasionActivity extends BaseActivity {
     }
 
     private void updateLanguageSpecificContent() {
+        if (contentTypeTab.isHaveBannerImage()) {
+            imgBanner.setVisibility(View.VISIBLE);
+            layTitle.setVisibility(View.GONE);
+            ImageHelper.setImage(imgBanner, contentTypeTab.getImageFile(), null, Enums.PLACEHOLDER_TYPE.PROMOTIONAL_BANNER);
+        } else {
+            imgBanner.setVisibility(View.GONE);
+            layTitle.setVisibility(View.VISIBLE);
+            txtTitle.setText(contentTypeTab.getTitleName().toUpperCase());
+        }
     }
 
     @Override

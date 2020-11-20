@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +36,8 @@ public class SearchAllFragment extends BaseSearchFragment {
     ShimmerFrameLayout shimmerViewContainer;
     @BindView(R.id.lstSearchResult)
     PagingListView lstSearchResult;
-
+    @BindView(R.id.txtNoData)
+    TextView txtNoData;
     public static BaseSearchFragment getInstance(String searchedText) {
         return getInstance(new SearchAllFragment(), searchedText);
     }
@@ -155,7 +157,22 @@ public class SearchAllFragment extends BaseSearchFragment {
                         shimmerViewContainer.stopShimmer();
                         shimmerViewContainer.setVisibility(View.GONE);
                         searchContentAll = getSearchAll.getSearchContent();
-                        lstSearchResult.setHasMoreItems(true);
+                        //  lstSearchResult.setHasMoreItems(true);
+                        if (searchContentAll== null || searchContentAll.getSearchContents().size() == 0) {
+                            lstSearchResult.setHasMoreItems(false);
+                            if(searchContentAll.getSearchContents().size() == 0) {
+                                txtNoData.setVisibility(View.VISIBLE);
+                                lstSearchResult.setVisibility(View.GONE);
+                                txtNoData.setText(MyHelper.getString(R.string.no_records_found));
+                            }else{
+                                txtNoData.setVisibility(View.GONE);
+                                lstSearchResult.setVisibility(View.VISIBLE);
+                            }
+                        }else {
+                            lstSearchResult.setHasMoreItems(true);
+                            txtNoData.setVisibility(View.GONE);
+                            lstSearchResult.setVisibility(View.VISIBLE);
+                        }
                         generateData();
                         updateUI();
                     } else
