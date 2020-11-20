@@ -1,1 +1,2 @@
 include ':app', ':wrapping_viewpager', ":gesture_view"
+rootProject.name = 'Rekhta'

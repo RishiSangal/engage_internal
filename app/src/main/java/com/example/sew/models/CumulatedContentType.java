@@ -6,6 +6,7 @@ import com.example.sew.helpers.MyService;
 
 import org.json.JSONObject;
 
+import static com.example.sew.common.MyConstants.DOHA_ID;
 import static com.example.sew.common.MyConstants.NAZM_ID;
 import static com.example.sew.common.MyConstants.SHER_ID;
 
@@ -25,9 +26,9 @@ public class CumulatedContentType extends BaseModel {
             jsonObject = new JSONObject();
         this.jsonObject = jsonObject;
         typeId = optString(jsonObject, "TypeId");
-        contentNameEn= optString(jsonObject,"Name_En");
-        contentNameHi= optString(jsonObject,"Name_Hi");
-        contentNameUr= optString(jsonObject,"Name_Ur");
+        contentNameEn = optString(jsonObject, "Name_En");
+        contentNameHi = optString(jsonObject, "Name_Hi");
+        contentNameUr = optString(jsonObject, "Name_Ur");
         contentType = optString(jsonObject, "ContentType");
         typeSlug = optString(jsonObject, "TypeSlug");
         totalContent = MyHelper.convertToInt(optString(jsonObject, "TotalContent"));
@@ -65,16 +66,14 @@ public class CumulatedContentType extends BaseModel {
     }
 
 
-
     public Enums.LIST_RENDERING_FORMAT getListRenderingFormat() {
         if (getListingType() == 1) {
             if (NAZM_ID.contentEquals(getTypeId()))
                 return Enums.LIST_RENDERING_FORMAT.NAZM;
             else
                 return Enums.LIST_RENDERING_FORMAT.GHAZAL;
-        }
-        else if (getListingType()==2) {
-            if (SHER_ID.contentEquals(getTypeId()))
+        } else if (getListingType() == 2) {
+            if (SHER_ID.contentEquals(getTypeId()) || DOHA_ID.contentEquals(getTypeId()))
                 return Enums.LIST_RENDERING_FORMAT.SHER;
             else
                 return Enums.LIST_RENDERING_FORMAT.QUOTE;
@@ -86,6 +85,7 @@ public class CumulatedContentType extends BaseModel {
             return Enums.LIST_RENDERING_FORMAT.IMAGE_SHAYRI;
         // return Enums.LIST_RENDERING_FORMAT.NAZM;
     }
+
     public String getContentNameEn() {
         return contentNameEn;
     }
@@ -97,6 +97,7 @@ public class CumulatedContentType extends BaseModel {
     public String getContentNameUr() {
         return contentNameUr;
     }
+
     public String getContentTypeName() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
