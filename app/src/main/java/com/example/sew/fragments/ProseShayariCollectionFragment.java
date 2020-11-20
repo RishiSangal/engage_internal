@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +10,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.sew.R;
-import com.example.sew.activities.GhazalsActivity;
-import com.example.sew.activities.NazmActivity;
 import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.ProseShayariCollectionActivity;
-import com.example.sew.activities.ShayariActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.adapters.ProseShayariCollectionAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetCollectionListByCollectionType;
-import com.example.sew.apis.GetContentListWithPaging;
-import com.example.sew.apis.GetCoupletListWithPaging;
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.models.AppCollection;
 import com.example.sew.models.ContentType;
-import com.example.sew.models.SherCollection;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -145,7 +137,6 @@ public class ProseShayariCollectionFragment extends BaseFragment {
 
     private void updateUI() {
         if (proseShayariCollectionAdapter == null) {
-            Parcelable state = rvSherCollection.getLayoutManager().onSaveInstanceState();
             proseShayariCollectionAdapter = new ProseShayariCollectionAdapter(GetActivity(), appCollections, contentType, description);
             proseShayariCollectionAdapter.setCollectionType(collectionType);
             proseShayariCollectionAdapter.setOnItemClickListener(onItemClickListener);
@@ -156,7 +147,6 @@ public class ProseShayariCollectionFragment extends BaseFragment {
                     rvSherCollection.onPaging();
                 }
             });
-            rvSherCollection.getLayoutManager().onRestoreInstanceState(state);
         } else
             proseShayariCollectionAdapter.notifyDataSetChanged();
 

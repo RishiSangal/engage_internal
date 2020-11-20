@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,29 +142,22 @@ public class TagSherFragment extends BaseFragment {
     private void updateUI() {
         if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER){
             if (tagSherAdapter == null) {
-                Parcelable state = lstPoetContent.onSaveInstanceState();
                 tagSherAdapter = new TagSherAdapter(GetActivity(), sherContents);
                 tagSherAdapter.setOnWordClickListener(onWordClickListener);
                 tagSherAdapter.setOnTagClick(onTagClickListener);
                 tagSherAdapter.setOnGhazalClickListener(onGhazalClickListener);
                 tagSherAdapter.setOnPoetNameClickListener(onPoetNameClickListener);
                 lstPoetContent.setAdapter(tagSherAdapter);
-                if (state != null)
-                    lstPoetContent.onRestoreInstanceState(state);
             } else
                 tagSherAdapter.notifyDataSetChanged();
     }else if(contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE){
             if (tagQuoteAdapter == null) {
-                Parcelable state = lstPoetContent.onSaveInstanceState();
-
                 tagQuoteAdapter = new TagQuoteAdapter(GetActivity(), sherContents);
                 tagQuoteAdapter.setTotalContentCount(getCoupletListWithPaging.getTotalCount());
                 tagQuoteAdapter.setOnWordClickListener(onWordClickListener);
                 tagQuoteAdapter.setOnTagClick(onTagClickListener);
                 tagQuoteAdapter.setOnGhazalClickListener(onGhazalClickListener);
                 lstPoetContent.setAdapter(tagQuoteAdapter);
-                if (state != null)
-                    lstPoetContent.onRestoreInstanceState(state);
             } else
                 tagQuoteAdapter.notifyDataSetChanged();
         }

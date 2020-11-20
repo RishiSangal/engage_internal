@@ -191,7 +191,7 @@ public class MyConstants {
         GET_APP_INFO = HOST_CDN_URL + "/v5/shayari/AppInfo";
         GET_YOUTUBE_KEY = HOST_CDN_URL + "/v5/shayari/GetYouTubeKey";
         GET_CONTENT_TYPE_TABBY_TYPE = HOST_CDN_URL + "/v5/shayari/GetContentTypeTabByType";
-        POST_SEARCH_ONLOAD_DEMAND = HOST_CDN_URL + "/v4/shayari/SearchAllLoadOnDemand";
+        POST_SEARCH_ONLOAD_DEMAND = HOST_CDN_URL + "/v5/shayari/SearchAllLoadOnDemand";
         GET_ALL_COMMENTS_BY_TARGET_ID = HOST_BASE_URL + "/v1/forum/GetAllCommentsByTargetId";
         GET_REPLY_BY_PARENT_ID = HOST_BASE_URL + "/v1/forum/GetReplyByParentId";
         POST_USER_COMMENTS = HOST_BASE_URL + "/v1/forum/SetUserComments";

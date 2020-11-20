@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,10 +105,8 @@ public class NazmsFragment extends BaseFragment {
 
     private void updateUI() {
         if (nazmAdapter == null) {
-            Parcelable state = lstNazams.onSaveInstanceState();
             nazmAdapter = new NazmAdapter(GetActivity(), nazams, targetId);
             lstNazams.setAdapter(nazmAdapter);
-            lstNazams.onRestoreInstanceState(state);
         } else
             nazmAdapter.notifyDataSetChanged();
     }

@@ -1,31 +1,26 @@
 package com.example.sew.activities;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.binaryfork.spanny.Spanny;
 import com.example.sew.R;
 import com.example.sew.adapters.DictionaryAdapter;
-import com.example.sew.adapters.PoetVideoAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetPlattsDictionary;
 import com.example.sew.apis.GetRekhtaDictionary;
@@ -39,16 +34,11 @@ import com.example.sew.models.ContentType;
 import com.example.sew.models.PlattsDictionary;
 import com.example.sew.models.SearchDictionary;
 import com.example.sew.models.WordOfTheDay;
-import com.example.sew.models.home_view_holders.WordOfTheDayViewHolder;
-import com.example.sew.views.TitleTextView;
 import com.example.sew.views.TitleTextViewType7;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -373,10 +363,8 @@ public class DictionaryActivity extends BaseActivity {
 //            }
 
             if (dictionaryAdapter == null) {
-                Parcelable state = lstDictionary.onSaveInstanceState();
                 dictionaryAdapter = new DictionaryAdapter(getActivity(), allData);
                 lstDictionary.setAdapter(dictionaryAdapter);
-                lstDictionary.onRestoreInstanceState(state);
             } else
                 dictionaryAdapter.notifyDataSetChanged();
 

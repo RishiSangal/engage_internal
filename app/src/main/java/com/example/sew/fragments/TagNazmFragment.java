@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,12 @@ import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
 import com.example.sew.activities.RenderContentActivity;
-import com.example.sew.adapters.PoetNazmAdapter;
 import com.example.sew.adapters.TagNazmAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentListWithPaging;
-import com.example.sew.common.MyConstants;
 import com.example.sew.common.PagingListView;
-import com.example.sew.models.ContentType;
 import com.example.sew.models.ContentTypeTab;
 import com.example.sew.models.CumulatedContentType;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.ShayariContent;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -129,11 +124,8 @@ public class TagNazmFragment extends BaseFragment {
 
     private void updateUI() {
         if (tagNazmAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
             tagNazmAdapter = new TagNazmAdapter(GetActivity(), tagNazms);
             lstPoetContent.setAdapter(tagNazmAdapter);
-            if (state != null)
-                lstPoetContent.onRestoreInstanceState(state);
         } else
             tagNazmAdapter.notifyDataSetChanged();
     }

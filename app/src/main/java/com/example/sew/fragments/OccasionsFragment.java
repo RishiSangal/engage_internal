@@ -11,22 +11,17 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.sew.R;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
 import com.example.sew.adapters.OccasionsCollectionAdapter;
-import com.example.sew.adapters.T20CollectionAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetOccasions;
 import com.example.sew.models.OccasionCollection;
-import com.example.sew.models.SherCollection;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -113,7 +108,6 @@ public class OccasionsFragment extends BaseFragment {
     private OccasionsCollectionAdapter occasionsCollectionAdapter;
     private void updateUI() {
         if (occasionsCollectionAdapter == null) {
-            Parcelable state = rvOccasions.getLayoutManager().onSaveInstanceState();
             occasionsCollectionAdapter = new OccasionsCollectionAdapter(GetActivity(), occasionCollections);
             occasionsCollectionAdapter.setOnItemClickListener(onItemClickListener);
             rvOccasions.setAdapter(occasionsCollectionAdapter);
@@ -123,7 +117,6 @@ public class OccasionsFragment extends BaseFragment {
                     rvOccasions.onPaging();
                 }
             });
-            rvOccasions.getLayoutManager().onRestoreInstanceState(state);
         } else
             occasionsCollectionAdapter.notifyDataSetChanged();
 

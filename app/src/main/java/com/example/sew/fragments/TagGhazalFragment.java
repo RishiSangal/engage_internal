@@ -2,7 +2,6 @@ package com.example.sew.fragments;
 
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
 
 import com.example.sew.R;
 import com.example.sew.activities.RenderContentActivity;
-import com.example.sew.adapters.PoetGhazalAdapter;
 import com.example.sew.adapters.TagGhazalAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetContentListWithPaging;
 import com.example.sew.common.PagingListView;
-import com.example.sew.models.ContentType;
 import com.example.sew.models.ContentTypeTab;
 import com.example.sew.models.CumulatedContentType;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.ShayariContent;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -129,11 +124,8 @@ public class TagGhazalFragment extends BaseFragment {
 
     private void updateUI() {
         if (tagGhazalAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
             tagGhazalAdapter = new TagGhazalAdapter(GetActivity(), tagGhazals);
             lstPoetContent.setAdapter(tagGhazalAdapter);
-            if (state != null)
-                lstPoetContent.onRestoreInstanceState(state);
         } else
             tagGhazalAdapter.notifyDataSetChanged();
     }

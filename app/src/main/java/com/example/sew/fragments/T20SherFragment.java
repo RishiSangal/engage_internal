@@ -1,8 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.SherCollectionActivity;
-import com.example.sew.adapters.ProseShayariCollectionAdapter;
 import com.example.sew.adapters.T20CollectionAdapter;
 import com.example.sew.apis.BaseServiceable;
-import com.example.sew.apis.GetCoupletListWithPaging;
 import com.example.sew.apis.GetT20Shers;
-import com.example.sew.apis.GetWordMeaning;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.SherCollection;
-import com.example.sew.models.WordContainer;
 import com.example.sew.views.paging_recycler_view.PagingRecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -117,7 +107,6 @@ public class T20SherFragment extends BaseFragment {
 
     private void updateUI() {
         if (t20CollectionAdapter == null) {
-            Parcelable state= rvSherCollection.getLayoutManager().onSaveInstanceState();
             t20CollectionAdapter = new T20CollectionAdapter(GetActivity(), sherCollections);
             t20CollectionAdapter.setOnItemClickListener(onItemClickListener);
             rvSherCollection.setAdapter(t20CollectionAdapter);
@@ -127,7 +116,6 @@ public class T20SherFragment extends BaseFragment {
                     rvSherCollection.onPaging();
                 }
             });
-            rvSherCollection.getLayoutManager().onRestoreInstanceState(state);
         } else
             t20CollectionAdapter.notifyDataSetChanged();
 

@@ -1,16 +1,13 @@
 package com.example.sew.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
@@ -19,19 +16,15 @@ import com.example.sew.activities.RenderContentActivity;
 import com.example.sew.adapters.SearchAllAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetSearchAll;
-import com.example.sew.apis.GetSearchContentByType;
 import com.example.sew.apis.PostSearchOnnLoadDemand;
-import com.example.sew.common.Enums;
 import com.example.sew.common.PagingListView;
 import com.example.sew.helpers.MyHelper;
-import com.example.sew.models.PoetDetail;
 import com.example.sew.models.SearchContent;
 import com.example.sew.models.SearchContentAll;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,12 +82,19 @@ public class SearchAllFragment extends BaseSearchFragment {
                 postSearchOnnLoadDemand.setKeyword(searchKeyword).addPagination()
                         .runAsync((BaseServiceable.OnApiFinishListener<PostSearchOnnLoadDemand>) postSearchOnnLoadDemand -> {
                             if (postSearchOnnLoadDemand.isValidResponse()) {
-                                searchContentAll = postSearchOnnLoadDemand.getSearchContentAll();
-                                allData.addAll(searchContentAll.getSearchContents());
-                                lstSearchResult.setIsLoading(false);
-                                lstSearchResult.setHasMoreItems(true);
-                                generateDataOnDemand();
-                                updateUI();
+                                if (searchContentAll.getSearchContents().size() > 0) {
+                                    searchContentAll = postSearchOnnLoadDemand.getSearchContentAll();
+                                    allData.addAll(searchContentAll.getSearchContents());
+                                    lstSearchResult.setIsLoading(false);
+                                    lstSearchResult.setHasMoreItems(true);
+                                    generateDataOnDemand();
+                                    updateUI();
+                                }else {
+                                    lstSearchResult.setHasMoreItems(false);
+//                                    txtNoData.setVisibility(View.VISIBLE);
+//                                    lstSearchResult.setVisibility(View.GONE);
+//                                    txtNoData.setText(MyHelper.getString(R.string.no_records_found));
+                                }
                             } else
                                 showToast(postSearchOnnLoadDemand.getErrorMessage());
 

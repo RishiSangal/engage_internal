@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,10 +110,8 @@ public class GhazalsFragment extends BaseFragment {
 
     private void updateUI() {
         if (ghazalAdapter == null) {
-            Parcelable state = lstGhazals.onSaveInstanceState();
             ghazalAdapter = new GhazalAdapter(GetActivity(), ghazals, targetId);
             lstGhazals.setAdapter(ghazalAdapter);
-            lstGhazals.onRestoreInstanceState(state);
         } else
             ghazalAdapter.notifyDataSetChanged();
     }

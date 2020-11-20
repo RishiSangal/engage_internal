@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,10 +159,8 @@ public class PoetAudioFragment extends BasePoetProfileFragment implements AudioP
         if (audioPlayerControls != null)
             audioPlayerControls.setAudioContents(audioContents);
         if (poetAudioAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
             poetAudioAdapter = new PoetAudioAdapter(GetActivity(), audioContents, getPoetDetail());
             lstPoetContent.setAdapter(poetAudioAdapter);
-            lstPoetContent.onRestoreInstanceState(state);
         } else
             poetAudioAdapter.notifyDataSetChanged();
     }

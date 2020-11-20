@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
 import com.example.sew.R;
-import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.adapters.PoetVideoAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetVideoListWithPaging;
@@ -101,10 +99,8 @@ public class PoetVideoFragment extends BasePoetProfileFragment {
 
     private void updateUI() {
         if (poetVideoAdapter == null) {
-            Parcelable state= lstPoetContent.onSaveInstanceState();
             poetVideoAdapter = new PoetVideoAdapter(GetActivity(), videoContents, getPoetDetail());
             lstPoetContent.setAdapter(poetVideoAdapter);
-            lstPoetContent.onRestoreInstanceState(state);
         } else
             poetVideoAdapter.notifyDataSetChanged();
     }

@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,10 +134,8 @@ public class SearchGhazalNazmSherFragment extends BaseSearchFragment {
 
     private void updateUI() {
         if (searchGhazalNazmSherAdapter == null) {
-            Parcelable state = lstSearchResult.onSaveInstanceState();
             searchGhazalNazmSherAdapter = new SearchGhazalNazmSherAdapter(GetActivity(), searchContents);
             lstSearchResult.setAdapter(searchGhazalNazmSherAdapter);
-            lstSearchResult.onRestoreInstanceState(state);
         } else
             searchGhazalNazmSherAdapter.notifyDataSetChanged();
     }

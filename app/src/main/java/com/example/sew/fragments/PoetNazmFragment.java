@@ -1,7 +1,6 @@
 package com.example.sew.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,12 +112,9 @@ public class PoetNazmFragment extends BasePoetProfileFragment {
 
     private void updateUI() {
         if (poetNazmAdapter == null) {
-            Parcelable state = lstPoetContent.onSaveInstanceState();
             poetNazmAdapter = new PoetNazmAdapter(GetActivity(), poetNazms, getPoetDetail(), getContentType(), PoetNazmFragment.this, defaultSortContent);
             poetNazmAdapter.setTotalContentCount(getContentListWithPaging.getTotalCount());
             lstPoetContent.setAdapter(poetNazmAdapter);
-            if (state != null)
-                lstPoetContent.onRestoreInstanceState(state);
         } else
             poetNazmAdapter.notifyDataSetChanged();
     }
