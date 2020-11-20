@@ -44,6 +44,7 @@ public class TagSherFragment extends BaseFragment {
     PagingListView lstPoetContent;
     CumulatedContentType contentType;
     ContentTypeTab contentTypeTab;
+
     public static TagSherFragment getInstance(CumulatedContentType contentType, ContentTypeTab contentTypeTab) {
         TagSherFragment tagSherFragment = new TagSherFragment();
         Bundle bundle = new Bundle();
@@ -140,8 +141,9 @@ public class TagSherFragment extends BaseFragment {
         SherContent sherContent = (SherContent) v.getTag(R.id.tag_data);
         startActivity(PoetDetailActivity.getInstance(GetActivity(), sherContent.getPI()));
     };
+
     private void updateUI() {
-        if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER){
+        if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER) {
             if (tagSherAdapter == null) {
                 Parcelable state = lstPoetContent.onSaveInstanceState();
                 tagSherAdapter = new TagSherAdapter(GetActivity(), sherContents);
@@ -154,7 +156,7 @@ public class TagSherFragment extends BaseFragment {
                     lstPoetContent.onRestoreInstanceState(state);
             } else
                 tagSherAdapter.notifyDataSetChanged();
-    }else if(contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE){
+        } else if (contentType.getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE) {
             if (tagQuoteAdapter == null) {
                 Parcelable state = lstPoetContent.onSaveInstanceState();
 

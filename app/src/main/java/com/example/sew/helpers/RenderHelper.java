@@ -83,9 +83,9 @@ public class RenderHelper {
         if (layParaContainer == null)
             return;
         Typeface entTf, hindiTf, urduTf;
-        entTf = ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
-        hindiTf = ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
-        urduTf = ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+        entTf = getEngFont(isQuote, activity);
+        hindiTf = getHinFont(activity);
+        urduTf = getUrduFont(activity);
         final float maxFontSize = MyService.getSelectedLanguage() == Enums.LANGUAGE.URDU ? 16f : 18f;
         if (isHTML) {
             layParaContainer.setVisibility(View.GONE);
@@ -139,7 +139,7 @@ public class RenderHelper {
         } else {
             final ArrayList<Para> modifiedParas = new ArrayList<>();
             if (isQuote) {
-                modifiedParas.addAll(getModifiedPara(activity, paras, leftRightPadding));
+                modifiedParas.addAll(getModifiedPara(activity, paras, leftRightPadding, isQuote));
             }
             if (modifiedParas.isEmpty())
                 modifiedParas.addAll(paras);
@@ -168,7 +168,7 @@ public class RenderHelper {
                 } else if (layParaContainer.getParent() instanceof FrameLayout)
                     layParaContainer.setLayoutParams(new FrameLayout.LayoutParams((int) Math.ceil(maxLength), LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                createParaViews(activity, modifiedParas, onWordClick, onWordLongClick, textAlignment, desiredFontSize, textColor, showLoadingDialog, showTranslation, views -> {
+                createParaViews(activity, modifiedParas, onWordClick, onWordLongClick, textAlignment, desiredFontSize, textColor, showLoadingDialog, showTranslation,isQuote, views -> {
                     activity.dismissDialog();
                     if (!CollectionUtils.isEmpty(views)) {
                         layParaContainer.removeAllViews();
@@ -261,6 +261,7 @@ public class RenderHelper {
                                         final int textColor,
                                         final boolean showLoadingDialog,
                                         final boolean showTranslation,
+                                        boolean isQuote,
                                         final OnParaViewsCreatedListener onParaViewsCreatedListener) {
         if (showLoadingDialog)
             activity.showDialog();
@@ -278,7 +279,7 @@ public class RenderHelper {
 
             }
         });
-        if (cacheViews.get(paras.hashCode()) != null) {
+        /*if (cacheViews.get(paras.hashCode()) != null) {
             ArrayList<View> cachedViews = cacheViews.get(paras.hashCode());
             for (int i = 0; i < cachedViews.size(); i++) {
                 if (cachedViews.get(i).getParent() != null)
@@ -286,7 +287,7 @@ public class RenderHelper {
             }
             activity.runOnUiThread(() -> onParaViewsCreatedListener.onParaViewsCreated(cacheViews.get(paras.hashCode())));
             return;
-        }
+        }*/
         new Thread(() -> {
             int lineNumber = 0;
             try {
@@ -328,7 +329,11 @@ public class RenderHelper {
                                 layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word_ur, null);
                                 txtWord = layWordContainer.findViewById(R.id.txtWord);
                             } else {
-                                layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word, null);
+                                if(isQuote)
+                                    layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word_quote, null);
+                                else
+                                    layWordContainer = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.cell_word, null);
+
                                 txtWord = layWordContainer.findViewById(R.id.txtWord);
                             }
                             if (textColor != activity.getDarkGreyTextColor())
@@ -392,20 +397,21 @@ public class RenderHelper {
 
     private static ArrayList<Para> getModifiedPara(final BaseActivity activity,
                                                    ArrayList<Para> paras,
-                                                   int leftRightPadding) {
+                                                   int leftRightPadding,
+                                                   boolean isQuote) {
 
         if (paras.size() > 0 && paras.get(0).getLines().size() > 0) {
             if (cacheModifiedParas.get(paras.get(0)) != null)
                 return cacheModifiedParas.get(paras.get(0));
             else
-                cacheModifiedParas.put(paras.get(0), convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding));
+                cacheModifiedParas.put(paras.get(0), convertToMultiLines(activity, paras.get(0).getLines().get(0), paras.get(0), leftRightPadding, isQuote));
             return cacheModifiedParas.get(paras.get(0));
         }
         return paras;
     }
 
     private static ArrayList<Para> convertToMultiLines(final BaseActivity activity, Line line, Para para,
-                                                       int leftRightPadding) {
+                                                       int leftRightPadding, boolean isQuote) {
         final float[] maxLength = {0};
         final float maxHindiFontSize = 15f;
         final float maxOtherFontSize = 18f;
@@ -414,9 +420,9 @@ public class RenderHelper {
         int dp_5 = (int) Utils.pxFromDp(5);
         int dp_1 = (int) Utils.pxFromDp(1);
         Typeface entTf, hindiTf, urduTf;
-        entTf = ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
-        hindiTf = ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
-        urduTf = ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+        entTf = getEngFont(isQuote, activity);
+        hindiTf = getHinFont(activity);
+        urduTf = getUrduFont(activity);
         final float maxFontSize = MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI ? maxHindiFontSize : maxOtherFontSize;
         float desiredFontSize = maxOtherFontSize;
         TextPaint paint = new TextPaint();
@@ -450,7 +456,7 @@ public class RenderHelper {
                         continue;
                 }
                 tmpWordContainer.add(tmpLine.getWordContainers().get(i));
-                float maxLengthToFillThisText = getMaxLengthToFillThisText(activity, tmpParas, (int) desiredFontSize, desireScreenWidth, finalLeftRightPadding);
+                float maxLengthToFillThisText = getMaxLengthToFillThisText(activity, tmpParas, (int) desiredFontSize, desireScreenWidth, finalLeftRightPadding, isQuote);
                 boolean canTextRender = maxLengthToFillThisText < desireScreenWidth;
                 if (!canTextRender) {
                     tmpWordContainer.remove(tmpLine.getWordContainers().get(i));
@@ -486,9 +492,9 @@ public class RenderHelper {
             int dp_5 = (int) Utils.pxFromDp(5);
             int dp_1 = (int) Utils.pxFromDp(1);
             Typeface entTf, hindiTf, urduTf;
-            entTf = ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
-            hindiTf = ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
-            urduTf = ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+            entTf = getEngFont(isQuote, activity);
+            hindiTf = getHinFont(activity);
+            urduTf = getUrduFont(activity);
             final float maxFontSize = MyService.getSelectedLanguage() == Enums.LANGUAGE.HINDI ? maxHindiFontSize : maxOtherFontSize;
             TextPaint paint = new TextPaint();
             if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH) {//for urdu, we need to use roboto, otherwise custom font
@@ -574,7 +580,7 @@ public class RenderHelper {
                 float newMaxLength = maxLength[0];
                 for (int i = desiredFontSize[0] + 1; i <= maxUpperLimit; i++) {
                     newScreenWidth = i;
-                    float maxLengthToFillThisText = getMaxLengthToFillThisText(activity, paras, i, desireScreenWidth, finalLeftRightPadding);
+                    float maxLengthToFillThisText = getMaxLengthToFillThisText(activity, paras, i, desireScreenWidth, finalLeftRightPadding, isQuote);
                     boolean canTextRender = maxLengthToFillThisText < desireScreenWidth;
                     if (!canTextRender) {
                         newScreenWidth -= 1;
@@ -598,14 +604,14 @@ public class RenderHelper {
 
     }
 
-    private static float getMaxLengthToFillThisText(BaseActivity activity, ArrayList<Para> paras, int desiredFontSize, int desireScreenWidth, int finalLeftRightPadding) {
+    private static float getMaxLengthToFillThisText(BaseActivity activity, ArrayList<Para> paras, int desiredFontSize, int desireScreenWidth, int finalLeftRightPadding, boolean isQuote) {
         float maxLength = 0f;
         int dp_5 = (int) Utils.pxFromDp(5);
         int dp_1 = (int) Utils.pxFromDp(1);
         Typeface entTf, hindiTf, urduTf;
-        entTf = ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
-        hindiTf = ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
-        urduTf = ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+        entTf = getEngFont(isQuote, activity);
+        hindiTf = getHinFont(activity);
+        urduTf = getUrduFont(activity);
         TextPaint paint = new TextPaint();
         if (MyService.getSelectedLanguage() == Enums.LANGUAGE.ENGLISH) {//for urdu, we need to use roboto, otherwise custom font
             paint.setTypeface(entTf);
@@ -710,6 +716,20 @@ public class RenderHelper {
                 "body {font-family: CustomFont;color:" + HtmlColor + ";font-size: medium;text-align: " + textDirection + ";}</style>", fontName);
     }
 
+    private static Typeface getEngFont(boolean isQuote, final BaseActivity activity) {
+        if (isQuote)
+            return getHinFont(activity);
+        else
+            return ResourcesCompat.getFont(activity, R.font.merriweather_extended_light_italic_eng);
+    }
+
+    private static Typeface getHinFont(final BaseActivity activity) {
+        return ResourcesCompat.getFont(activity, R.font.laila_regular_hin);
+    }
+
+    private static Typeface getUrduFont(final BaseActivity activity) {
+        return ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+    }
 
     public static class RenderContentBuilder {
         private ArrayList<Para> paras;
@@ -825,12 +845,4 @@ public class RenderHelper {
             renderContent(paras, activity, textAlignment, onWordClick, onWordLongClick, layParaContainer, zoomLayout, textColor, leftRightPadding, isHTML, isQuote, htmlContent, showLoadingDialog, showTranslation);
         }
     }
-/*
-1
-1
-2
-10
-3
-
- */
 }
