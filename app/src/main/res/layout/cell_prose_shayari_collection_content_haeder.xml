@@ -147,7 +147,7 @@
         android:layout_height="1dp"
         android:background="?appDividerColor"
         android:layout_below="@+id/layfavSort"
-        android:layout_marginBottom="@dimen/_47sdp"/>
+        android:layout_marginBottom="@dimen/_35sdp"/>
     <View
 
         android:layout_width="@dimen/_40sdp"

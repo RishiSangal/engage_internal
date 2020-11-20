@@ -10,14 +10,12 @@ import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.adapters.HomeProseCollectionRecyclerAdapter;
 import com.example.sew.adapters.HomeShayariCollectionRecyclerAdapter;
-import com.example.sew.adapters.HomeShayariImageRecyclerAdapter;
 import com.example.sew.adapters.HomeSherCollectionRecyclerAdapter;
 import com.example.sew.adapters.HomeTopPoetRecyclerAdapter;
 import com.example.sew.adapters.HomeVideoRecyclerAdapter;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.models.HomeProseCollection;
 import com.example.sew.models.HomeShayari;
-import com.example.sew.models.HomeShayariImage;
 import com.example.sew.models.HomeSherCollection;
 import com.example.sew.models.HomeTopPoet;
 import com.example.sew.models.HomeVideo;
@@ -81,12 +79,12 @@ public class CollectionTemplateViewHolder extends BaseHomeViewHolder {
 
     }
 
-    public BaseHomeViewHolder loadMoreImageShayari(ArrayList<HomeShayariImage> shayariImages) {
-        txtCollectionTitle.setText(MyHelper.getString(R.string.more_image_shayeri));
-        if (rvCollection.getAdapter() == null)
-            rvCollection.setAdapter(new HomeShayariImageRecyclerAdapter(getActivity(), shayariImages));
-        return this;
-    }
+//    public BaseHomeViewHolder loadMoreImageShayari(ArrayList<HomeShayariImage> shayariImages) {
+//        txtCollectionTitle.setText(MyHelper.getString(R.string.more_image_shayeri));
+//        if (rvCollection.getAdapter() == null)
+//            rvCollection.setAdapter(new HomeShayariImageRecyclerAdapter(getActivity(), shayariImages));
+//        return this;
+//    }
 
     public BaseHomeViewHolder loadMoreVideo(ArrayList<HomeVideo> videos) {
         txtCollectionTitle.setText(MyHelper.getString(R.string.more_video));

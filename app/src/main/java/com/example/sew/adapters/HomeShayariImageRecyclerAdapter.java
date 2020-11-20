@@ -15,7 +15,6 @@ import com.example.sew.helpers.ImageHelper;
 import com.example.sew.models.HomeShayariImage;
 import com.example.sew.models.ShayariImage;
 import com.example.sew.models.home_view_holders.SeeMoreViewHolder;
-import com.example.sew.views.SquareImageView;
 
 import java.util.ArrayList;
 
@@ -26,10 +25,12 @@ import butterknife.OnClick;
 public class HomeShayariImageRecyclerAdapter extends BaseRecyclerAdapter {
 
     private ArrayList<HomeShayariImage> shayariImages;
+    private ArrayList<ShayariImage> commonShayriImage;
 
-    public HomeShayariImageRecyclerAdapter(BaseActivity activity, ArrayList<HomeShayariImage> shayariImages) {
+    public HomeShayariImageRecyclerAdapter(BaseActivity activity, ArrayList<ShayariImage> commonShayriImages, ArrayList<HomeShayariImage> shayariImages) {
         super(activity);
         this.shayariImages = shayariImages;
+        this.commonShayriImage = commonShayriImages;
     }
 
 
@@ -76,7 +77,7 @@ public class HomeShayariImageRecyclerAdapter extends BaseRecyclerAdapter {
         void onItemClick(View view) {
             HomeShayariImage homeShayariImage = (HomeShayariImage) view.getTag(R.id.tag_data);
             ShayariImage shayariImage = new ShayariImage(homeShayariImage.getJsonObject());
-            getActivity().startActivity(ShayariImageDetailActivity.getInstance(getActivity(), shayariImage));
+            getActivity().startActivity(ShayariImageDetailActivity.getInstance(getActivity(), commonShayriImage, shayariImage));
 //            HomeTopPoet topPoet = (HomeTopPoet) view.getTag(R.id.tag_data);
 //            getActivity().startActivity(PoetDetailActivity.getInstance(getActivity(), topPoet.getEntityId()));
         }

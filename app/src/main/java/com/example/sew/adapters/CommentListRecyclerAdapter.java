@@ -104,9 +104,15 @@ public class CommentListRecyclerAdapter extends BaseRecyclerAdapter {
                     commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
                 }
             } else {
-                commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
-                commentViewHolder.imgImage.setVisibility(View.GONE);
-                commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+                if (!TextUtils.isEmpty(currComment.getOtherUserImage())) {
+                    ImageHelper.setImage(commentViewHolder.imgImage, currComment.getOtherUserImage(), Enums.PLACEHOLDER_TYPE.PROFILE);
+                    commentViewHolder.txtFirstCharacterName.setVisibility(View.GONE);
+                    commentViewHolder.imgImage.setVisibility(View.VISIBLE);
+                } else {
+                    commentViewHolder.txtFirstCharacterName.setVisibility(View.VISIBLE);
+                    commentViewHolder.imgImage.setVisibility(View.GONE);
+                    commentViewHolder.txtFirstCharacterName.setText(String.valueOf(currComment.getCommentByUserName().charAt(0)).toUpperCase());
+                }
             }
 
         } else {

@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +26,9 @@ import com.example.sew.adapters.CommentListRecyclerAdapter;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllCommentsByTargetId;
 import com.example.sew.apis.PostAddEditReplyComment;
+import com.example.sew.common.CommentSortPopupWindow;
 import com.example.sew.common.Enums;
+import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
@@ -191,28 +192,8 @@ public class AddCommentActivity extends BaseActivity {
     }
 
     @OnClick(R.id.txtFilter)
-    public void onFilterClick() {
-        PopupMenu popup = new PopupMenu(getActivity(), txtFilter);
-        for (int i = 0; i < filterList.size(); i++) {
-            popup.getMenu().add(R.id.menuGroup, R.id.group_detail, i, filterList.get(i));
-        }
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.toString().equalsIgnoreCase(getString(R.string.top_comment))) {
-                defaultFilterKey = Enums.FORUM_SORT_FIELDS.POPULARITY.getKey();
-                defaultAscKey = Enums.COMMENT_SORT_LIST.DESCENDING.getKey();
-                getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
-            } else if ((item.toString().equalsIgnoreCase(getString(R.string.newest_comments)))) {
-                defaultFilterKey = Enums.FORUM_SORT_FIELDS.RECENT_COMMENT.getKey();
-                defaultAscKey = Enums.COMMENT_SORT_LIST.DESCENDING.getKey();
-                getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
-            } else if (item.toString().equalsIgnoreCase(getString(R.string.replied_by_rekhta))) {
-                defaultFilterKey = Enums.FORUM_SORT_FIELDS.COMMENT_BY_REKHTA.getKey();
-                defaultAscKey = Enums.COMMENT_SORT_LIST.DESCENDING.getKey();
-                getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
-            }
-            return true;
-        });
-        popup.show();
+    public void onFilterClick(View view) {
+        new CommentSortPopupWindow(getActivity(), defaultFilterKey, defaultAscKey, AddCommentActivity.this).showOnAnchor(view, RelativePopupWindow.VerticalPosition.ALIGN_BOTTOM, RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT, false); // Creation of popup
     }
 
 
@@ -373,6 +354,7 @@ public class AddCommentActivity extends BaseActivity {
     public void onFavoriteUpdated() {
         super.onFavoriteUpdated();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -380,6 +362,7 @@ public class AddCommentActivity extends BaseActivity {
             BaseActivity.sendBroadCast(BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
         }
     }
+
     public void childReply(boolean isChildReply, ReplyComment replyComment, Comment currComment) {
         this.isChildReply = isChildReply;
         currentViewType = REPLY_TYPE_CHILD;
@@ -417,4 +400,10 @@ public class AddCommentActivity extends BaseActivity {
         openKeyBoard();
     }
 
+    public void sortComment(Enums.FORUM_SORT_FIELDS sortFields, Enums.COMMENT_SORT_LIST acsDes) {
+        commentListRecyclerAdapter = null;
+        defaultFilterKey = sortFields.getKey();
+        defaultAscKey = acsDes.getKey();
+        getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
+    }
 }

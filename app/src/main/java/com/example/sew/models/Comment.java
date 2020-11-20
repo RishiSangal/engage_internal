@@ -14,7 +14,7 @@ public class Comment extends BaseModel {
     JSONObject jsonObject;
 
     private String totalLike, totalDisLike, userFavourite, commentDate, commentBy,
-            commentByUserName, id, targetId, commentDescription, parentCommentId, source;
+            commentByUserName,otherUserImage, id, targetId, commentDescription, parentCommentId, source;
     private int replyCount, language;
     private ArrayList<ReplyComment> replyComment;
     private boolean isEditable;
@@ -30,6 +30,7 @@ public class Comment extends BaseModel {
         replyCount = jsonObject.optInt("TR");
         commentBy = jsonObject.optString("UI");
         commentByUserName = jsonObject.optString("UN");
+        otherUserImage= jsonObject.optString("TH");
         isEditable= jsonObject.optBoolean("IE");
         id = jsonObject.optString("CI");
         targetId = jsonObject.optString("TI");
@@ -106,6 +107,10 @@ public class Comment extends BaseModel {
 
     public int getLanguage() {
         return language;
+    }
+
+    public String getOtherUserImage() {
+        return otherUserImage;
     }
 
     public boolean isEditable() {

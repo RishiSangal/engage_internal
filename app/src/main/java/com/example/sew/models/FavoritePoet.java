@@ -16,7 +16,7 @@ public class FavoritePoet extends BaseOtherFavModel {
     private String entityYearRange;
     private String shortUrlEnglish;
     private String shortUrlHindi;
-    private String shortUrlUrdu;
+    private String shortUrlUrdu, fd;
     JSONObject jsonObject;
 
     public FavoritePoet(JSONObject jsonObject) {
@@ -34,6 +34,7 @@ public class FavoritePoet extends BaseOtherFavModel {
         shortUrlEnglish = optString(jsonObject, "UE");
         shortUrlHindi = optString(jsonObject, "UH");
         shortUrlUrdu = optString(jsonObject, "UU");
+        fd = optString(jsonObject, "FD");
     }
 
 
@@ -99,6 +100,10 @@ public class FavoritePoet extends BaseOtherFavModel {
         return getPoetNameEnglish();
     }
 
+    public String getFD() {
+        return fd;
+    }
+
     @Override
     public JSONObject getJsonObject() {
         return jsonObject;
@@ -112,6 +117,7 @@ public class FavoritePoet extends BaseOtherFavModel {
         FavoritePoet favoritePoet = (FavoritePoet) o;
         return getId().equalsIgnoreCase(favoritePoet.getId());
     }
+
     @Override
     public int hashCode() {
         return getId().toUpperCase().hashCode();
