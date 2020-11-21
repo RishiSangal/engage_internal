@@ -30,6 +30,7 @@ import com.example.sew.common.CommentSortPopupWindow;
 import com.example.sew.common.Enums;
 import com.example.sew.common.RelativePopupWindow;
 import com.example.sew.helpers.ImageHelper;
+import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.Comment;
 import com.example.sew.models.ReplyComment;
@@ -296,8 +297,6 @@ public class AddCommentActivity extends BaseActivity {
                 rvComment.onNoMoreData();
                 rvComment.onHide();
                 txtCommentHeaderCount.setText(getAllCommentsByTargetIds.getTotalCommentsCount());
-                if(getAllCommentsByTargetIds.getComment().size()==0)
-                    txtFilter.setEnabled(false);
             } else {
                 finish();
                 showToast(getAllCommentsByTargetIds.getErrorMessage());
@@ -307,6 +306,10 @@ public class AddCommentActivity extends BaseActivity {
 
     private void updateUI() {
         rvComment.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        if (commentList.size() > 1)
+            txtFilter.setVisibility(View.VISIBLE);
+        else
+            txtFilter.setVisibility(View.INVISIBLE);
         if (commentListRecyclerAdapter == null) {
             commentListRecyclerAdapter = new CommentListRecyclerAdapter(getActivity(), commentList, defaultAscKey, defaultFilterKey);
             commentListRecyclerAdapter.setOnParentReplyClickListener(onParentReplyClickListener);
@@ -333,6 +336,10 @@ public class AddCommentActivity extends BaseActivity {
 
     public void refreshTotalCommentCount(String totalCommentCount) {
         txtCommentHeaderCount.setText(totalCommentCount);
+        if (MyHelper.convertToInt(totalCommentCount) > 1)
+            txtFilter.setVisibility(View.VISIBLE);
+        else
+            txtFilter.setVisibility(View.INVISIBLE);
     }
 
     public void refreshInputComment() {
