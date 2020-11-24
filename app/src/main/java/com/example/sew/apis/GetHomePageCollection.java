@@ -2,6 +2,7 @@ package com.example.sew.apis;
 
 import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.MyService;
+import com.example.sew.models.Blogs;
 import com.example.sew.models.DidYouKnow;
 import com.example.sew.models.HomeBannerCollection;
 import com.example.sew.models.HomeFeatured;
@@ -72,6 +73,7 @@ public class GetHomePageCollection extends Base {
     private HomeWordOfTheDay wordOfTheDay;
     private HomeVideo video;
     private DidYouKnow didYouKnow;
+    private Blogs blogs;
 
     public void onPostRun(int statusCode, String response) {
         super.onPostRun(statusCode, response);
@@ -160,6 +162,7 @@ public class GetHomePageCollection extends Base {
             video = new HomeVideo(data.optJSONObject("Video"));
             wordOfTheDay = new HomeWordOfTheDay(data.optJSONObject("WordOfTheDay"));
             didYouKnow = new DidYouKnow(data.optJSONObject("DidYouKnow"));
+            blogs= new Blogs(data.optJSONObject("Blog"));
         }
     }
 
@@ -232,5 +235,9 @@ public class GetHomePageCollection extends Base {
 
     public DidYouKnow getDidYouKnow() {
         return didYouKnow;
+    }
+
+    public Blogs getBlogs() {
+        return blogs;
     }
 }

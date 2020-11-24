@@ -9,6 +9,7 @@ import com.example.sew.models.HomeLookingMore;
 import com.example.sew.models.HomeShayariImage;
 import com.example.sew.models.home_view_holders.BannerCarouselViewHolder;
 import com.example.sew.models.home_view_holders.BaseHomeViewHolder;
+import com.example.sew.models.home_view_holders.BlogsViewHolder;
 import com.example.sew.models.home_view_holders.CollectionTemplateViewHolder;
 import com.example.sew.models.home_view_holders.DidYouKowViewHolder;
 import com.example.sew.models.home_view_holders.FeaturedPoetViewHolder;
@@ -44,7 +45,8 @@ public class HomePageAdapter extends BaseMyAdapter {
     public static final int VIEW_TYPE_LOOKING_MORE = 15;
     public static final int VIEW_TYPE_SUPPORT_REKHTA = 16;
     public static final int VIEW_TYPE_OTHER = 17;
-    public static final int TOTAL_ITEM_COUNT = VIEW_TYPE_OTHER + 1;
+    public static final int VIEW_TYPE_BLOGS = 18;
+    public static final int TOTAL_ITEM_COUNT = VIEW_TYPE_BLOGS + 1;
     private ArrayList<Object> data;
 
     public HomePageAdapter(BaseActivity activity, GetHomePageCollection homePageCollection, ArrayList<Object> data) {
@@ -133,6 +135,9 @@ public class HomePageAdapter extends BaseMyAdapter {
                 break;
             case VIEW_TYPE_SUPPORT_REKHTA:
                 baseHomeViewHolder = SupportRekhtaViewHolder.getInstance(convertView, getActivity()).loadData();
+                break;
+            case VIEW_TYPE_BLOGS:
+                baseHomeViewHolder= BlogsViewHolder.getInstance(convertView, getActivity()).loadData(homePageCollection.getBlogs());
                 break;
             case VIEW_TYPE_OTHER:
                 if (getItem(position) instanceof HomeLookingMore) {

@@ -103,6 +103,8 @@ public class MoreActivity extends BaseHomeActivity {
     TextView txtNotificationCount;
     @BindView(R.id.layWholeDonation)
     LinearLayout layWholeDonation;
+    @BindView(R.id.txtRekhtaBlogsTitle)
+    TextView txtRekhtaBlogsTitle;
     View top_more;
 
     public static Intent getInstance(Activity activity) {
@@ -157,6 +159,7 @@ public class MoreActivity extends BaseHomeActivity {
         navContributeTV.setText(MyHelper.getString(R.string.contribute));
         txtDonateOnline.setText(MyHelper.getString(R.string.donate_now));
         txtDonateViaPaytm.setText(MyHelper.getString(R.string.donate_via_paytm));
+        txtRekhtaBlogsTitle.setText(MyHelper.getString(R.string.rekhta_blog_title));
         int totalFavoriteCount = MyService.getTotalFavoriteCount();
         layWholeDonation.setVisibility(View.GONE);
         txtMoreMyFavoriteCount.setText(totalFavoriteCount == 0 ? "" : String.valueOf(totalFavoriteCount) + " " + MyHelper.getString(R.string.myfavorites));
@@ -203,7 +206,7 @@ public class MoreActivity extends BaseHomeActivity {
 
     @SuppressLint("ResourceType")
     @OnClick({R.id.layFavorite, R.id.layHome, R.id.layPoets, R.id.laySher, R.id.layGhazal, R.id.layNazm, R.id.layProse, R.id.layShayari, R.id.layImageShayari, R.id.layDictionary, R.id.laySettings, R.id.layAboutUs, R.id.layFeedback,
-            R.id.layLogout, R.id.btnEnglishLanguage, R.id.btnHindiLanguage, R.id.btnUrduLanguage, R.id.layDonateNow, R.id.layDonateViaPaytm})
+            R.id.layLogout, R.id.btnEnglishLanguage, R.id.btnHindiLanguage, R.id.btnUrduLanguage, R.id.layDonateNow, R.id.layDonateViaPaytm, R.id.layRekhtaBlogs})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layImageShayari:
@@ -290,6 +293,10 @@ public class MoreActivity extends BaseHomeActivity {
             case R.id.layDonateViaPaytm:
                 Intent browserIntentPaytm = new Intent(Intent.ACTION_VIEW, Uri.parse(getActivity().getString(R.string.donate_rekhta_via_paytm)));
                 getActivity().startActivity(browserIntentPaytm);
+                break;
+            case R.id.layRekhtaBlogs:
+                Intent rekhtaBlogIntent= new Intent(getActivity(), RekhtaBlogsWebViewActivity.class);
+                getActivity().startActivity(rekhtaBlogIntent);
                 break;
         }
     }

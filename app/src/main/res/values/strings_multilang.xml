@@ -240,4 +240,5 @@
     <string name="comment">comment</string>
     <string name="add_comment">add_comment</string>
     <string name="do_you_want_to_delete">do_you_want_to_delete</string>
+    <string name="rekhta_blog_title">rekhta_blog_title</string>
 </resources>

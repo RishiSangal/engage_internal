@@ -191,7 +191,10 @@
             android:name=".activities.NotificationActivity"
             android:configChanges="layoutDirection"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activities.RekhtaBlogsWebViewActivity"
+            android:configChanges="layoutDirection"
+            android:screenOrientation="portrait" />
         <receiver android:name=".helpers.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

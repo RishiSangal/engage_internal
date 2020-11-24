@@ -456,7 +456,39 @@
                     app:textSizeUr="@dimen/_16ssp"
                     tools:text="Dictionary" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layRekhtaBlogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@drawable/touch_effect"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_10sdp">
 
+                <com.example.sew.views.IconTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:text="@string/rico_rekhta_monogram"
+                    android:textColor="?appIconColor"
+                    android:textSize="@dimen/_32ssp" />
+
+                <com.example.sew.views.TitleTextViewType6
+                    android:id="@+id/txtRekhtaBlogsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_24sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:textColor="?primaryTextColor"
+                    app:textSizeEn="@dimen/_14ssp"
+                    app:textSizeHi="@dimen/_14ssp"
+                    app:textSizeUr="@dimen/_16ssp"
+                    tools:text="Rekhta Blogs" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/laySettings"
                 android:layout_width="match_parent"

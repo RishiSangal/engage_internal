@@ -227,6 +227,8 @@ public class HomeActivity extends BaseHomeActivity {
             viewTypes.add(HomePageAdapter.VIEW_TYPE_VIDEO);
         if (!CollectionUtils.isEmpty(getHomePageCollection.getVideos()))
             viewTypes.add(HomePageAdapter.VIEW_TYPE_MORE_VIDEOS);
+        if(getHomePageCollection.getBlogs() != null && !TextUtils.isEmpty(getHomePageCollection.getBlogs().getId()))
+            viewTypes.add(HomePageAdapter.VIEW_TYPE_BLOGS);
         if (!CollectionUtils.isEmpty(getHomePageCollection.getProseCollections()))
             viewTypes.add(HomePageAdapter.VIEW_TYPE_PROSE_COLLECTION);
        // viewTypes.add(HomePageAdapter.VIEW_TYPE_SUPPORT_REKHTA);
