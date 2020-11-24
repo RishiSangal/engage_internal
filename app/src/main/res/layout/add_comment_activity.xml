@@ -116,7 +116,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="?appBackgroundColor">
 
                     <View
                         android:layout_width="match_parent"
@@ -280,14 +281,10 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </androidx.appcompat.widget.Toolbar>
 
-            <View
-                android:id="@+id/viewShadow"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@drawable/comment_shadow"
-                android:visibility="gone" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -295,6 +292,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
+            android:background="?appBackgroundColor"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -302,7 +300,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <View
+                    android:id="@+id/viewShadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="?appDividerColor"
+                    android:visibility="gone" />
                 <com.example.sew.views.paging_recycler_view.PagingRecyclerView
                     android:id="@+id/rvComment"
                     android:layout_width="match_parent"

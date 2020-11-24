@@ -16,7 +16,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 
-import com.alexvasilkov.gestures.commons.circle.CircleImageView;
 import com.example.sew.R;
 import com.example.sew.apis.PostLogout;
 import com.example.sew.common.ActivityManager;
@@ -30,6 +29,7 @@ import com.example.sew.views.TitleTextViewType6;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MoreActivity extends BaseHomeActivity {
 
@@ -176,6 +176,7 @@ public class MoreActivity extends BaseHomeActivity {
             // imgLogout.setImageResource(R.drawable.ic_login);
             txtUserName.setText(MyService.getUser().getDisplayName());
             txtUserName.setText(MyHelper.getString(R.string.guest));
+            imgProfile.setImageResource(R.drawable.icon);
             txtMoreMyFavoriteCount.setVisibility(View.INVISIBLE);
         }
         btnEnglishLanguage.setBackgroundResource(R.drawable.languagebtn_white_border);

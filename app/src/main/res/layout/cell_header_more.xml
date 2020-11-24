@@ -25,10 +25,11 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
-            <com.alexvasilkov.gestures.commons.circle.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgProfile"
                 android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"/>
+                android:layout_height="@dimen/_70sdp"
+                android:src="@drawable/icon"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
