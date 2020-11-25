@@ -1,12 +1,15 @@
 package com.example.sew.models.home_view_holders;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
+import com.example.sew.activities.RekhtaBlogsWebViewActivity;
 import com.example.sew.common.Enums;
 import com.example.sew.helpers.ImageHelper;
+import com.example.sew.helpers.MyService;
 import com.example.sew.models.Blogs;
 
 import butterknife.BindView;
@@ -17,11 +20,18 @@ public class BlogsViewHolder extends BaseHomeViewHolder {
 
     @BindView(R.id.imgBlogsImage)
     ImageView imgBlogsImage;
+    String targetUrl;
 
     @OnClick(R.id.imgBlogsImage)
     void onImageShayariClick() {
         if (blogs == null)
             return;
+        if (MyService.isUserLogin()) {
+            if (!TextUtils.isEmpty(blogs.getTargetUrl()))
+                targetUrl = blogs.getTargetUrl() + MyService.getUser().getId();
+        } else
+            targetUrl = blogs.getTargetUrl();
+        getActivity().startActivity(RekhtaBlogsWebViewActivity.getInstance(getActivity(), targetUrl));
 
     }
 
@@ -39,6 +49,7 @@ public class BlogsViewHolder extends BaseHomeViewHolder {
     public BlogsViewHolder loadData(final Blogs blogs) {
         this.blogs = blogs;
         ImageHelper.setImage(imgBlogsImage, blogs.getImageUrl(), Enums.PLACEHOLDER_TYPE.PROMOTIONAL_BANNER);
+        MyService.setBlogTargetUrl(blogs.getTargetUrl());
         return this;
     }
 

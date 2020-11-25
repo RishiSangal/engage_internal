@@ -8,7 +8,7 @@ public class Blogs extends BaseModel {
     private String blogEnglishName;
     private String blogHindiName;
     private String blogUrduName;
-    private String blogUrl;
+    private String targetUrl;
     private String imageUrl;
     private boolean IE;
 
@@ -19,7 +19,7 @@ public class Blogs extends BaseModel {
         blogEnglishName = optString(jsonObject, "BE");
         blogHindiName = optString(jsonObject, "BH");
         blogUrduName = optString(jsonObject, "BU");
-        blogUrl = optString(jsonObject, "TU");
+        targetUrl = optString(jsonObject, "TU");
         imageUrl = optString(jsonObject, "IU");
         IE = jsonObject.optBoolean("IE");
 
@@ -46,8 +46,8 @@ public class Blogs extends BaseModel {
         return blogUrduName;
     }
 
-    public String getBlogUrl() {
-        return blogUrl;
+    public String getTargetUrl() {
+        return targetUrl;
     }
 
     public String getImageUrl() {

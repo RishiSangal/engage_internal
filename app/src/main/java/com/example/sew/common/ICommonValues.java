@@ -62,4 +62,5 @@ public interface ICommonValues {
     String CURR_COMMENT_TYPE = "curr_comment_type";
     String CURR_COMMENT= "curr_comment";
     String CURR_REPLY_COMMENT= "curr_reply_comment";
+    String TARGET_URL= "target_url";
 }

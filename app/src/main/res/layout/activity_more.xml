@@ -474,7 +474,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:text="@string/rico_rekhta_monogram"
                     android:textColor="?appIconColor"
-                    android:textSize="@dimen/_32ssp" />
+                    android:textSize="@dimen/_30ssp" />
 
                 <com.example.sew.views.TitleTextViewType6
                     android:id="@+id/txtRekhtaBlogsTitle"

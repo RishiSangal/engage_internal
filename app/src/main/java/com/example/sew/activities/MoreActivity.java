@@ -204,6 +204,8 @@ public class MoreActivity extends BaseHomeActivity {
         }
     }
 
+    String targetUrl;
+
     @SuppressLint("ResourceType")
     @OnClick({R.id.layFavorite, R.id.layHome, R.id.layPoets, R.id.laySher, R.id.layGhazal, R.id.layNazm, R.id.layProse, R.id.layShayari, R.id.layImageShayari, R.id.layDictionary, R.id.laySettings, R.id.layAboutUs, R.id.layFeedback,
             R.id.layLogout, R.id.btnEnglishLanguage, R.id.btnHindiLanguage, R.id.btnUrduLanguage, R.id.layDonateNow, R.id.layDonateViaPaytm, R.id.layRekhtaBlogs})
@@ -295,8 +297,13 @@ public class MoreActivity extends BaseHomeActivity {
                 getActivity().startActivity(browserIntentPaytm);
                 break;
             case R.id.layRekhtaBlogs:
-                Intent rekhtaBlogIntent= new Intent(getActivity(), RekhtaBlogsWebViewActivity.class);
-                getActivity().startActivity(rekhtaBlogIntent);
+                if (MyService.isUserLogin()) {
+                    if (!TextUtils.isEmpty(MyService.getBlogTargetUrl()))
+                        targetUrl = MyService.getBlogTargetUrl() + MyService.getUser().getId();
+                } else
+                    targetUrl = MyService.getBlogTargetUrl();
+                startActivity(RekhtaBlogsWebViewActivity.getInstance(getActivity(), targetUrl));
+
                 break;
         }
     }

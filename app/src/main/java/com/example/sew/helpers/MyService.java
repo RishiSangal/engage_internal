@@ -60,6 +60,7 @@ public class MyService {
     private static final String FCM_TOKEN = "FCM_TOKEN";
     private static final String DEVICE_ID = "DEVICE_ID";
     private static final String YOUTUBE_KEY = "YOUTUBE_KEY";
+    private static final String BLOGS_TARGET_URL = "BLOGS_TARGET_URL";
     private static final String LAST_APP_VERSION = "LAST_APP_VERSION";
     private static final String LAST_UPDATE_DIALOG_SHOW_TIME = "LAST_UPDATE_DIALOG_SHOW_TIME";
     private static final String LAST_UPDATE_CONFIG_TIME = "LAST_UPDATE_CONFIG_TIME";
@@ -107,6 +108,13 @@ public class MyService {
         return Paper.book(DB_USER).read(YOUTUBE_KEY);
     }
 
+    public static void setBlogTargetUrl(String targetUrl) {
+        Paper.book(DB_USER).write(BLOGS_TARGET_URL, targetUrl);
+    }
+
+    public static String getBlogTargetUrl() {
+        return Paper.book(DB_USER).read(BLOGS_TARGET_URL);
+    }
 
     public static void logoutUser() {
         setUser(new User(null));
