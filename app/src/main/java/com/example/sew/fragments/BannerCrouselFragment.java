@@ -13,7 +13,8 @@ import androidx.annotation.Nullable;
 import com.example.sew.R;
 import com.example.sew.activities.PoetDetailActivity;
 import com.example.sew.activities.ProseShayariActivity;
-import com.example.sew.activities.ShayariActivity;
+import com.example.sew.activities.RenderContentActivity;
+import com.example.sew.activities.ShayariImageDetailActivity;
 import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
 import com.example.sew.common.Enums;
@@ -22,8 +23,6 @@ import com.example.sew.helpers.MyHelper;
 import com.example.sew.models.HomeBannerCollection;
 import com.example.sew.models.HomeImageTag;
 import com.example.sew.models.HomeSherCollection;
-import com.example.sew.models.SherTag;
-import com.example.sew.views.TitleTextViewType7;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,25 +47,30 @@ public class BannerCrouselFragment extends BaseFragment {
             case HomeBannerCollection.BANNERTYPE_T20:
                 HomeSherCollection homeSherCollection = MyHelper.getDummyT20SherCollection(bannerCollection.getTargetId(), bannerCollection.getBannerName());
                 startActivity(SherCollectionActivity.getInstance(GetActivity(), homeSherCollection));
-               // startActivity(SherTagOccasionActivity.getInstance(GetActivity(), homeSherCollection));
+                // startActivity(SherTagOccasionActivity.getInstance(GetActivity(), homeSherCollection));
                 break;
             case HomeBannerCollection.BANNERTYPE_ENTITY:
-                startActivity(PoetDetailActivity.getInstance(getActivity(), bannerCollection.getTargetId()));
+                //  startActivity(PoetDetailActivity.getInstance(getActivity(), bannerCollection.getTargetId()));
+                startActivity(PoetDetailActivity.getInstance(GetActivity(), bannerCollection.getTargetId(), MyHelper.getContentById(bannerCollection.getContentTypeId())));
                 break;
             case HomeBannerCollection.BANNERTYPE_TAGS:
-                GetActivity().startActivity(SherTagOccasionActivity.getInstance(GetActivity(), HomeImageTag.getInstance(bannerCollection.getTargetId())));
+                GetActivity().startActivity(SherTagOccasionActivity.getInstance(GetActivity(), HomeImageTag.getInstance(bannerCollection.getTargetId()), bannerCollection.getContentTypeId()));
                 break;
             case HomeBannerCollection.BANNERTYPE_OCCASION:
                 HomeSherCollection homeOccasionCollection = MyHelper.getDummyOccasionCollection(bannerCollection.getTargetId(), bannerCollection.getBannerName());
-                startActivity(SherTagOccasionActivity.getInstance(GetActivity(), homeOccasionCollection));
+                startActivity(SherTagOccasionActivity.getInstance(GetActivity(), homeOccasionCollection, bannerCollection.getContentTypeId()));
                 break;
             case HomeBannerCollection.BANNERTYPE_SHAYARI:
-                startActivity(ProseShayariActivity.getInstance(getActivity(), Enums.COLLECTION_TYPE.SHAYARI));
+                startActivity(ProseShayariActivity.getInstance(getActivity(), Enums.COLLECTION_TYPE.SHAYARI, MyHelper.getContentById(bannerCollection.getContentTypeId())));
                 break;
             case HomeBannerCollection.BANNERTYPE_PROSE:
-                startActivity(ProseShayariActivity.getInstance(getActivity(), Enums.COLLECTION_TYPE.PROSE));
+                startActivity(ProseShayariActivity.getInstance(getActivity(), Enums.COLLECTION_TYPE.PROSE, MyHelper.getContentById(bannerCollection.getContentTypeId())));
                 break;
             case HomeBannerCollection.BANNERTYPE_IMAGESHAYARI:
+                startActivity(ShayariImageDetailActivity.getInstance(getActivity(), MyHelper.getShayriImageObj(bannerCollection.getTargetId())));
+                break;
+            case HomeBannerCollection.BANNERTYPE_CONTENT:
+                startActivity(RenderContentActivity.getInstance(getActivity(), bannerCollection.getTargetId()));
                 break;
 
         }

@@ -2,6 +2,7 @@ package com.example.sew.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.example.sew.helpers.ImageHelper;
 import com.example.sew.models.BaseModel;
 import com.example.sew.models.BaseSherTag;
 import com.example.sew.models.ContentTypeTab;
+import com.example.sew.models.CumulatedContentType;
 import com.example.sew.models.HomeImageTag;
 import com.example.sew.models.HomeSherCollection;
 import com.example.sew.models.OccasionCollection;
@@ -27,6 +29,8 @@ import com.example.sew.models.SherTag;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,37 +50,47 @@ public class SherTagOccasionActivity extends BaseActivity {
     View view;
     @BindView(R.id.layTitle)
     LinearLayout layTitle;
-    String targetId, tagTitle;
+    String targetId, tagTitle, contentTypeId;
 
     Enums.SHER_COLLECTION_TYPE sherCollectionType;
     SherCollection sherCollection;
     OccasionCollection occasionCollection;
     HomeSherCollection homeSherCollection;
     BaseSherTag sherTag;
+    ArrayList<CumulatedContentType> cumulatedContentTypes = new ArrayList<>();
 
-    private static Intent getInstance(BaseActivity activity, String targetId, Enums.SHER_COLLECTION_TYPE sherCollectionType, BaseModel data, String title) {
+    private static Intent getInstance(BaseActivity activity, String targetId, Enums.SHER_COLLECTION_TYPE sherCollectionType, BaseModel data, String title, String contentTypeId) {
         Intent intent = new Intent(activity, SherTagOccasionActivity.class);
         intent.putExtra(TARGET_ID, targetId);
         intent.putExtra(CONTENT_DATA_OBJ, data.getJsonObject().toString());
         intent.putExtra(SHER_COLLECTION_TYPE, sherCollectionType.toString());
         intent.putExtra(TAG_TITLE, title);
+        intent.putExtra(CONTENT_ID, contentTypeId);
         return intent;
     }
 
     public static Intent getInstance(BaseActivity activity, SherCollection sherCollection) {
-        return getInstance(activity, sherCollection.getSherCollectionId(), Enums.SHER_COLLECTION_TYPE.TOP_20, sherCollection, sherCollection.getTitle());
+        return getInstance(activity, sherCollection.getSherCollectionId(), Enums.SHER_COLLECTION_TYPE.TOP_20, sherCollection, sherCollection.getTitle(), "");
     }
 
     public static Intent getInstance(BaseActivity activity, HomeSherCollection homeSherCollection) {
-        return getInstance(activity, homeSherCollection.getId(), homeSherCollection.getSherCollectionType(), homeSherCollection, homeSherCollection.getName());
+        return getInstance(activity, homeSherCollection.getId(), homeSherCollection.getSherCollectionType(), homeSherCollection, homeSherCollection.getName(), "");
     }
 
     public static Intent getInstance(BaseActivity activity, BaseSherTag sherTag) {
-        return getInstance(activity, sherTag.getTagId(), Enums.SHER_COLLECTION_TYPE.TAG, sherTag, sherTag.getTagName());
+        return getInstance(activity, sherTag.getTagId(), Enums.SHER_COLLECTION_TYPE.TAG, sherTag, sherTag.getTagName(), "");
     }
 
     public static Intent getInstance(BaseActivity activity, OccasionCollection occasionCollection) {
-        return getInstance(activity, occasionCollection.getSherCollectionId(), Enums.SHER_COLLECTION_TYPE.OCCASIONS, occasionCollection, occasionCollection.getTitle());
+        return getInstance(activity, occasionCollection.getSherCollectionId(), Enums.SHER_COLLECTION_TYPE.OCCASIONS, occasionCollection, occasionCollection.getTitle(), "");
+    }
+
+    public static Intent getInstance(BaseActivity activity, BaseSherTag sherTag, String contentTypeId) {
+        return getInstance(activity, sherTag.getTagId(), Enums.SHER_COLLECTION_TYPE.TAG, sherTag, sherTag.getTagName(), contentTypeId);
+    }
+
+    public static Intent getInstance(BaseActivity activity, HomeSherCollection homeSherCollection, String contentTypeId) {
+        return getInstance(activity, homeSherCollection.getId(), homeSherCollection.getSherCollectionType(), homeSherCollection, homeSherCollection.getName(), contentTypeId);
     }
 
     ContentTypeTab contentTypeTab;
@@ -88,6 +102,7 @@ public class SherTagOccasionActivity extends BaseActivity {
         ButterKnife.bind(this);
         targetId = getIntent().getStringExtra(TARGET_ID);
         tagTitle = getIntent().getStringExtra(TAG_TITLE);
+        contentTypeId = getIntent().getStringExtra(CONTENT_ID);
         sherCollectionType = Enum.valueOf(Enums.SHER_COLLECTION_TYPE.class, getIntent().getStringExtra(SHER_COLLECTION_TYPE));
         try {
             JSONObject jsonObject = new JSONObject(getIntent().getStringExtra(CONTENT_DATA_OBJ));
@@ -136,6 +151,7 @@ public class SherTagOccasionActivity extends BaseActivity {
                     dismissDialog();
                     if (getCoupletListWithPaging.isValidResponse()) {
                         contentTypeTab = getCoupletListWithPaging.getContentTypeTab();
+                        cumulatedContentTypes = getContentTypeTabByType.getContentTypeTab().getCumulatedContentType();
                         updateUI();
                     } else {
                         showToast(getCoupletListWithPaging.getErrorMessage());
@@ -148,7 +164,10 @@ public class SherTagOccasionActivity extends BaseActivity {
         viewPager.setAdapter(new SherTagOccassionFragmentAdapter(getSupportFragmentManager(), this, sherCollectionType, contentTypeTab, contentTypeTab.getCumulatedContentType()));
         viewPager.setOffscreenPageLimit(Math.min(contentTypeTab.getCumulatedContentType().size(), 5));
         tabLayout.setViewPager(viewPager);
-        viewPager.setCurrentItem(0);
+        if (TextUtils.isEmpty(contentTypeId))
+            viewPager.setCurrentItem(0);
+        else
+            viewPager.setCurrentItem(getContentTypePosition());
 //        if (selectedCumulatedContentType != null && containsDefaultContentType()) {
 //            viewpager.setCurrentItem(getContentTypePosition());
 //            cumulatedContentTypes = null;
@@ -159,7 +178,7 @@ public class SherTagOccasionActivity extends BaseActivity {
     public void onLanguageChanged() {
         super.onLanguageChanged();
         lazyRefreshTabPositioning(tabLayout, viewPager);
-       // getContentTypeTab();
+        // getContentTypeTab();
         updateLanguageSpecificContent();
     }
 
@@ -173,6 +192,16 @@ public class SherTagOccasionActivity extends BaseActivity {
             layTitle.setVisibility(View.VISIBLE);
             txtTitle.setText(contentTypeTab.getTitleName().toUpperCase());
         }
+    }
+
+    private int getContentTypePosition() {
+        int index = 0;
+        for (CumulatedContentType cumulatedContentObj : cumulatedContentTypes) {
+            if (cumulatedContentObj.getTypeId().contentEquals(contentTypeId))
+                return index;
+            ++index;
+        }
+        return index;
     }
 
     @Override

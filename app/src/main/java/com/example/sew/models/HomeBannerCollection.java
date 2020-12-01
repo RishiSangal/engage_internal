@@ -33,12 +33,13 @@ public class HomeBannerCollection extends BaseModel {
     private String poetNameHi;
     private String poetNameUr;
     private String imageURL;
+    private String contentTypeId;
     JSONObject jsonObject;
     public static final int IMAGETYPE_NONE = 0;
     public static final int IMAGETYPE_SMALL = 1;
     public static final int IMAGETYPE_MEDIUM = 2;
     public static final int IMAGETYPE_LARGE = 3;
-//Tags = 7, Occasion = 8, Shayari = 9, Prose = 10, ImageShayari = 11, Collection = 12
+    //Tags = 7, Occasion = 8, Shayari = 9, Prose = 10, ImageShayari = 11, Collection = 12
     public static final int BANNERTYPE_ENTITY = 1;
     public static final int BANNERTYPE_CONTENT = 2;
     public static final int BANNERTYPE_T20 = 3;
@@ -64,27 +65,28 @@ public class HomeBannerCollection extends BaseModel {
         /*bannerNameHi = optString(jsonObject, "BH");
         bannerNameUr = optString(jsonObject, "BU");*/
         //labelTextEn = optString(jsonObject, "LE");
-       // labelTextHi = optString(jsonObject, "LH");
-       // labelTextUr = optString(jsonObject, "LU");
+        // labelTextHi = optString(jsonObject, "LH");
+        // labelTextUr = optString(jsonObject, "LU");
         byLineUr = byLineHi = byLineEn = optString(jsonObject, "BL");
 //        byLineHi = optString(jsonObject, "BLH");
 //        byLineUr = optString(jsonObject, "BLU");
         //fromDate = optString(jsonObject, "FD");
-       // toDate = optString(jsonObject, "TD");
+        // toDate = optString(jsonObject, "TD");
         targetId = optString(jsonObject, "TI");
         //targetUrl = optString(jsonObject, "TU");
-        //childId = optString(jsonObject, "CI");
+        childId = optString(jsonObject, "CI");
         imageType = MyHelper.convertToInt(optString(jsonObject, "IT"));
         seq = optString(jsonObject, "S");
         bannerType = MyHelper.convertToInt(optString(jsonObject, "BT"));
-       // tabIndex = optString(jsonObject, "TIN");
-       // mergeToPrev = optString(jsonObject, "MP");
-       // labelBackgroundColor = optString(jsonObject, "LB");
-       // labelColor = optString(jsonObject, "LC");
-      //  poetNameEn = optString(jsonObject, "PNE");
-       // poetNameHi = optString(jsonObject, "PNH");
-       // poetNameUr = optString(jsonObject, "PNU");
-        imageURL= optString(jsonObject,"IU");
+        // tabIndex = optString(jsonObject, "TIN");
+        // mergeToPrev = optString(jsonObject, "MP");
+        // labelBackgroundColor = optString(jsonObject, "LB");
+        // labelColor = optString(jsonObject, "LC");
+        //  poetNameEn = optString(jsonObject, "PNE");
+        // poetNameHi = optString(jsonObject, "PNH");
+        // poetNameUr = optString(jsonObject, "PNU");
+        imageURL = optString(jsonObject, "IU");
+        contentTypeId = optString(jsonObject, "CT");
     }
 
     @Override
@@ -222,5 +224,9 @@ public class HomeBannerCollection extends BaseModel {
 
     public String getImageUrl() {
         return imageURL;
+    }
+
+    public String getContentTypeId() {
+        return contentTypeId;
     }
 }

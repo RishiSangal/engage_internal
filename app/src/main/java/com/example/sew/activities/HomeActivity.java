@@ -114,6 +114,8 @@ public class HomeActivity extends BaseHomeActivity {
         if (TextUtils.isEmpty(MyService.getYouTubeKey()))
             getYouTubeKeyApiCall();
         getContentTypeId();
+        if(MyService.isUserLogin())
+            getAllFavoriteIdApiCall();
         getHomePageCollection = new GetHomePageCollection();
         getHomePageCollections();
         if (MyService.isUserLogin())
@@ -140,6 +142,7 @@ public class HomeActivity extends BaseHomeActivity {
     private void getContentTypeId(){
         new GetContentTypeIds().runAsync(null);
     }
+
     private void getHomePageCollections() {
         showDialog();
         if (getHomePageCollection == null)
@@ -231,7 +234,7 @@ public class HomeActivity extends BaseHomeActivity {
             viewTypes.add(HomePageAdapter.VIEW_TYPE_BLOGS);
         if (!CollectionUtils.isEmpty(getHomePageCollection.getProseCollections()))
             viewTypes.add(HomePageAdapter.VIEW_TYPE_PROSE_COLLECTION);
-       // viewTypes.add(HomePageAdapter.VIEW_TYPE_SUPPORT_REKHTA);
+        // viewTypes.add(HomePageAdapter.VIEW_TYPE_SUPPORT_REKHTA);
         data.addAll(viewTypes);
         data.addAll(getHomePageCollection.getLookingMores());
         lstHomeCollection.setAdapter(new HomePageAdapter(getActivity(), getHomePageCollection, data));

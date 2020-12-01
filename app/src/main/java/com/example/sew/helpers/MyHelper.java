@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,26 +16,23 @@ import android.os.Environment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sew.BuildConfig;
-import com.example.sew.R;
 import com.example.sew.MyApplication;
+import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
-import com.example.sew.common.ActivityManager;
 import com.example.sew.common.AppErrorMessage;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MyConstants;
 import com.example.sew.models.ContentType;
 import com.example.sew.models.HomeSherCollection;
 import com.example.sew.models.Line;
-import com.example.sew.models.OccasionCollection;
 import com.example.sew.models.Para;
+import com.example.sew.models.ShayariImage;
 import com.google.android.gms.common.util.CollectionUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -49,15 +45,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -286,6 +278,18 @@ public class MyHelper {
             if (contentType.getSlug().equalsIgnoreCase(contentSlug))
                 return contentType;
         return new ContentType(null);
+    }
+    public static ShayariImage getShayriImageObj(String targetId){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("I", targetId);
+            jsonObject.put("S", "");
+            jsonObject.put("SI", "");
+            jsonObject.put("SU", "");
+            jsonObject.put("CI", "");
+        } catch (JSONException ignored) {
+        }
+        return new ShayariImage(jsonObject);
     }
 
     public static ContentType getDummyContentTypeProfile() {

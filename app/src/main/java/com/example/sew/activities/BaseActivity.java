@@ -17,7 +17,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -35,7 +33,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.sew.MyApplication;
 import com.example.sew.R;
+import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllFavoriteListWithPagingV5;
+import com.example.sew.apis.GetAllfavoriteId;
 import com.example.sew.apis.GetFavoriteListWithPaging;
 import com.example.sew.apis.PostMarkFavorite;
 import com.example.sew.apis.PostRemoveFavorite;
@@ -414,6 +414,16 @@ public abstract class BaseActivity extends AppCompatActivity implements ICommonV
                 new PostMarkFavorite()
                         .setContentId(contentId).setFavType(favType)
                         .runAsync(null);
+        });
+    }
+
+    public void getAllFavoriteIdApiCall(){
+        new GetAllfavoriteId().runAsync((BaseServiceable.OnApiFinishListener<GetAllfavoriteId>) getAllfavoriteId ->{
+            if(getAllfavoriteId.isValidResponse()){
+                ArrayList<String> favIds= getAllfavoriteId.getAllFavoriteIds();
+
+
+            }
         });
     }
 

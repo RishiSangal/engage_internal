@@ -18,8 +18,6 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -34,7 +32,6 @@ import com.binaryfork.spanny.Spanny;
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.activities.RenderContentActivity;
-import com.example.sew.activities.SherCollectionActivity;
 import com.example.sew.activities.SherTagOccasionActivity;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetShayariImageDetail;
@@ -154,7 +151,7 @@ public class ShayariImageDetailFragment extends BaseFragment {
 
     private void getShayariImageDetail() {
         new GetShayariImageDetail()
-                .setShayariImgId(shayariImage.getId()).setTargetIdSlug(shayariImage.getSlug())
+                .setShayariImgId(shayariImage.getId()).setTargetIdSlug("")
                 .runAsync((BaseServiceable.OnApiFinishListener<GetShayariImageDetail>) getShayariImageDetail -> {
                     if (getShayariImageDetail.isValidResponse()) {
                         if (isDestroyed)

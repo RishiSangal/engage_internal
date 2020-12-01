@@ -109,6 +109,7 @@ public class MyConstants {
     private static String GET_CONTENT_TYPE_TABBY_TYPE;
     private static String POST_SEARCH_ONLOAD_DEMAND;
     private static String GET_COUNTING_SUMMARYBY_TARGETID;
+    private static String GET_ALL_FAVORITE_ID;
     // public static final String GET_BOTTOM_CONTENT_BY_ID ;
     // public static final String REMOVE_FAVORITE ;
     //public static final String MARK_FAVORITE ;
@@ -199,6 +200,7 @@ public class MyConstants {
         GET_MARK_LIKE_DISLIKE = HOST_BASE_URL + "/v1/forum/MarkLikeDislike";
         POST_USER_COMPLAIN = HOST_BASE_URL + "/v1/forum/SetUserComplain";
         GET_COMPLAIN_TYPES = HOST_BASE_URL + "/v1/forum/GetComplainTypes";
+        GET_ALL_FAVORITE_ID = HOST_BASE_URL+ "/v5/shayari/GetAllFavoriteId";
     }
 
     public static void initIfRequired() {
@@ -547,5 +549,8 @@ public class MyConstants {
         return GET_COMPLAIN_TYPES;
     }
 
-
+    public static String getGetAllFavoriteId() {
+        initIfRequired();
+        return GET_ALL_FAVORITE_ID;
+    }
 }
