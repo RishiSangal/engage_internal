@@ -151,7 +151,7 @@ public class ShayariImageDetailFragment extends BaseFragment {
 
     private void getShayariImageDetail() {
         new GetShayariImageDetail()
-                .setShayariImgId(shayariImage.getId()).setTargetIdSlug("")
+                .setShayariImgId(shayariImage.getId()).setTargetIdSlug(shayariImage.getSlug())
                 .runAsync((BaseServiceable.OnApiFinishListener<GetShayariImageDetail>) getShayariImageDetail -> {
                     if (getShayariImageDetail.isValidResponse()) {
                         if (isDestroyed)
