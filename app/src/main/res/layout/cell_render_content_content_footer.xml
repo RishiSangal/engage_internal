@@ -63,6 +63,10 @@
             android:background="?appDividerColor"/>
     </LinearLayout>
     <include
+        android:id="@+id/layRelatedContent"
+        layout="@layout/cell_render_content_related_content"
+        android:visibility="gone"/>
+    <include
         android:id="@+id/layCommentSections"
         layout="@layout/render_comment_section" />
     <LinearLayout

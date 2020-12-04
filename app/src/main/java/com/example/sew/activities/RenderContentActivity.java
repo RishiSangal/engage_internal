@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -30,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.alexvasilkov.gestures.GestureController;
 import com.alexvasilkov.gestures.State;
@@ -187,6 +189,13 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     @BindView(R.id.txtFavoriteFooterCount)
     TextView txtFavoriteFooterCount;
 
+    @BindView(R.id.layInterestingFact)
+    LinearLayout layInterestingFact;
+    @BindView(R.id.txtInterestingFactTitle)
+    TextView txtInterestingFactTitle;
+    @BindView(R.id.txtInterestingFact)
+    TextView txtInterestingFact;
+
     @BindView(R.id.imageView2)
     ImageView imageView2;
     @BindView(R.id.footerCrcitcOnText)
@@ -230,6 +239,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     TextView txtYouMayLikeTitle;
     TextView txtYouMayLikeSubtitle;
 
+    TextView txtRelatedContentTitle;
+    LinearLayout layRelatedContentPlaceholder;
     TextView txtCommentCount;
     TextView txtComment;
     LinearLayout layKeepReadingContentPlaceholder;
@@ -239,6 +250,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
     View layKeepReading;
     View layYouMayLike;
     View poetProfileSection;
+    View layRelatedContent;
     @BindView(R.id.flexTags)
     FlexboxLayout flexTags;
     @BindView(R.id.layContentTags)
@@ -330,6 +342,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         layYouMayLike = findViewById(R.id.layYouMayLike);
         layCommentSection = findViewById(R.id.layCommentSection);
         poetProfileSection = findViewById(R.id.poetProfileSection);
+        layRelatedContent = findViewById(R.id.layRelatedContent);
         txtKeepReadingTitle = layKeepReading.findViewById(R.id.txtKeepReadingLikeTitle);
         txtKeepReadingSubtitle = layKeepReading.findViewById(R.id.txtKeepReadingLikeSubtitle);
         txtYouMayLikeTitle = layYouMayLike.findViewById(R.id.txtKeepReadingLikeTitle);
@@ -338,6 +351,9 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         layYouMayLikeContentPlaceholder = layYouMayLike.findViewById(R.id.layContentPlaceholder);
         txtCommentCount = layCommentSection.findViewById(R.id.txtCommentCount);
         txtComment = layCommentSection.findViewById(R.id.txtComment);
+        layRelatedContentPlaceholder = layRelatedContent.findViewById(R.id.layRelatedContentPlaceholder);
+        txtRelatedContentTitle = layRelatedContent.findViewById(R.id.txtRelatedContentTitle);
+
         layLoadingPlaceholder.setVisibility(View.VISIBLE);
         contentId = getIntent().getStringExtra(CONTENT_ID);
         slugId = getIntent().getStringExtra(SLUG_ID);
@@ -505,8 +521,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                     txtCommentCount.setTextSize(13);
                     txtCommentCount.setText(MyHelper.getString(R.string.add_comment));
                     txtComment.setVisibility(GONE);
-                }
-                else {
+                } else {
                     if (getAllCommentsByTargetId.getTotalCommentsCount().length() > 2) {
                         txtCommentCount.setTextSize(15);
                     }
@@ -594,11 +609,45 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         boolean isUrduAvailable = contentPageModel.getHaveUr().contentEquals("true");
         checkAndSetLanguageChangeValues(isEnglishAvailable, isHindiAvailable, isUrduAvailable);
 
-        if(contentPageModel.isHTML())
+        if (contentPageModel.isHTML())
             imgCritiqueInfo.setVisibility(GONE);
         txtFooterViewPoetProfile.setText(MyHelper.getString(R.string.view_profile));
 //        txtPrevTitle.setText(MyHelper.getString(R.string.previous));
 //        txtNextTitle.setText(MyHelper.getString(R.string.next));
+
+        if(!TextUtils.isEmpty(contentPageModel.getFootNote())) {
+            layInterestingFact.setVisibility(View.VISIBLE);
+            txtInterestingFactTitle.setText(MyHelper.getString(R.string.interesting_fact));
+            switch (MyService.getSelectedLanguage()){
+                case ENGLISH:
+                    if(contentPageModel.isHaveFactEng())
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                    else if(contentPageModel.isHaveFactHin())
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                    else if(contentPageModel.isHaveFactUrdu())
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                    break;
+                case HINDI:
+                    if(contentPageModel.isHaveFactHin())
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                    else if(contentPageModel.isHaveFactEng())
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                    else if(contentPageModel.isHaveFactUrdu())
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                    break;
+                case URDU:
+                    if(contentPageModel.isHaveFactUrdu())
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                    else if(contentPageModel.isHaveFactHin())
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                    else if(contentPageModel.isHaveFactEng())
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                    break;
+
+            }
+            txtInterestingFact.setText(contentPageModel.getFootNote());
+        }else
+            layInterestingFact.setVisibility(GONE);
         txtHeaderPoetName.setText(contentPageModel.getPoet().getName());
         txtFooterAuthorName.setText(contentPageModel.getPoet().getName());
         txtHeaderContentTitle.setText(contentPageModel.getTitle());
@@ -687,6 +736,12 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 layKeepReadingContentPlaceholder.addView(viewHolder.convertView);
             }
         }
+// related content code here
+//        layRelatedContentPlaceholder.removeAllViews();
+//        for (int i = 0; i < 4; i++){
+//            RelatedContentViewHolder viewHolder= new RelatedContentViewHolder(getInflatedView(R.layout.cell_related_content_item));
+//            layRelatedContentPlaceholder.addView(viewHolder.convertView);
+//        }
 
 
         layYouMayLikeContentPlaceholder.removeAllViews();
@@ -1021,7 +1076,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 isOpenKeyboard = false;
                 clearShareSelection();
                 checkAndModifyShareSelectionIfNecessary();
-                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard,contentPageModel.getTitle(),contentPageModel.getContentTyeName()));
+                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard, contentPageModel.getTitle(), contentPageModel.getContentTyeName()));
                 break;
             case R.id.imgTranslate:
                 showingTranslation = !showingTranslation;
@@ -1493,6 +1548,21 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         }, 2000);
     }
 
+    static class RelatedContentViewHolder{
+        View convertView;
+        @BindView(R.id.txtContentType)
+        TextView txtContentType;
+        @BindView(R.id.txtBody)
+        TextView txtBody;
+        @BindView(R.id.txtAuthor)
+        TextView txtAuthor;
+        RelatedContentViewHolder(View view){
+            ButterKnife.bind(this, view);
+            this.convertView = view;
+        }
+    }
+
+
     static class KeepReadingYouMayLikeViewHolder {
         View convertView;
         @BindView(R.id.imgPoetProfile)
@@ -1730,5 +1800,15 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         ImageHelper.setImage(imgPoetAudioImage, audioContent.getImageUrl());
         audioTitle.setText(audioContent.getAuthorName());
     }
+    private static Typeface getEngFont(final BaseActivity activity) {
+        return ResourcesCompat.getFont(activity, R.font.lato_regular_eng);
+    }
 
+    private static Typeface getHinFont(final BaseActivity activity) {
+        return ResourcesCompat.getFont(activity, R.font.noto_devanagari_hin);
+    }
+
+    private static Typeface getUrduFont(final BaseActivity activity) {
+        return ResourcesCompat.getFont(activity, R.font.noto_nastaliq_regular_urdu);
+    }
 }

@@ -274,7 +274,7 @@ public class AddCommentActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                viewShadow.setVisibility(View.VISIBLE);
+                viewShadow.setVisibility(View.GONE);
             }
 
         });

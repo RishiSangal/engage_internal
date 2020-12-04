@@ -49,6 +49,9 @@ public class ContentPageModel extends BaseModel {
     private String favCount;
     private boolean originalIsFav;
     private String contentTyeName;
+    private boolean haveFactEng;
+    private boolean haveFactHin;
+    private boolean haveFactUrdu;
 
     public ContentPageModel(JSONObject jsonObject) {
         if (jsonObject == null)
@@ -77,6 +80,9 @@ public class ContentPageModel extends BaseModel {
         isHTML = optString(jsonObject, "IH").contentEquals("true");
         this.favCount = optString(jsonObject, "FC");
         this.TypeSlug = optString(jsonObject, "TS");
+        this.haveFactEng= optString(jsonObject, "HFE").contentEquals("true");
+        this.haveFactHin= optString(jsonObject, "HFH").contentEquals("true");
+        this.haveFactUrdu= optString(jsonObject, "HFU").contentEquals("true");
         this.contentTyeName = optString(jsonObject, "CTN");
         this.originalIsFav = MyService.isFavorite(getId());
         htmlOrJsonRenderContent = jsonObject.optString("CR");
@@ -346,5 +352,17 @@ public class ContentPageModel extends BaseModel {
 
     public String getContentTyeName() {
         return contentTyeName;
+    }
+
+    public boolean isHaveFactEng() {
+        return haveFactEng;
+    }
+
+    public boolean isHaveFactHin() {
+        return haveFactHin;
+    }
+
+    public boolean isHaveFactUrdu() {
+        return haveFactUrdu;
     }
 }

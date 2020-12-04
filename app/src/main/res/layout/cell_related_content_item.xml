@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/poetList_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/touch_effect"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp">
+
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtContentType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/dark_blue"
+            app:textSizeEn="@dimen/_14ssp"
+            app:textSizeHi="@dimen/_14ssp"
+            app:textSizeUr="@dimen/_16ssp"
+            tools:text="AAh ko chahiye t" />
+
+        <com.example.sew.views.TitleTextViewType6
+            android:id="@+id/txtBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="?primaryTextColor"
+            app:textSizeEn="@dimen/_14ssp"
+            app:textSizeHi="@dimen/_14ssp"
+            app:textSizeUr="@dimen/_16ssp"
+            tools:text="bas tere liye udaas aa.nkhe.n" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.example.sew.views.TitleTextViewType6
+                android:id="@+id/txtAuthor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textColor="?primaryTextColor"
+                app:textSizeEn="@dimen/_10ssp"
+                app:textSizeHi="@dimen/_12ssp"
+                app:textSizeUr="@dimen/_12ssp"
+                tools:text="AAh ko chahiye t" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgEditorChoiceIcon"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="fitXY"
+                    android:tint="?appIconColor"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_beginner_choice" />
+
+                <ImageView
+                    android:id="@+id/imgPopularChoiceIcon"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:scaleType="fitXY"
+                    android:tint="@color/dark_blue"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_editors_choice" />
+
+                <ImageView
+                    android:id="@+id/imgAudioLink"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:scaleType="fitXY"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:tint="?appIconColor"
+                    app:srcCompat="@drawable/ic_volume_medium" />
+
+                <ImageView
+                    android:id="@+id/imgYoutubeLink"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:scaleType="fitXY"
+                    android:tint="?appIconColor"
+                    android:layout_marginEnd="@dimen/_19sdp"
+                    app:srcCompat="@drawable/ic_video" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/layDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="?appDividerColor"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:visibility="visible" />
+</LinearLayout>
