@@ -56,8 +56,10 @@ public class PagingListView extends ListView {
     public void setHasMoreItems(boolean hasMoreItems) {
         this.hasMoreItems = hasMoreItems;
         if (!this.hasMoreItems) {
-            if(loadingView!=null)
+            if(loadingView!=null) {
                 removeFooterView(loadingView);
+                removeFooterView(bottomView);
+            }
             bottomView= new BottomView(getContext());
             addFooterView(bottomView);
         } else if (findViewById(R.id.loading_view) == null) {

@@ -474,7 +474,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:text="@string/rico_blogs"
                     android:textColor="?appIconColor"
-                    android:textSize="@dimen/_30ssp" />
+                    android:textSize="@dimen/_32ssp" />
 
                 <com.example.sew.views.TitleTextViewType6
                     android:id="@+id/txtRekhtaBlogsTitle"
