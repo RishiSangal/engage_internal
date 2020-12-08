@@ -114,8 +114,8 @@ public class HomeActivity extends BaseHomeActivity {
         if (TextUtils.isEmpty(MyService.getYouTubeKey()))
             getYouTubeKeyApiCall();
         getContentTypeId();
-        if(MyService.isUserLogin())
-            getAllFavoriteIdApiCall();
+//        if(MyService.isUserLogin())
+//            getAllFavoriteIdApiCall();
         getHomePageCollection = new GetHomePageCollection();
         getHomePageCollections();
         if (MyService.isUserLogin())

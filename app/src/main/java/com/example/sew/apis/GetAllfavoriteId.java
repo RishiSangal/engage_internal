@@ -1,6 +1,7 @@
 package com.example.sew.apis;
 
 import com.example.sew.common.MyConstants;
+import com.example.sew.helpers.MyService;
 
 import org.json.JSONArray;
 
@@ -22,8 +23,8 @@ public class GetAllfavoriteId extends Base {
             JSONArray jsonArray = getData().optJSONArray("R");
             for (int i = 0; i < jsonArray.length(); i++) {
                 allFavoriteIds.add(jsonArray.optString(i));
+                MyService.addFavorite(jsonArray.optString(i));
             }
-
         }
     }
 

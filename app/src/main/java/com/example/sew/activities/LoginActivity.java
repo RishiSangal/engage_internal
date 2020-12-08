@@ -20,6 +20,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.sew.R;
 import com.example.sew.adapters.CustomListAdapter;
 import com.example.sew.apis.BaseServiceable;
+import com.example.sew.apis.GetAllfavoriteId;
 import com.example.sew.apis.PostDeviceRegisterForPush;
 import com.example.sew.apis.PostLogin;
 import com.example.sew.apis.PostSocialLogin;
@@ -32,6 +33,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -121,17 +123,30 @@ public class LoginActivity extends BaseSocialLoginActivity {
                 .setProvider(socialType)
                 .setUserName(String.format(Locale.getDefault(), "%s %s", firstName, lastName))
                 .runAsync((BaseServiceable.OnApiFinishListener<PostSocialLogin>) socialLogin -> {
-                    dismissDialog();
                     if (socialLogin.isValidResponse()) {
-                        registerDeviceForPush(false);
-                        startActivity(HomeActivity.getInstance(getActivity(),false));
+                        getAllFavoriteIds();
 //                        startActivity(HomeActivity.getInstance(getActivity()));
 //                        finish();
-                    } else
+                    } else {
+                        dismissDialog();
                         showToast(socialLogin.getErrorMessage());
+                    }
                 });
     }
 
+    public void getAllFavoriteIds() {
+        new GetAllfavoriteId().runAsync((BaseServiceable.OnApiFinishListener<GetAllfavoriteId>) getAllFavoriteIds -> {
+            dismissDialog();
+            if (getAllFavoriteIds.isValidResponse()) {
+                ArrayList<String> favIds = getAllFavoriteIds.getAllFavoriteIds();
+                registerDeviceForPush(false);
+                startActivity(HomeActivity.getInstance(getActivity(), false));
+            } else {
+                showToast(getAllFavoriteIds.getErrorMessage());
+                finish();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,8 +188,8 @@ public class LoginActivity extends BaseSocialLoginActivity {
                 doGoogleLogin();
                 break;
             case R.id.txtSkipLogin:
-                  registerDeviceForPush(true);
-                  startActivity(HomeActivity.getInstance(getActivity(),false));
+                registerDeviceForPush(true);
+                startActivity(HomeActivity.getInstance(getActivity(), false));
 //                startActivity(HomeActivity.getInstance(getActivity()));
 //                finish();
                 break;
@@ -191,7 +206,7 @@ public class LoginActivity extends BaseSocialLoginActivity {
         new PostDeviceRegisterForPush().
                 runAsync((BaseServiceable.OnApiFinishListener<PostDeviceRegisterForPush>) postDeviceRegisterForPush -> {
                     if (postDeviceRegisterForPush.isValidResponse()) {
-                        if(!IsSkipLogin)
+                        if (!IsSkipLogin)
                             syncFavoriteIfNecessary();
 //                        startActivity(HomeActivity.getInstance(getActivity(),false));
                         finish();
@@ -209,16 +224,15 @@ public class LoginActivity extends BaseSocialLoginActivity {
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
             alertError(layEmail, layPassword);
             showToast(AppErrorMessage.please_enter_email_password);
-        }
-        else if (!isValidEmail) {
-            if(TextUtils.isEmpty(email)){
+        } else if (!isValidEmail) {
+            if (TextUtils.isEmpty(email)) {
                 alertError(layEmail);
                 showToast(AppErrorMessage.please_enter_email_id);
-            }else {
+            } else {
                 alertError(layEmail);
                 showToast(AppErrorMessage.please_enter_valid_email_id);
             }
-        }else if (TextUtils.isEmpty(password)) {
+        } else if (TextUtils.isEmpty(password)) {
             alertError(layPassword);
             showToast(AppErrorMessage.please_enter_password);
         }
@@ -238,15 +252,15 @@ public class LoginActivity extends BaseSocialLoginActivity {
                     .setEmail(email)
                     .setPassword(password)
                     .runAsync((BaseServiceable.OnApiFinishListener<PostLogin>) postLogin -> {
-                        dismissDialog();
                         if (postLogin.isValidResponse()) {
-                            registerDeviceForPush(false);
-                            startActivity(HomeActivity.getInstance(getActivity(),false));
+                            getAllFavoriteIds();
 //                            syncFavoriteIfNecessary();
 //                            startActivity(HomeActivity.getInstance(getActivity()));
 //                            finish();
-                        } else
+                        } else {
+                            dismissDialog();
                             showToast(postLogin.getErrorMessage());
+                        }
                     });
         }
     }
@@ -256,6 +270,7 @@ public class LoginActivity extends BaseSocialLoginActivity {
             if (view != null)
                 view.setBackground(getResources().getDrawable(R.drawable.text_error_layout));
     }
+
     public void showPasswordErrorDialog(String password) {
         boolean hasPassLen = false;
         boolean hasNumber = false;

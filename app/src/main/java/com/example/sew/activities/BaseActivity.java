@@ -417,7 +417,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ICommonV
         });
     }
 
-    public void getAllFavoriteIdApiCall(){
+  /*  public void getAllFavoriteIdApiCall(){
         new GetAllfavoriteId().runAsync((BaseServiceable.OnApiFinishListener<GetAllfavoriteId>) getAllfavoriteId ->{
             if(getAllfavoriteId.isValidResponse()){
                 ArrayList<String> favIds= getAllfavoriteId.getAllFavoriteIds();
@@ -425,7 +425,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ICommonV
 
             }
         });
-    }
+    }*/
 
     public final void syncFavoriteIfNecessary() {
         if (MyService.isUserLogin()) {
