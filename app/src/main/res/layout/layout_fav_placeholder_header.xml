@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_170sdp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_170sdp">
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_170sdp"
+            android:background="@drawable/reactangle_shimmer"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shadow_toolbar"
+            android:rotation="180" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/circleimg_shimmer" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/cornerround_shimmer"
+                android:includeFontPadding="false"
+                android:layout_marginTop="@dimen/_8sdp"/>
+            <View
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/cornerround_shimmer"
+                android:includeFontPadding="false"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

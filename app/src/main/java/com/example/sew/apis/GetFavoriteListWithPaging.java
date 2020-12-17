@@ -83,6 +83,8 @@ public class GetFavoriteListWithPaging extends Base {
             favContentTypes = new ArrayList<>(size);
             for (int i = 0; i < size; i++)
                 favContentTypes.add(new ContentType(array.optJSONObject(i)));
+            MyService.setUserLoggedin(false);
+            BaseActivity.sendBroadCast(BROADCAST_ALL_FAVORITE_LOAD_COMPLETED);
         }
     }
 

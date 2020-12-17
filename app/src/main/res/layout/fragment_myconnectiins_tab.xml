@@ -5,13 +5,36 @@
     android:background="?appBackgroundColor"
     android:orientation="vertical">
 
-    <include layout="@layout/header_type_1" />
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_type_1" />
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/layout_fav_placeholder_header"/>
+
+            <include layout="@layout/layout_fav_placeholder_row" />
+            <include layout="@layout/layout_fav_placeholder_row" />
+
+            <include layout="@layout/layout_fav_placeholder_row" />
+            <include layout="@layout/layout_fav_placeholder_row" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/favLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottomBar"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="false"
+        android:visibility="gone">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"

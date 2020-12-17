@@ -235,6 +235,7 @@ public class MoreActivity extends BaseHomeActivity {
                             .setPositiveButton(MyHelper.getString(R.string.yes), (dialog, which) -> {
                                 new PostLogout().runAsync(null);
                                 MyService.logoutUser();
+                                MyService.setUserLoggedin(false);
                                 startActivity(new Intent(getActivity(), SplashActivity.class));
                                 ActivityManager.getInstance().clearStack();
                                 dialog.dismiss();

@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.sew.R;
@@ -25,6 +27,7 @@ import com.example.sew.models.FavoriteDictionary;
 import com.example.sew.models.FavoritePoet;
 import com.example.sew.models.ShayariImage;
 import com.example.sew.models.User;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
@@ -49,7 +52,10 @@ public class FavoriteActivity extends BaseHomeActivity {
     TextView txtFavTabMyFavoriteCount;
     @BindView(R.id.imgBannerImage)
     ImageView imgBannerImage;
-
+    @BindView(R.id.favLayout)
+    CoordinatorLayout favLayout;
+    @BindView(R.id.shimmer_view_container)
+    ShimmerFrameLayout shimmerViewContainer;
     public static Intent getInstance(Activity activity) {
         return new Intent(activity, FavoriteActivity.class);
     }
@@ -73,6 +79,12 @@ public class FavoriteActivity extends BaseHomeActivity {
         setContentView(R.layout.fragment_myconnectiins_tab);
         ButterKnife.bind(this);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_3);
+        if(MyService.isUserLoggedin()) {
+            shimmerViewContainer.startShimmer();
+        }else {
+            shimmerViewContainer.stopShimmer();
+            favLayout.setVisibility(View.VISIBLE);
+        }
         getFavorites();
         viewpager.setSaveFromParentEnabled(false);
         registerBroadcastListener(new BroadcastReceiver() {
@@ -81,6 +93,13 @@ public class FavoriteActivity extends BaseHomeActivity {
                 updateUI();
             }
         }, BROADCAST_FAVORITE_UPDATED);
+        registerBroadcastListener(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                shimmerViewContainer.stopShimmer();
+                favLayout.setVisibility(View.VISIBLE);
+            }
+        }, BROADCAST_ALL_FAVORITE_LOAD_COMPLETED);
 //        registerBroadcastListener(new BroadcastReceiver() {
 //            @Override
 //            public void onReceive(Context context, Intent intent) {
@@ -201,7 +220,8 @@ public class FavoriteActivity extends BaseHomeActivity {
     private class ResetFavoriteAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            showDialog();
+            if(!MyService.isUserLoggedin())
+                showDialog();
             super.onPreExecute();
         }
 

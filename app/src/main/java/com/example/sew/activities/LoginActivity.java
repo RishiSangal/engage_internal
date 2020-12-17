@@ -140,6 +140,7 @@ public class LoginActivity extends BaseSocialLoginActivity {
             if (getAllFavoriteIds.isValidResponse()) {
                 ArrayList<String> favIds = getAllFavoriteIds.getAllFavoriteIds();
                 registerDeviceForPush(false);
+                MyService.setUserLoggedin(true);
                 startActivity(HomeActivity.getInstance(getActivity(), false));
             } else {
                 showToast(getAllFavoriteIds.getErrorMessage());

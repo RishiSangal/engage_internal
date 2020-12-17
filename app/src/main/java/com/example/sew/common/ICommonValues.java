@@ -21,6 +21,7 @@ public interface ICommonValues {
     String BROADCAST_INTERNET_RESTORE = "broadcast_internet_restore";
     String BROADCAST_AUDIO_REFRESHED = "broadcast_audio_refreshed";
     String BROADCAST_RENDER_CONTENT_COMMENT_UPDATE = "broadcast_render_content_comment_update";
+    String BROADCAST_ALL_FAVORITE_LOAD_COMPLETED = "broadcast_all_favorite_load_completed";
     String IS_OFFLINE = "IS_OFFLINE";
     String TARGET_ID = "TARGET_ID";
     String HOME_TODAY_TOP = "HOME_TODAY_TOP";
