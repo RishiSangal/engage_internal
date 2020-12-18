@@ -41,6 +41,9 @@ public class MyApplication extends MultiDexApplication implements ICommonValues 
 
     private static MyApplication myApplication;
     public static Context mAppContext;
+    public static boolean  Fav_all_loaded;
+//    Fav_IMAGE_SHAYRI , Fav_WORD, Fav_T20, Fav_OCCASION, Fav_SHAYARI_COLLECTION,
+//    Fav_PROSE_COLLECTION, Fav_ENTITY,
 
     private boolean isBrowsingOffline = false;
 

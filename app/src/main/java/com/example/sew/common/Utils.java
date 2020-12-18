@@ -5,11 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sew.MyApplication;
+import com.example.sew.activities.BaseActivity;
+import com.example.sew.helpers.MyService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.example.sew.common.ICommonValues.BROADCAST_ALL_FAVORITE_LOAD_COMPLETED;
 
 public class Utils {
     public static float dpFromPx(final float px) {
@@ -51,5 +55,15 @@ public class Utils {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         return formatter1.format(calendar.getTime());
+    }
+
+    public static void checkFavLoaded() {
+        if ( MyApplication.Fav_all_loaded){
+            BaseActivity.sendBroadCast(BROADCAST_ALL_FAVORITE_LOAD_COMPLETED);
+            MyService.setIsFavLoaded(true);
+        }
+//        MyApplication.Fav_IMAGE_SHAYRI && MyApplication.Fav_WORD && MyApplication.Fav_T20 &&
+//                MyApplication.Fav_OCCASION && MyApplication.Fav_SHAYARI_COLLECTION &&
+//                MyApplication.Fav_PROSE_COLLECTION && MyApplication.Fav_ENTITY &&
     }
 }

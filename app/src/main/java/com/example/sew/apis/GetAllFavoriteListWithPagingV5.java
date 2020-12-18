@@ -2,10 +2,12 @@ package com.example.sew.apis;
 
 import android.text.TextUtils;
 
+import com.example.sew.MyApplication;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.common.Enums;
 import com.example.sew.common.ICommonValues;
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.BaseOtherFavModel;
@@ -69,24 +71,31 @@ public class GetAllFavoriteListWithPagingV5 extends Base {
                 case CONTENT:
                     break;
                 case IMAGE_SHAYRI:
+//                    MyApplication.Fav_IMAGE_SHAYRI = true;
                     array = getData().optJSONArray("FI");
                     break;
                 case WORD:
+//                    MyApplication.Fav_WORD = true;
                     array = getData().optJSONArray("FW");
                     break;
                 case T20:
+//                    MyApplication.Fav_T20 = true;
                     array = getData().optJSONArray("FT");
                     break;
                 case OCCASION:
+//                    MyApplication.Fav_OCCASION = true;
                     array = getData().optJSONArray("FO");
                     break;
                 case SHAYARI_COLLECTION:
+//                    MyApplication.Fav_SHAYARI_COLLECTION = true;
                     array = getData().optJSONArray("FS");
                     break;
                 case PROSE_COLLECTION:
+//                    MyApplication.Fav_PROSE_COLLECTION = true;
                     array = getData().optJSONArray("FP");
                     break;
                 case ENTITY:
+//                    MyApplication.Fav_ENTITY = true;
                     array = getData().optJSONArray("FE");
             }
 
@@ -130,9 +139,11 @@ public class GetAllFavoriteListWithPagingV5 extends Base {
 
             if (size > 0 && !CollectionUtils.isEmpty(favoriteContents) && totalCount > favoriteContents.size()) {
                 loadMoreData();
-            } else if (size > 0 && !CollectionUtils.isEmpty(collectionFavorite) && totalCount > collectionFavorite.size()) {
+            } else if (size > 0 && !CollectionUtils.isEmpty(collectionFavorite) && totalCount > collectionFavorite.size())
+            {
                 loadMoreData();
-            } else {
+            }
+            else {
                 ArrayList<? extends BaseOtherFavModel> savedFavoriteContent = null;
                 ArrayList<String> savedFavoriteCollection = null;
                 switch (getFavType()) {
@@ -179,6 +190,8 @@ public class GetAllFavoriteListWithPagingV5 extends Base {
                     if (isAnyFavoriteRemoved)
                         BaseActivity.sendBroadCast(ICommonValues.BROADCAST_FAVORITE_UPDATED);
             }
+
+            Utils.checkFavLoaded();
         }
     }
 }

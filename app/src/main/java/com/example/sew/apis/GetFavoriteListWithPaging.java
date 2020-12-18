@@ -2,9 +2,11 @@ package com.example.sew.apis;
 
 import android.text.TextUtils;
 
+import com.example.sew.MyApplication;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.common.ICommonValues;
 import com.example.sew.common.MyConstants;
+import com.example.sew.common.Utils;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.models.ContentType;
@@ -66,6 +68,8 @@ public class GetFavoriteListWithPaging extends Base {
             if (totalCount > favoriteContents.size()) {
                 loadMoreData();
             } else {
+                MyApplication.Fav_all_loaded = true;
+                Utils.checkFavLoaded();
                 ArrayList<FavContentPageModel> savedFavoriteContent = MyService.getAllFavorite();
                 for (int i = savedFavoriteContent.size() - 1; i >= 0; i--) {
                     if (!favoriteContents.contains(savedFavoriteContent.get(i))) {
@@ -84,7 +88,6 @@ public class GetFavoriteListWithPaging extends Base {
             for (int i = 0; i < size; i++)
                 favContentTypes.add(new ContentType(array.optJSONObject(i)));
             MyService.setUserLoggedin(false);
-            BaseActivity.sendBroadCast(BROADCAST_ALL_FAVORITE_LOAD_COMPLETED);
         }
     }
 

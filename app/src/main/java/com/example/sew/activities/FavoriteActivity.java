@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.sew.MyApplication;
 import com.example.sew.R;
 import com.example.sew.adapters.FavoriteFragmentAdapter;
 import com.example.sew.common.Enums;
@@ -79,7 +80,7 @@ public class FavoriteActivity extends BaseHomeActivity {
         setContentView(R.layout.fragment_myconnectiins_tab);
         ButterKnife.bind(this);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_3);
-        if(MyService.isUserLoggedin()) {
+        if(!MyApplication.Fav_all_loaded && !MyService.isFavLoaded()) {
             shimmerViewContainer.startShimmer();
         }else {
             shimmerViewContainer.stopShimmer();

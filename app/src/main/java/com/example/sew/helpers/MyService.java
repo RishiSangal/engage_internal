@@ -75,6 +75,7 @@ public class MyService {
     private static final String DB_SAVED_ALL_CONTENT_TYPE_LIST = "DB_SAVED_ALL_CONTENT_TYPE_LIST";
     private static final String SAVED_CONTENT_TYPE_IDS = "SAVED_CONTENT_TYPE_IDS ";
     private static final String IS_USER_LOGGEDIN = "is_user_loggedin";
+    private static final String IS_FAV_LOADED = "IS_FAV_LOADED";
 
     private static final String BASE_URL = "BASE_URL";
     private static final String CDN_URL = "CDN_URL";
@@ -124,6 +125,8 @@ public class MyService {
         setUniqueIdAndParamsIfNecessary();
         removeAllFavorite();
         setDeviceId("");
+        MyService.setIsFavLoaded(false);
+        MyApplication.Fav_all_loaded = false;
     }
 
     public static String getAuthToken() {
@@ -218,6 +221,14 @@ public class MyService {
 
     public static boolean isFirstTimeOpenApp() {
         return Paper.book(DB_USER).read(IS_FIRST_TIME_OPEN_APP, true);
+    }
+
+    public static void setIsFavLoaded(boolean isFirstTime) {
+        Paper.book(DB_USER).write(IS_FAV_LOADED, isFirstTime);
+    }
+
+    public static boolean isFavLoaded() {
+        return Paper.book(DB_USER).read(IS_FAV_LOADED, false);
     }
 
     public static void setUserLoggedin(boolean isUserLog) {

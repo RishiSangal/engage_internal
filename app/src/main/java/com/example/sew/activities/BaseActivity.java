@@ -429,6 +429,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ICommonV
 
     public final void syncFavoriteIfNecessary() {
         if (MyService.isUserLogin()) {
+
             new GetFavoriteListWithPaging().addPagination().runAsync(null);
             new GetAllFavoriteListWithPagingV5().setFavType(Enums.FAV_TYPES.IMAGE_SHAYRI).addPagination().runAsync(null);
             new GetAllFavoriteListWithPagingV5().setFavType(Enums.FAV_TYPES.ENTITY).addPagination().runAsync(null);
