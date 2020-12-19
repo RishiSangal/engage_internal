@@ -57,6 +57,7 @@ public class FavoriteActivity extends BaseHomeActivity {
     CoordinatorLayout favLayout;
     @BindView(R.id.shimmer_view_container)
     ShimmerFrameLayout shimmerViewContainer;
+
     public static Intent getInstance(Activity activity) {
         return new Intent(activity, FavoriteActivity.class);
     }
@@ -80,9 +81,10 @@ public class FavoriteActivity extends BaseHomeActivity {
         setContentView(R.layout.fragment_myconnectiins_tab);
         ButterKnife.bind(this);
         initBottomNavigation(Enums.BOTTOM_TYPE.HOME_3);
-        if(!MyApplication.Fav_all_loaded && !MyService.isFavLoaded()) {
+        if (!MyApplication.Fav_all_loaded && !MyService.isFavLoaded()) {
             shimmerViewContainer.startShimmer();
-        }else {
+        } else {
+            showFavCount();
             shimmerViewContainer.stopShimmer();
             favLayout.setVisibility(View.VISIBLE);
         }
@@ -99,6 +101,7 @@ public class FavoriteActivity extends BaseHomeActivity {
             public void onReceive(Context context, Intent intent) {
                 shimmerViewContainer.stopShimmer();
                 favLayout.setVisibility(View.VISIBLE);
+                showFavCount();
             }
         }, BROADCAST_ALL_FAVORITE_LOAD_COMPLETED);
 //        registerBroadcastListener(new BroadcastReceiver() {
@@ -123,7 +126,7 @@ public class FavoriteActivity extends BaseHomeActivity {
             userName.setText(MyHelper.getString(R.string.guest));
             imgBannerImage.setImageResource(R.drawable.home);
         }
-        showFavCount();
+       // showFavCount();
         resetAndUpdateFavorite();
     }
 
@@ -152,7 +155,7 @@ public class FavoriteActivity extends BaseHomeActivity {
 
             // Get the entry at this iteration
             Map.Entry<ContentType, ArrayList<FavContentPageModel>> entry = iterator.next();
-            if (entry.getValue() == null || entry.getValue().isEmpty()){
+            if (entry.getValue() == null || entry.getValue().isEmpty()) {
                 iterator.remove();
 //                allFavoriteSections.remove(entry.getKey());
 //                break;
@@ -174,7 +177,7 @@ public class FavoriteActivity extends BaseHomeActivity {
         allFavoritePoet.addAll(MyService.MyFavService.getFavoritePoet());
         if (favoriteFragmentAdapter == null) {
             favoriteFragmentAdapter = new FavoriteFragmentAdapter(getSupportFragmentManager(), getActivity(),
-                    allFavoriteSections, allSavedImageShayari, allFavoriteDictionary,allFavoritePoet);
+                    allFavoriteSections, allSavedImageShayari, allFavoriteDictionary, allFavoritePoet);
             viewpager.setAdapter(favoriteFragmentAdapter);
         } else {
 //            int oldCount = favoriteFragmentAdapter.getCount();
@@ -191,8 +194,8 @@ public class FavoriteActivity extends BaseHomeActivity {
 
     public ArrayList<FavContentPageModel> getFavContents(ContentType contentType) {
         for (Map.Entry<ContentType, ArrayList<FavContentPageModel>>
-                entry : allFavoriteSections.entrySet()){
-            if(entry.getKey().equals(contentType))
+                entry : allFavoriteSections.entrySet()) {
+            if (entry.getKey().equals(contentType))
                 return allFavoriteSections.get(entry.getKey());
         }
         return allFavoriteSections.get(contentType);
@@ -221,7 +224,7 @@ public class FavoriteActivity extends BaseHomeActivity {
     private class ResetFavoriteAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            if(!MyService.isUserLoggedin())
+            if (MyApplication.Fav_all_loaded && MyService.isFavLoaded())
                 showDialog();
             super.onPreExecute();
         }
