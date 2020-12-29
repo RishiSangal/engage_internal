@@ -304,7 +304,6 @@ public class MoreActivity extends BaseHomeActivity {
                 } else
                     targetUrl = MyService.getBlogTargetUrl();
                 startActivity(RekhtaBlogsWebViewActivity.getInstance(getActivity(), targetUrl));
-
                 break;
         }
     }

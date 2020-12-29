@@ -3,11 +3,11 @@ package com.example.sew.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -18,9 +18,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.binaryfork.spanny.Spanny;
 import com.example.sew.R;
 import com.example.sew.adapters.CommentListRecyclerAdapter;
 import com.example.sew.apis.BaseServiceable;
@@ -199,7 +201,7 @@ public class AddCommentActivity extends BaseActivity {
 
 
     private ArrayList<Comment> commentList = new ArrayList<>();
-    String targetId;
+    String targetId, communityGuidlines;
     ArrayList<String> filterList;
 
     class MyClickableSpan extends ClickableSpan {
@@ -244,20 +246,15 @@ public class AddCommentActivity extends BaseActivity {
         filterList.add(getString(R.string.top_comment));
         filterList.add(getString(R.string.newest_comments));
         filterList.add(getString(R.string.replied_by_rekhta));
-        SpannableString ss = new SpannableString(commentHeader);
-        final String first = "Community Guidelines";
-        int firstIndex = commentHeader.indexOf(first);
-//        ClickableSpan firstWordClick = new ClickableSpan() {
-//            @Override
-//            public void onClick(View widget) {
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")));
-//            }
-//        };
-        ss.setSpan(new MyClickableSpan(commentHeader), firstIndex, firstIndex + first.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        txtTitle.setLinksClickable(true);
-        // txtTitle.setHighlightColor(getResources().getColor(R.color.dark_blue));
-        // txtTitle.setMovementMethod(LinkMovementMethod.getInstance());
-        txtTitle.setText(ss, TextView.BufferType.SPANNABLE);
+        txtTitle.setMovementMethod(LinkMovementMethod.getInstance());
+        Spanny spanny = new Spanny();
+        spanny.append("Remember to keep comments respectful and to follow our ")
+                .append(("Community Guidelines"), new ForegroundColorSpan(getClickableTextColor()), new CustomClickableSpan(communityGuidlines));
+
+        txtTitle.setText(spanny);
+
+
+
 
         if (isOpenKeyBoard) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -290,6 +287,7 @@ public class AddCommentActivity extends BaseActivity {
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 dismissDialog();
                 targetId = getAllCommentsByTargetIds.getTargetId();
+                communityGuidlines= getAllCommentsByTargetIds.getCommunityGuildlines();
                 if (getAllCommentsByTargetIds.isFirstPage())
                     commentList.clear();
                 commentList.addAll(getAllCommentsByTargetIds.getComment());
@@ -412,5 +410,31 @@ public class AddCommentActivity extends BaseActivity {
         defaultFilterKey = sortFields.getKey();
         defaultAscKey = acsDes.getKey();
         getAllCommentsByTargetIdApi(defaultFilterKey, defaultAscKey);
+    }
+
+
+    public class CustomClickableSpan extends ClickableSpan {
+        String guidelines;
+
+        CustomClickableSpan(String guidelines) {
+            this.guidelines = guidelines;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            if(!TextUtils.isEmpty(communityGuidlines))
+                startActivity(RekhtaBlogsWebViewActivity.getInstance(getActivity(), communityGuidlines));
+        }
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            ds.linkColor = getClickableTextColor();
+            super.updateDrawState(ds);
+            ds.setUnderlineText(false);
+        }
+    }
+
+    private int getClickableTextColor() {
+        return ContextCompat.getColor(getActivity(), R.color.dark_blue);
     }
 }

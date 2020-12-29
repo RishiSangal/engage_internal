@@ -26,6 +26,11 @@
 
             <include layout="@layout/layout_fav_placeholder_row" />
             <include layout="@layout/layout_fav_placeholder_row" />
+            <include layout="@layout/layout_fav_placeholder_row" />
+            <include layout="@layout/layout_fav_placeholder_row" />
+
+            <include layout="@layout/layout_fav_placeholder_row" />
+            <include layout="@layout/layout_fav_placeholder_row" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>

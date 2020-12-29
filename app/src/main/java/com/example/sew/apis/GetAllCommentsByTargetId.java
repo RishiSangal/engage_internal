@@ -1,8 +1,5 @@
 package com.example.sew.apis;
 
-import com.example.sew.activities.BaseActivity;
-import com.example.sew.common.Enums;
-import com.example.sew.common.ICommonValues;
 import com.example.sew.common.MyConstants;
 import com.example.sew.models.Comment;
 
@@ -31,7 +28,7 @@ public class GetAllCommentsByTargetId extends Base {
         return this;
     }
 
-    private String targetId, contentType, userStatus, totalCommentsCount;
+    private String targetId, contentType, userStatus, totalCommentsCount,communityGuildlines;
     private ArrayList<Comment> comment;
 
     @Override
@@ -42,11 +39,11 @@ public class GetAllCommentsByTargetId extends Base {
             contentType = getData().optString("CT");
             userStatus = getData().optString("US");
             totalCommentsCount = getData().optString("TCC");
+            communityGuildlines= getData().optString("CG");
             JSONArray commentArray = getData().optJSONArray("C");
             if (commentArray == null)
                 commentArray = new JSONArray();
-            comment = new ArrayList<>(commentArray.length());
-            for (int i = 0; i < commentArray.length(); i++)
+            comment = new ArrayList<>(commentArray.length());for (int i = 0; i < commentArray.length(); i++)
                 comment.add(new Comment(commentArray.optJSONObject(i)));
            // BaseActivity.sendBroadCast(ICommonValues.BROADCAST_RENDER_CONTENT_COMMENT_UPDATE);
         }
@@ -67,6 +64,10 @@ public class GetAllCommentsByTargetId extends Base {
 
     public String getTotalCommentsCount() {
         return totalCommentsCount;
+    }
+
+    public String getCommunityGuildlines() {
+        return communityGuildlines;
     }
 
     public ArrayList<Comment> getComment() {
