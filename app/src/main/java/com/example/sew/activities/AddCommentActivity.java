@@ -82,6 +82,8 @@ public class AddCommentActivity extends BaseActivity {
     TextView txtContentTitle;
     @BindView(R.id.txtContentType)
     TextView txtContentType;
+    @BindView(R.id.layCommunityGuidlines)
+    LinearLayout layCommunityGuidlines;
     CommentListRecyclerAdapter commentListRecyclerAdapter;
 
     boolean isParentReply, isChildReply;
@@ -287,7 +289,12 @@ public class AddCommentActivity extends BaseActivity {
             if (getAllCommentsByTargetIds.isValidResponse()) {
                 dismissDialog();
                 targetId = getAllCommentsByTargetIds.getTargetId();
-                communityGuidlines= getAllCommentsByTargetIds.getCommunityGuildlines();
+                if(TextUtils.isEmpty(getAllCommentsByTargetIds.getCommunityGuildlines()))
+                    layCommunityGuidlines.setVisibility(View.GONE);
+                else {
+                    layCommunityGuidlines.setVisibility(View.VISIBLE);
+                    communityGuidlines = getAllCommentsByTargetIds.getCommunityGuildlines();
+                }
                 if (getAllCommentsByTargetIds.isFirstPage())
                     commentList.clear();
                 commentList.addAll(getAllCommentsByTargetIds.getComment());

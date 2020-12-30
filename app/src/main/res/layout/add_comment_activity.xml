@@ -73,6 +73,7 @@
                             android:textSize="@dimen/_14ssp" />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/layCommunityGuidlines"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?appThirdBackground"
