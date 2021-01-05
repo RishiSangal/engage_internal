@@ -52,12 +52,16 @@ public class FavContentPageModel extends BaseModel {
             RenderingAlignment,
             bodyEng,
             bodyHin,
-            bodyUrdu;
+            bodyUrdu,
+            interestingFactEn,
+            interestingFactHin,
+            interestingFactUrdu;
     private RenderContent renderContentEn,
             renderContentHi,
             renderContentUrdu;
-    private boolean isHTML;
-    private String htmlOrJsonRenderContentEn,htmlOrJsonRenderContentHi,htmlOrJsonRenderContentUrdu, FD;
+    private boolean isHTML, haveFactEng, haveFactHin, haveFactUrdu;
+
+    private String htmlOrJsonRenderContentEn, htmlOrJsonRenderContentHi, htmlOrJsonRenderContentUrdu, FD;
     JSONObject jsonObject;
 
     public FavContentPageModel(JSONObject jsonObject) {
@@ -92,6 +96,13 @@ public class FavContentPageModel extends BaseModel {
         this.HaveEn = optString(jsonObject, "HE");
         this.HaveHi = optString(jsonObject, "HH");
         this.HaveUr = optString(jsonObject, "HU");
+
+        this.interestingFactEn = optString(jsonObject, "FTE");
+        this.interestingFactHin = optString(jsonObject, "FTH");
+        this.interestingFactUrdu = optString(jsonObject, "FTU");
+        this.haveFactEng = optString(jsonObject, "HFE").contentEquals("true");
+        this.haveFactHin = optString(jsonObject, "HFH").contentEquals("true");
+        this.haveFactUrdu = optString(jsonObject, "HFU").contentEquals("true");
         this.RenderingAlignment = optString(jsonObject, "A");
         isHTML = optString(jsonObject, "IH").contentEquals("true");
         this.TypeSlug = optString(jsonObject, "S");
@@ -238,6 +249,7 @@ public class FavContentPageModel extends BaseModel {
         }
         return titleEng;
     }
+
     public String getBody() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
@@ -249,6 +261,7 @@ public class FavContentPageModel extends BaseModel {
         }
         return bodyEng;
     }
+
     public boolean isHTML() {
         return isHTML;
     }
@@ -256,9 +269,11 @@ public class FavContentPageModel extends BaseModel {
     private String getAnyNonEmptyTitle() {
         return !TextUtils.isEmpty(getTitleEng()) ? getTitleEng() : !TextUtils.isEmpty(getTitleHin()) ? getTitleHin() : getTitleUrdu();
     }
+
     private String getAnyNonEmptyBody() {
         return !TextUtils.isEmpty(getBodyEng()) ? getBodyEng() : !TextUtils.isEmpty(getBodyHin()) ? getBodyHin() : getBodyUrdu();
     }
+
     public String getSubTitle() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
@@ -372,6 +387,7 @@ public class FavContentPageModel extends BaseModel {
     public RenderContent getRenderContentEn() {
         return renderContentEn;
     }
+
     public RenderContent getRenderContent() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
@@ -383,6 +399,7 @@ public class FavContentPageModel extends BaseModel {
         }
         return getRenderContentEn();
     }
+
     public String getJsonOrHtmlContent() {
         switch (MyService.getSelectedLanguage()) {
             case ENGLISH:
@@ -427,5 +444,29 @@ public class FavContentPageModel extends BaseModel {
 
     public String getHtmlOrJsonRenderContentUrdu() {
         return htmlOrJsonRenderContentUrdu;
+    }
+
+    public String getInterestingFactEn() {
+        return interestingFactEn;
+    }
+
+    public String getInterestingFactHin() {
+        return interestingFactHin;
+    }
+
+    public String getInterestingFactUrdu() {
+        return interestingFactUrdu;
+    }
+
+    public boolean isHaveFactUrdu() {
+        return haveFactUrdu;
+    }
+
+    public boolean isHaveFactHin() {
+        return haveFactHin;
+    }
+
+    public boolean isHaveFactEng() {
+        return haveFactEng;
     }
 }

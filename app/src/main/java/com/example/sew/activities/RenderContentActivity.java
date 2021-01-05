@@ -555,6 +555,53 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                     .setHtmlContent(favContentPageModel.getJsonOrHtmlContent());
         }
         renderContentBuilder.Build();
+        if (TextUtils.isEmpty(favContentPageModel.getInterestingFactEn()) && TextUtils.isEmpty(favContentPageModel.getInterestingFactHin())
+                && TextUtils.isEmpty(favContentPageModel.getInterestingFactUrdu())) {
+            layInterestingFact.setVisibility(GONE);
+        } else {
+            layInterestingFact.setVisibility(View.VISIBLE);
+            txtInterestingFactTitle.setText(MyHelper.getString(R.string.interesting_fact));
+            switch (MyService.getSelectedLanguage()) {
+                case ENGLISH:
+                    if (favContentPageModel.isHaveFactEng()) {
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactEn());
+                    } else if (favContentPageModel.isHaveFactHin()) {
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactHin());
+                    } else if (favContentPageModel.isHaveFactUrdu()) {
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactUrdu());
+                    }
+                    break;
+                case HINDI:
+                    if (favContentPageModel.isHaveFactHin()) {
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactHin());
+                    } else if (favContentPageModel.isHaveFactEng()) {
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactEn());
+                    } else if (favContentPageModel.isHaveFactUrdu()) {
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactUrdu());
+                    }
+                    break;
+                case URDU:
+                    if (favContentPageModel.isHaveFactUrdu()) {
+                        txtInterestingFact.setTypeface(getUrduFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactUrdu());
+                    } else if (favContentPageModel.isHaveFactHin()) {
+                        txtInterestingFact.setTypeface(getHinFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactHin());
+                    } else if (favContentPageModel.isHaveFactEng()) {
+                        txtInterestingFact.setTypeface(getEngFont(getActivity()));
+                        txtInterestingFact.setText(favContentPageModel.getInterestingFactEn());
+                    }
+                    break;
+
+            }
+
+        }
 
         layContentTags.setVisibility(GONE);
         boolean isEnglishAvailable = favContentPageModel.getHaveEn().contentEquals("true");
@@ -615,38 +662,38 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
 //        txtPrevTitle.setText(MyHelper.getString(R.string.previous));
 //        txtNextTitle.setText(MyHelper.getString(R.string.next));
 
-        if(!TextUtils.isEmpty(contentPageModel.getFootNote())) {
+        if (!TextUtils.isEmpty(contentPageModel.getFootNote())) {
             layInterestingFact.setVisibility(View.VISIBLE);
             txtInterestingFactTitle.setText(MyHelper.getString(R.string.interesting_fact));
-            switch (MyService.getSelectedLanguage()){
+            switch (MyService.getSelectedLanguage()) {
                 case ENGLISH:
-                    if(contentPageModel.isHaveFactEng())
+                    if (contentPageModel.isHaveFactEng())
                         txtInterestingFact.setTypeface(getEngFont(getActivity()));
-                    else if(contentPageModel.isHaveFactHin())
+                    else if (contentPageModel.isHaveFactHin())
                         txtInterestingFact.setTypeface(getHinFont(getActivity()));
-                    else if(contentPageModel.isHaveFactUrdu())
+                    else if (contentPageModel.isHaveFactUrdu())
                         txtInterestingFact.setTypeface(getUrduFont(getActivity()));
                     break;
                 case HINDI:
-                    if(contentPageModel.isHaveFactHin())
+                    if (contentPageModel.isHaveFactHin())
                         txtInterestingFact.setTypeface(getHinFont(getActivity()));
-                    else if(contentPageModel.isHaveFactEng())
+                    else if (contentPageModel.isHaveFactEng())
                         txtInterestingFact.setTypeface(getEngFont(getActivity()));
-                    else if(contentPageModel.isHaveFactUrdu())
+                    else if (contentPageModel.isHaveFactUrdu())
                         txtInterestingFact.setTypeface(getUrduFont(getActivity()));
                     break;
                 case URDU:
-                    if(contentPageModel.isHaveFactUrdu())
+                    if (contentPageModel.isHaveFactUrdu())
                         txtInterestingFact.setTypeface(getUrduFont(getActivity()));
-                    else if(contentPageModel.isHaveFactHin())
+                    else if (contentPageModel.isHaveFactHin())
                         txtInterestingFact.setTypeface(getHinFont(getActivity()));
-                    else if(contentPageModel.isHaveFactEng())
+                    else if (contentPageModel.isHaveFactEng())
                         txtInterestingFact.setTypeface(getEngFont(getActivity()));
                     break;
 
             }
             txtInterestingFact.setText(contentPageModel.getFootNote());
-        }else
+        } else
             layInterestingFact.setVisibility(GONE);
         txtHeaderPoetName.setText(contentPageModel.getPoet().getName());
         txtFooterAuthorName.setText(contentPageModel.getPoet().getName());
@@ -1548,7 +1595,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         }, 2000);
     }
 
-    static class RelatedContentViewHolder{
+    static class RelatedContentViewHolder {
         View convertView;
         @BindView(R.id.txtContentType)
         TextView txtContentType;
@@ -1556,7 +1603,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         TextView txtBody;
         @BindView(R.id.txtAuthor)
         TextView txtAuthor;
-        RelatedContentViewHolder(View view){
+
+        RelatedContentViewHolder(View view) {
             ButterKnife.bind(this, view);
             this.convertView = view;
         }
@@ -1800,6 +1848,7 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
         ImageHelper.setImage(imgPoetAudioImage, audioContent.getImageUrl());
         audioTitle.setText(audioContent.getAuthorName());
     }
+
     private static Typeface getEngFont(final BaseActivity activity) {
         return ResourcesCompat.getFont(activity, R.font.lato_regular_eng);
     }
