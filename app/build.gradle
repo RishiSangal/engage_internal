@@ -29,8 +29,8 @@ android {
         applicationId "org.Rekhta"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 10641
-        versionName "2.1.2.2"
+        versionCode 10642
+        versionName "2.1.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release_rekhta_prod
         buildConfigField "int", "APP_SERVER", APP_SERVER_PRODUCTION
@@ -38,7 +38,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.release_rekhta_prod
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -47,6 +47,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        checkReleaseBuilds false
     }
 }
 
