@@ -1123,7 +1123,8 @@ public class RenderContentActivity extends BaseActivity implements RenderActivit
                 isOpenKeyboard = false;
                 clearShareSelection();
                 checkAndModifyShareSelectionIfNecessary();
-                startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard, contentPageModel.getTitle(), contentPageModel.getContentTyeName()));
+                if(!TextUtils.isEmpty(contentPageModel.getTitle()))
+                    startActivity(AddCommentActivity.getInstance(this, contentId, isOpenKeyboard, contentPageModel.getTitle(), contentPageModel.getContentTyeName()));
                 break;
             case R.id.imgTranslate:
                 showingTranslation = !showingTranslation;

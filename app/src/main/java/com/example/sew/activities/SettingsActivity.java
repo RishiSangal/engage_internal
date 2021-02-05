@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.example.sew.R;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetSettings;
 import com.example.sew.apis.SetUserSettings;
-import com.example.sew.common.ActivityManager;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.ThemeHelper;
@@ -42,8 +40,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-
-import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 
 public class SettingsActivity extends BaseActivity {
     @BindView(R.id.frame)
@@ -196,9 +192,12 @@ public class SettingsActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+
         checkForAppUpdate();
 
     }
+
 
     private UserSettings userSettings;
 
@@ -206,6 +205,7 @@ public class SettingsActivity extends BaseActivity {
         showDialog();
         new GetSettings()
                 .runAsync((BaseServiceable.OnApiFinishListener<GetSettings>) getSettings -> {
+
                     dismissDialog();
                     if (getSettings.isValidResponse()) {
                         userSettings = getSettings.getUserSettings();
@@ -467,7 +467,8 @@ public class SettingsActivity extends BaseActivity {
                     // Start an update.
                     startAppUpdateImmediate(appUpdateInfo);
                 }
-            }
+            }else
+                showToast("No need to update Application.");
         });
     }
     private void startAppUpdateImmediate(AppUpdateInfo appUpdateInfo) {

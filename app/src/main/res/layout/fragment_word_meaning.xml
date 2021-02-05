@@ -8,22 +8,27 @@
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/relClose"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/layMeaning"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/word_meaning_bg_close"
-        android:layout_marginTop="@dimen/_25sdp">
-        <com.example.sew.views.IconTextView
-            android:id="@+id/closeImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rico_close"
-            android:textSize="@dimen/_14ssp"
+        android:layout_centerHorizontal="true">
+        <RelativeLayout
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
-            android:textColor="?appIconColor"/>
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/word_meaning_bg_close">
+            <com.example.sew.views.IconTextView
+                android:id="@+id/closeImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rico_close"
+                android:textSize="@dimen/_14ssp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:textColor="?appIconColor"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout

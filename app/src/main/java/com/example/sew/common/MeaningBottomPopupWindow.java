@@ -55,6 +55,8 @@ public class MeaningBottomPopupWindow extends PopupWindow {
     TextView txtPoetTenureDivider;
     @BindView(R.id.imgDot)
     ImageView imgDot;
+    @BindView(R.id.mainMeaningview)
+    RelativeLayout mainMeaningview;
     private BaseActivity activity;
     private String word;
     private String wordMeaningStr = "";
@@ -79,7 +81,7 @@ public class MeaningBottomPopupWindow extends PopupWindow {
         ButterKnife.bind(this, convertView);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        setOutsideTouchable(false);
+        setOutsideTouchable(true);
         getWordMeaning();
         //imgClose.setVisibility(View.GONE);
         context.registerBroadcastListener(broadcastReceiver, BROADCAST_FAVORITE_UPDATED);
@@ -229,6 +231,7 @@ public class MeaningBottomPopupWindow extends PopupWindow {
     void onCloseClicked() {
         dismiss();
     }
+
 
     private void setLayoutDirection(View rootView) {
         switch (MyService.getSelectedLanguage()) {

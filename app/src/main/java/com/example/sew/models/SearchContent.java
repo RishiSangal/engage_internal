@@ -1,6 +1,5 @@
 package com.example.sew.models;
 
-import com.example.sew.common.Enums;
 import com.example.sew.helpers.MyHelper;
 
 import org.json.JSONObject;
@@ -10,6 +9,7 @@ public class SearchContent extends BaseModel {
     private String Body;
     private String Id;
     private String TypeId;
+    private String type;
     private String ContentSlug;
     private String PoetId;
     private String PoetSlug;
@@ -22,6 +22,7 @@ public class SearchContent extends BaseModel {
     private boolean PopularChoice;
     private String ShortUrlIndex;
     private String Title;
+    private int typeColor;
 
     public SearchContent(JSONObject jsonObject) {
         if (jsonObject == null)
@@ -29,6 +30,7 @@ public class SearchContent extends BaseModel {
         Body = optString(jsonObject, "Body");
         Id = optString(jsonObject, "Id");
         TypeId = optString(jsonObject, "TypeId");
+        type= optString(jsonObject, "Type");
         ContentSlug = optString(jsonObject, "ContentSlug");
         PoetId = optString(jsonObject, "PoetId");
         PoetSlug = optString(jsonObject, "PoetSlug");
@@ -113,5 +115,16 @@ public class SearchContent extends BaseModel {
 
     public String getTitle() {
         return Title;
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setContentTitleColor(int typeColor) {
+        this.typeColor = typeColor;
+    }
+
+    public int getContentTitleColor() {
+        return typeColor;
     }
 }

@@ -2,6 +2,9 @@ package com.example.sew.models;
 
 import android.text.TextUtils;
 
+import com.example.sew.helpers.MyHelper;
+import com.example.sew.helpers.MyService;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -41,9 +44,16 @@ public class SearchContentAll extends BaseModel {
             jsonArray = new JSONArray();
         size = jsonArray.length();
         searchContents = new ArrayList<>(size);
-        for (int i = 0; i < size; i++)
-            searchContents.add(new SearchContent(jsonArray.optJSONObject(i)));
+        for (int i = 0; i < size; i++) {
+            // searchContents.add(new SearchContent(jsonArray.optJSONObject(i)));
+            SearchContent searchContent= new SearchContent(jsonArray.optJSONObject(i));
+            searchContents.add(searchContent);
+            for (int j = 0; j < MyService.getAllContentType().size(); j++) {
+                if (MyService.getAllContentType().get(j).getContentId().equalsIgnoreCase(searchContent.getTypeId()))
+                    searchContent.setContentTitleColor(MyHelper.getTagColor(j));
+            }
 
+        }
         jsonArray = jsonObject.optJSONArray("Dictionary");
         size = 0;
         if (jsonArray == null)

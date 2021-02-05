@@ -1,7 +1,6 @@
 package com.example.sew.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -22,15 +21,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
 import com.example.sew.BuildConfig;
-import com.example.sew.R;
 import com.example.sew.MyApplication;
+import com.example.sew.R;
 import com.example.sew.apis.BaseServiceable;
 import com.example.sew.apis.GetAllFavoriteListWithPagingV5;
 import com.example.sew.apis.GetAppConfig;
 import com.example.sew.apis.GetAppInfo;
-import com.example.sew.apis.GetFavoriteListWithPaging;
-import com.example.sew.apis.GetHomePageCollection;
 import com.example.sew.common.Enums;
 import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.MyHelper;
@@ -38,14 +38,10 @@ import com.example.sew.helpers.MyService;
 import com.example.sew.helpers.ServiceManager;
 import com.example.sew.models.AppVersion;
 import com.example.sew.models.PushNotification;
-import com.example.sew.models.RenderContent;
 import com.example.sew.models.ShayariImage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -279,7 +275,7 @@ public class SplashActivity extends BaseActivity {
     public void generateKeyHash() {
         PackageInfo info;
         try {
-            info = getPackageManager().getPackageInfo("com.example.rekhta", PackageManager.GET_SIGNATURES);
+            info = getPackageManager().getPackageInfo("org.Rekhta", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md;
                 md = MessageDigest.getInstance("SHA");

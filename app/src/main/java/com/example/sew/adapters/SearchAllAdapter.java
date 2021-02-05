@@ -1,26 +1,16 @@
 package com.example.sew.adapters;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Build;
-import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,15 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sew.R;
 import com.example.sew.activities.BaseActivity;
 import com.example.sew.common.Enums;
-import com.example.sew.common.Utils;
+import com.example.sew.common.MyConstants;
 import com.example.sew.helpers.ImageHelper;
 import com.example.sew.helpers.MyHelper;
 import com.example.sew.helpers.MyService;
-import com.example.sew.helpers.RenderHelper;
 import com.example.sew.models.SearchContent;
 import com.example.sew.models.SearchContentAll;
 import com.example.sew.models.SearchDictionary;
-import com.example.sew.views.TitleTextViewType4;
 import com.example.sew.views.TitleTextViewType6;
 
 import java.util.ArrayList;
@@ -227,7 +215,7 @@ public class SearchAllAdapter extends BaseMyAdapter {
                 contentViewHolder.txtContentAuthor.setText(content.getPoetName());
                 String bodyData = content.getBody().replace("<br/>", "\n");
                 String body = content.getBody().substring(0, content.getBody().lastIndexOf("\n") + 1) + "";
-                if (content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER||content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE) {
+                if (content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.SHER || content.getContentTypeId().getListRenderingFormat() == Enums.LIST_RENDERING_FORMAT.QUOTE) {
                     contentViewHolder.txtSher.setText(content.getBody());
                     contentViewHolder.txtContentBodySecond.setVisibility(View.GONE);
                     contentViewHolder.txtContentBody.setVisibility(View.GONE);
@@ -286,29 +274,60 @@ public class SearchAllAdapter extends BaseMyAdapter {
                 contentViewHolder.searchEditorChoiceIcon.setVisibility(content.isEditorChoice() ? View.VISIBLE : View.GONE);
                 addFavoriteClick(contentViewHolder.offlineFavIcon, content.getId(), Enums.FAV_TYPES.CONTENT.getKey());
                 updateFavoriteIcon(contentViewHolder.offlineFavIcon, content.getId());
-                switch (content.getContentTypeId().getListRenderingFormat()) {
-                    case GHAZAL:
-                        contentViewHolder.topLayout.setVisibility(View.GONE);
-                        contentViewHolder.linearLayout.setVisibility(View.VISIBLE);
-                        contentViewHolder.txtSher.setVisibility(View.GONE);
-                        contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.ghazal).toUpperCase());
-                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_red_A800));
-                        break;
-                    case NAZM:
-                        contentViewHolder.txtNazmTitle.setVisibility(View.VISIBLE);
-                        contentViewHolder.txtSher.setVisibility(View.GONE);
-                        contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.nazm).toUpperCase());
-                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_blue_A800));
-                        break;
-                    case SHER:
-                    case QUOTE:
-                        contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.sher).toUpperCase());
-                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_green_A800));
-                        contentViewHolder.topLayout.setVisibility(View.GONE);
-                        contentViewHolder.linearLayout.setVisibility(View.GONE);
-                        contentViewHolder.txtSher.setVisibility(View.VISIBLE);
-                        break;
+                contentViewHolder.txtContentType.setText(content.getType());
+               contentViewHolder.txtContentType.setTextColor(content.getContentTitleColor());
+//                for (int i = 0; i < MyService.getAllContentType().size(); i++) {
+//                    if (MyService.getAllContentType().get(i).getContentId().equalsIgnoreCase(content.getTypeId())) {
+//                        int contentTypeColor = MyHelper.getTagColor(i);
+//                        contentViewHolder.txtContentType.setTextColor(contentTypeColor);
+//                    }
+//                }
+                if (content.getTypeId().equalsIgnoreCase(MyConstants.GHAZAL_ID)) {
+                    contentViewHolder.topLayout.setVisibility(View.GONE);
+                    contentViewHolder.linearLayout.setVisibility(View.VISIBLE);
+                    contentViewHolder.txtSher.setVisibility(View.GONE);
+                  //  contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_red_A800));
+                } else if (content.getTypeId().equalsIgnoreCase(MyConstants.NAZM_ID)) {
+                    contentViewHolder.txtNazmTitle.setVisibility(View.VISIBLE);
+                    contentViewHolder.txtSher.setVisibility(View.GONE);
+                   // contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_blue_A800));
+                } else if (content.getTypeId().equalsIgnoreCase(MyConstants.SHER_ID)) {
+                    contentViewHolder.topLayout.setVisibility(View.GONE);
+                    contentViewHolder.linearLayout.setVisibility(View.GONE);
+                    contentViewHolder.txtSher.setVisibility(View.VISIBLE);
+                   // contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_green_A800));
+                } else {
+                    contentViewHolder.topLayout.setVisibility(View.GONE);
+                    contentViewHolder.linearLayout.setVisibility(View.VISIBLE);
+                    contentViewHolder.txtSher.setVisibility(View.GONE);
+                   // contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_yellow_800));
                 }
+
+
+//                switch (content.getContentTypeId().getListRenderingFormat()) {
+//                    case GHAZAL:
+//                        contentViewHolder.topLayout.setVisibility(View.GONE);
+//                        contentViewHolder.linearLayout.setVisibility(View.VISIBLE);
+//                        contentViewHolder.txtSher.setVisibility(View.GONE);
+//                       // contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.ghazal).toUpperCase());
+//                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_red_A800));
+//                        break;
+//                    case NAZM:
+//                        contentViewHolder.txtNazmTitle.setVisibility(View.VISIBLE);
+//                        contentViewHolder.txtSher.setVisibility(View.GONE);
+//                        //contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.nazm).toUpperCase());
+//                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_blue_A800));
+//                        break;
+//                    case SHER:
+//                    case QUOTE:
+//                        //contentViewHolder.txtContentType.setText(MyHelper.getString(R.string.sher).toUpperCase());
+//                        contentViewHolder.txtContentType.setTextColor(getColor(R.color.md_green_A800));
+//                        contentViewHolder.topLayout.setVisibility(View.GONE);
+//                        contentViewHolder.linearLayout.setVisibility(View.GONE);
+//                        contentViewHolder.txtSher.setVisibility(View.VISIBLE);
+//                        break;
+//
+//                }
                 break;
             }
         }

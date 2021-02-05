@@ -229,9 +229,11 @@ public class PoetDetailActivity extends BaseActivity {
     public void onLanguageChanged() {
         super.onLanguageChanged();
         lazyRefreshTabPositioning(tabLayout, viewpager);
-        poetNameTemplateTV.setText(poetCompleteProfile.getPoetDetail().getPoetName().toUpperCase());
-        poetBirthPlaceTemplate.setText(poetCompleteProfile.getPoetDetail().getDomicile());
-        poetDescriptionTemplate.setText(poetCompleteProfile.getPoetDetail().getShortDescription());
+        if (poetCompleteProfile.getPoetDetail() != null) {
+            poetNameTemplateTV.setText(poetCompleteProfile.getPoetDetail().getPoetName().toUpperCase());
+            poetBirthPlaceTemplate.setText(poetCompleteProfile.getPoetDetail().getDomicile());
+            poetDescriptionTemplate.setText(poetCompleteProfile.getPoetDetail().getShortDescription());
+        }
     }
 
     @OnClick(R.id.imgShareUrl)

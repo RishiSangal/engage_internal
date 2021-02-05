@@ -105,7 +105,7 @@ public class SearchPoetsFragment extends BaseSearchFragment {
                     SearchContentAll searchContentAll = getSearchContentByType.getSearchContentAll();
                     if (getSearchContentByType.isFirstPage())
                         searchPoets.clear();
-                    if(!CollectionUtils.isEmpty(searchContentAll.getPoets()))
+                    if(searchContentAll.getPoets()!=null)
                         searchPoets.addAll(searchContentAll.getPoets());
                     if (CollectionUtils.isEmpty(searchContentAll.getPoets()))
                         lstSearchResult.setHasMoreItems(false);
