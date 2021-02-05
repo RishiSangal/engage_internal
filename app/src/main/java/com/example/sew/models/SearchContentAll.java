@@ -44,15 +44,15 @@ public class SearchContentAll extends BaseModel {
             jsonArray = new JSONArray();
         size = jsonArray.length();
         searchContents = new ArrayList<>(size);
+        ArrayList<ContentType> allContentTypes=MyService.getAllContentType();
         for (int i = 0; i < size; i++) {
             // searchContents.add(new SearchContent(jsonArray.optJSONObject(i)));
             SearchContent searchContent= new SearchContent(jsonArray.optJSONObject(i));
             searchContents.add(searchContent);
-            for (int j = 0; j < MyService.getAllContentType().size(); j++) {
-                if (MyService.getAllContentType().get(j).getContentId().equalsIgnoreCase(searchContent.getTypeId()))
+            for (int j = 0; j < allContentTypes.size(); j++) {
+                if (allContentTypes.get(j).getContentId().equalsIgnoreCase(searchContent.getTypeId()))
                     searchContent.setContentTitleColor(MyHelper.getTagColor(j));
             }
-
         }
         jsonArray = jsonObject.optJSONArray("Dictionary");
         size = 0;
