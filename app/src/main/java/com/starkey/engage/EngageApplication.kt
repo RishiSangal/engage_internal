@@ -9,6 +9,7 @@ import io.paperdb.Paper
 class EngageApplication : Application() {
     var isDebuggingEnabled: Boolean = false
 
+// Testing Commit
     companion object {
         private var sInstance: EngageApplication? = null
         fun getInstance(): EngageApplication? {
