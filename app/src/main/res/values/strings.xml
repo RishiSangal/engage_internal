@@ -1,52 +1,37 @@
 <resources>
-    <string name="app_name">Rekhta</string>
-    <!--    SEW-POC-->
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
-    <string name="btn_login">Sign in</string>
-    <string name="btn_register">REGISTER</string>
-    <string name="btn_link_to_register">Not a member? Sign up now.</string>
-    <string name="btn_link_to_login">Already registred! Login Me.</string>
-    <string name="success_email_sent">An e-mail with instructions to reset your password has been sent to the e-mail address you provided. Please follow the instruction in the email to reset your password</string>
-    <string name="dot">•</string>;
-    <string name="title_home">Home</string>
-    <string name="paging_recycler_view_loading">Loading…</string>
-    <string name="paging_recycler_view_no_more_data">No More Data</string>
-    <string name="paging_recycler_view_retry">Loading error, tap to retry</string>
-    <string name="lore">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nulla lectus, vulputate in tortor non, interdum rutrum turpis. Etiam leo diam, vulputate nec justo eget, euismod ultrices ante.</string>
-    <string name="title_dashboard">Rokkitt</string>
-    <string name="title_notifications">Playfair</string>
-    <string name="demo_tab_1">Cupcake</string>
-    <string name="demo_tab_2">Donut</string>
-    <string name="demo_tab_3">Eclair</string>
-    <string name="demo_tab_4">Froyo</string>
-    <string name="demo_tab_5">Gingerbread</string>
-    <string name="demo_tab_6">Honeycomb</string>
-    <string name="demo_tab_7">Ice Cream Sandwich</string>
-    <string name="demo_tab_8">Jelly Bean</string>
-    <string name="demo_tab_9">KitKat</string>
-    <string name="demo_tab_10">Lollipop</string>
-    <string name="select_lang">SELECT LANGUAGE</string>
-    <string name="lang_content">You could switch any language while reading.</string>
-
-    <string name="facebook_app_id">710470395652694</string>
-    <string name="fb_login_protocol_scheme">fb710470395652694</string>
-    <!--<string name="google_signin_id_token">708294500136-2t1t1198quegkuhdb40uedi2kb6ss4is.apps.googleusercontent.com</string>-->
-    <string name="google_signin_id_token">146085015376-e6n8pula88u5bbgre77ole2cg4fshm2q.apps.googleusercontent.com</string> <!-- from ramannjindal@gmail.com / Project: Rekhta 19 Aug  -->
-    <string name="sign_in">Sign In</string>
-    <string name="fortgot_password_login_again">Login Again</string>
-
+    <string name="app_name">EngageAndroid</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_divider">|</string>
-    <string name="donate_rekhta_url">https://rekhtafoundation.org/donate-to-rekhta-foundation/?ref=rapp&amp;cid=1</string>
-    <string name="donate_rekhta_via_paytm">https://paytm.com/helpinghand/rekhta-foundation</string>
-    <string name="top_comment">Top Comments</string>
-    <string name="newest_comments">Newest comments</string>
-    <string name="replied_by_rekhta">Replied by Rekhta</string>
-    <string name="load_more_comments">LOAD MORE COMMENTS</string>
-    <string name="load_more_replies">Load More Replies</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
+    <string name="learn">Learn</string>
+    <string name="back">Back</string>
+    <string name="videoS">Video</string>
+    <string name="wasThisHelp">Was this helpful?</string>
+    <string name="yesS">Yes</string>
+    <string name="noS">No</string>
+
+    <string name="account">2566261597001</string>
+    <string name="policy">BCpkADawqM2uhnU-5NWLaNx44oPQTbA8H27BUdRvbXKVKLQ4VaYa355eS32Icwu2-Q80DJtp6Y0LoP7CcYfnJZHowtbvOus2Xl8-Al-BD4feqr7W0CNgwxNoI-vq3fdFwdfU6ADo0vASXnow</string>
+    <string name="video_detail">Tap Control allows you to set an action for the hearing aid to trigger when you tap twice on or near the hearing aid. Activate features like Voice Assistant, Edge Mode or start and stop streaming audio without fumbling for a button to press.</string>
+    <string name="tv_streaming"><![CDATA[Phone calls, music & TV]]></string>
+    <string name="close">Close</string>
+    <string name="start">Start</string>
+    <string name="got_it">Got It</string>
+    <string name="skip_quiz">Skip Quiz</string>
+    <string name="great_job">Great Job</string>
+    <string name="was_it_helpful">Was it helpful</string>
+    <string name="next_up">Next Up</string>
+    <string name="incorrect">You should never use water, alcohol swabs or cleaning solvents on hearing aids. They can break down or damage your devices. A toothbrush or small, soft brush, or a dry, soft cloth are recommended.</string>
+    <string name="experience_text">Before we start, how familiar are you with hearing aids?</string>
+    <string name="title_learn">Learn</string>
+
+    <string name="learn_get_started">Get started</string>
+    <string name="learn_using_hearing_aids">Using your hearing aids</string>
+    <string name="learn_connectivity_pairing">Connectivity and pairing</string>
+    <string name="learn_tips_advice">Tips and advice</string>
+    <string name="learn_battery_power">Battery and power</string>
+    <string name="learn_care_maintenance">Care and maintenance</string>
+    <string name="learn_track_your_health">Track your health</string>
+    <string name="learn_ask_assistant">Ask the Assistant</string>
+    <string name="learn_remote_help">Remote help</string>
+    <string name="position">Position</string>
 </resources>

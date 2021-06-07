@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_learn"
+    app:startDestination="@id/nav_to_learn">
+
+    <fragment
+        android:id="@+id/nav_to_learn"
+        android:name="com.starkey.engage.ui.learn.view.LearnFragment"
+        android:label="@string/title_learn"
+        tools:layout="@layout/fragment_learn">
+
+        <action
+            android:id="@+id/action_to_videoFragment"
+            app:destination="@id/videoFragment">
+
+            <argument
+                android:name="arg_search_content_id"
+                app:argType="string" />
+
+            <argument
+                android:name="arg_explore_content_more"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.starkey.engage.ui.learn.view.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video">
+
+        <action
+            android:id="@+id/action_videoFragment"
+            app:destination="@id/videoFragment">
+
+            <argument
+                android:name="arg_search_content_id"
+                app:argType="string" />
+
+            <argument
+                android:name="arg_explore_content_more"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+
+</navigation>

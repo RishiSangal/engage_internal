@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/videoTool"
+        layout="@layout/common_tool" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/videoTool">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.brightcove.player.view.BrightcoveExoPlayerVideoView
+                android:id="@+id/brightcove_video_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/video_view"
+                android:background="@color/black_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="22dp">
+
+                <TextView
+                    android:id="@+id/videoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_18dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_xxxlarge"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/rightGuide"
+                    app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                    app:layout_constraintTop_toBottomOf="@+id/brightcove_video_view"
+                    tools:text="How to use Tap Control" />
+
+                <TextView
+                    android:id="@+id/txtVideoDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:text="4 minutes"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/foryou_item_tv"
+                    app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                    app:layout_constraintTop_toBottomOf="@+id/videoTitle" />
+
+                <TextView
+                    android:id="@+id/videoDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/foryou_item_tv"
+                    app:layout_constraintEnd_toEndOf="@+id/rightGuide"
+                    app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                    app:layout_constraintTop_toBottomOf="@+id/txtVideoDuration"
+                    tools:text="@string/video_detail" />
+
+                <TextView
+                    android:id="@+id/wasThisHelpTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/wasThisHelp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/rightGuide"
+                    app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                    app:layout_constraintTop_toBottomOf="@+id/videoDesc" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/likeImg"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="@dimen/activity_horizontal_margin"
+                            android:src="@drawable/like" />
+
+                        <TextView
+                            android:id="@+id/yesTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="@string/yesS"
+                            android:textColor="@color/color_on_surface_tertiary_text"
+                            android:textSize="@dimen/textSize_16sp"
+                            app:layout_constraintEnd_toEndOf="@+id/likeImg"
+                            app:layout_constraintStart_toStartOf="@+id/likeImg"
+                            app:layout_constraintTop_toBottomOf="@+id/likeImg" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/dislikeImg"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="@dimen/activity_horizontal_margin"
+                            android:src="@drawable/dislike" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="@string/noS"
+                            android:textColor="@color/color_on_surface_tertiary_text"
+                            android:textSize="@dimen/textSize_16sp"
+                            app:layout_constraintEnd_toEndOf="@+id/dislikeImg"
+                            app:layout_constraintStart_toStartOf="@+id/dislikeImg"
+                            app:layout_constraintTop_toBottomOf="@+id/dislikeImg" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/txtExplore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:fontFamily="sans-serif"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="0sp"
+                    android:text="Explore more"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="Explore more" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyVideos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:nestedScrollingEnabled="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".module.VideoActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16">
+
+            <ImageView
+                android:id="@+id/imgSuccessStatus"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="20dp"
+                android:src="@drawable/quiz_correct"
+                android:visibility="visible"
+                app:tint="@color/white"
+                tools:visibility="visible" />
+
+            <TextView
+                style="@style/HeadlineH4LightCenterBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Great job!"
+                tools:text="Great job!"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_24dp"
+                />
+
+
+            <TextView
+                android:id="@+id/tvSummery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/color_on_surface_primary_text"
+                android:textSize="@dimen/text_normal"
+                android:text="Keep learning to ensure proper maintenance of your hearing aids."
+                app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                app:layout_constraintTop_toBottomOf="@+id/videoTitle" />
+
+            <TextView
+                android:id="@+id/wasThisHelpTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="78dp"
+                android:text="@string/wasThisHelp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/rightGuide"
+                app:layout_constraintStart_toStartOf="@+id/leftGuide"
+                app:layout_constraintTop_toBottomOf="@+id/videoDesc" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="9dp"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/likeImg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/dp_16"
+                        android:src="@drawable/like" />
+
+                    <TextView
+                        android:id="@+id/yesTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="@string/yesS"
+                        android:textSize="@dimen/textSize_16sp"
+                        android:textColor="@color/color_on_surface_tertiary_text"
+                        app:layout_constraintEnd_toEndOf="@+id/likeImg"
+                        app:layout_constraintStart_toStartOf="@+id/likeImg"
+                        app:layout_constraintTop_toBottomOf="@+id/likeImg" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/margin_24dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/dislikeImg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/dp_16"
+                        android:src="@drawable/dislike" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:textSize="@dimen/textSize_16sp"
+                        android:text="@string/noS"
+                        android:textColor="@color/color_on_surface_tertiary_text"
+                        app:layout_constraintEnd_toEndOf="@+id/dislikeImg"
+                        app:layout_constraintStart_toStartOf="@+id/dislikeImg"
+                        app:layout_constraintTop_toBottomOf="@+id/dislikeImg" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layBottomItemContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/next_up"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_normal"
+                    tools:text="@string/next_up" />
+
+                <TextView
+                    android:id="@+id/tvNextTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp_16"
+                    android:text="@string/skip_quiz"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/text_normal"
+                    tools:text="How to care for hearing aids" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

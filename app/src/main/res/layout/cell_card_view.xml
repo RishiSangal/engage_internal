@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgPopularTopics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_toggle_flag_24_px" />
+
+        <TextView
+            android:id="@+id/txtHeading"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:layout_marginLeft="@dimen/margin_18dp"
+            android:textColor="@color/color_on_surface_primary_text"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="4sp"
+            tools:text="Get started"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_navigation_chevron_right_24_px"
+            android:layout_marginRight="@dimen/margin_5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_gray"
+        android:orientation="vertical" />
+
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/margin_10dp"
+    android:gravity="center"
+    android:paddingBottom="@dimen/margin_12dp">
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="37dp"
+        android:layout_height="28dp"
+        android:src="@drawable/icon_navigation_learn_24_px"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtIconHeading"
+            style="@style/SubtitleSubtitle1AOnSurfaceLightAHighEmphasisLeftBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Help us tailor your learning content"
+            />
+
+        <TextView
+            android:id="@+id/txtIconSubHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:textColor="@color/color_on_surface_tertiary_text"
+            android:letterSpacing="0.03"
+            android:lineSpacingExtra="4sp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            tools:text="Share your hearing aid experience"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_navigation_chevron_right_24_px"/>
+</LinearLayout>
